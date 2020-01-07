@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation';
-import Icons from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Colors from '../themes/Colors';
 
 export const openDrawer = () => {
   Navigation.mergeOptions('sideDrawer', {
@@ -11,158 +12,181 @@ export const openDrawer = () => {
     },
   });
 };
+
 export default function startApp() {
-  Navigation.setRoot({
-    root: {
-      sideMenu: {
-        left: {
-          component: {
-            name: 'sideBar',
-            id: 'sideBar',
+  Promise.all([
+    Ionicons.getImageSource('ios-bookmarks', 30),
+    Ionicons.getImageSource('ios-clipboard', 30),
+    Ionicons.getImageSource('ios-notifications', 30),
+    Ionicons.getImageSource('ios-contact', 30),
+    Ionicons.getImageSource('ios-journal', 30),
+    Ionicons.getImageSource('ios-menu', 30),
+  ]).then(([listBook, orderHistory, notifications, user, library, menu]) => {
+    Navigation.setRoot({
+      root: {
+        sideMenu: {
+          left: {
+            component: {
+              name: 'sideBar',
+              id: 'sideBar',
+            },
           },
-        },
-        center: {
-          bottomTabs: {
-            id: 'tabs',
-            children: [
-              {
-                stack: {
-                  id: 'tab1',
-                  children: [
-                    {
-                      component: {
-                        name: 'Home',
-                        options: {
-                          bottomTab: {
-                            fontSize: 12,
-                            icon: require('../../Image/dn.jpg'),
+          center: {
+            bottomTabs: {
+              id: 'tabs',
+              children: [
+                {
+                  stack: {
+                    id: 'tab1',
+                    children: [
+                      {
+                        component: {
+                          name: 'Home',
+                          options: {
+                            topBar: {
+                              leftButtons: [
+                                {
+                                  id: 'backPress',
+                                  text: 'Back',
+                                  icon: menu,
+                                  fontSize: 10,
+                                },
+                              ],
+                              visible: true,
+                            },
+                            bottomTab: {
+                              fontSize: 10,
+                              icon: listBook,
+                              selectedIconColor: Colors.primary,
+                            },
                           },
                         },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
-              },
-              {
-                stack: {
-                  id: 'tab2',
-                  children: [
-                    {
-                      component: {
-                        name: 'Home',
-                        options: {
-                          topBar: {
-                            leftButtons: [
-                              {
-                                id: 'backPress',
-                                text: 'Back',
-                                icon: require('../../Image/menu.png'),
-                                fontSize: 12,
-                              },
-                            ],
-                            visible: true,
-                          },
-                          bottomTab: {
-                            fontSize: 12,
-
-                            icon: require('../../Image/dn.jpg'),
+                {
+                  stack: {
+                    id: 'tab2',
+                    children: [
+                      {
+                        component: {
+                          name: 'Home',
+                          options: {
+                            topBar: {
+                              leftButtons: [
+                                {
+                                  id: 'backPress',
+                                  text: 'Back',
+                                  icon: menu,
+                                  fontSize: 10,
+                                },
+                              ],
+                              visible: true,
+                            },
+                            bottomTab: {
+                              fontSize: 10,
+                              icon: orderHistory,
+                              selectedIconColor: Colors.primary,
+                            },
                           },
                         },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
-              },
-              {
-                stack: {
-                  id: 'tab2',
-                  children: [
-                    {
-                      component: {
-                        name: 'Home',
-                        options: {
-                          topBar: {
-                            leftButtons: [
-                              {
-                                id: 'backPress',
-                                text: 'Back',
-                                icon: require('../../Image/menu.png'),
-                              },
-                            ],
-                            visible: true,
-                          },
-                          bottomTab: {
-                            fontSize: 12,
-
-                            icon: require('../../Image/dn.jpg'),
+                {
+                  stack: {
+                    id: 'tab2',
+                    children: [
+                      {
+                        component: {
+                          name: 'Home',
+                          options: {
+                            topBar: {
+                              leftButtons: [
+                                {
+                                  id: 'backPress',
+                                  text: 'Back',
+                                  icon: menu,
+                                },
+                              ],
+                              visible: true,
+                            },
+                            bottomTab: {
+                              fontSize: 10,
+                              selectedIconColor: Colors.primary,
+                              icon: user,
+                            },
                           },
                         },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
-              },
-              {
-                stack: {
-                  id: 'tab2',
-                  children: [
-                    {
-                      component: {
-                        name: 'Home',
-                        options: {
-                          topBar: {
-                            leftButtons: [
-                              {
-                                id: 'backPress',
-                                text: 'Back',
-                                icon: require('../../Image/menu.png'),
-                              },
-                            ],
-                            visible: true,
-                          },
-                          bottomTab: {
-                            fontSize: 12,
-                            icon: require('../../Image/dn.jpg'),
+                {
+                  stack: {
+                    id: 'tab2',
+                    children: [
+                      {
+                        component: {
+                          name: 'Home',
+                          options: {
+                            topBar: {
+                              leftButtons: [
+                                {
+                                  id: 'backPress',
+                                  text: 'Back',
+                                  icon: menu,
+                                },
+                              ],
+                              visible: true,
+                            },
+                            bottomTab: {
+                              fontSize: 10,
+                              icon: notifications,
+                              selectedIconColor: Colors.primary,
+                            },
                           },
                         },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
-              },
-              {
-                stack: {
-                  id: 'tab2',
-                  children: [
-                    {
-                      component: {
-                        name: 'Home',
-                        options: {
-                          topBar: {
-                            leftButtons: [
-                              {
-                                id: 'backPress',
-                                text: 'Back',
-                                icon: require('../../Image/menu.png'),
-                              },
-                            ],
-                            visible: true,
-                          },
-                          bottomTab: {
-                            fontSize: 12,
-
-                            icon: require('../../Image/dn.jpg'),
+                {
+                  stack: {
+                    id: 'tab2',
+                    children: [
+                      {
+                        component: {
+                          name: 'Home',
+                          options: {
+                            topBar: {
+                              leftButtons: [
+                                {
+                                  id: 'backPress',
+                                  text: 'Back',
+                                  icon: menu,
+                                },
+                              ],
+                              visible: true,
+                            },
+                            bottomTab: {
+                              fontSize: 10,
+                              selectedIconColor: Colors.primary,
+                              icon: library,
+                            },
                           },
                         },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
         },
       },
-    },
+    });
   });
 }

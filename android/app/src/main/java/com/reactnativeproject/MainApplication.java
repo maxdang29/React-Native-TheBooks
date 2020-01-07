@@ -13,6 +13,7 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -35,7 +36,8 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
-                new RNCViewPagerPackage());
+                new RNCViewPagerPackage(), 
+                new VectorIconsPackage());
     }
 
     @Override

@@ -2,8 +2,14 @@ import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
 import {Text, TouchableButton} from '../../components';
 import {Colors} from '../../themes';
+import startApp from '../../navigation/bottomTab';
+import {AsyncStorage} from 'react-native';
 
 export default class IntroViewer extends React.PureComponent {
+  goToHome = async () => {
+    AsyncStorage.setItem('token', 'startApp');
+    startApp();
+  };
   render() {
     const {data} = this.props;
     const {imageSource, title, subTitle, startButton} = data;
@@ -41,7 +47,7 @@ export default class IntroViewer extends React.PureComponent {
               title={'Bắt đầu'}
               style={styles.button}
               buttonColor={Colors.primary}
-              onPress={this.goToSignIn}
+              onPress={this.goToHome}
               textStyle={styles.textButton}
             />
           </View>

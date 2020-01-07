@@ -75,23 +75,6 @@ class Intro extends Component {
             })}
           </Swiper>
         </View>
-
-        {/* <View style={styles.buttonGroup}>
-            <TouchableButton
-              title={'Bắt đầu'}
-              style={styles.button}
-              buttonColor={Colors.primary}
-              onPress={this.goToSignIn}
-              textStyle={styles.textButton}
-            />
-          </View> */}
-        {/* <Text
-            type="light"
-            color={Colors.black}
-            sizeType="xMedium"
-            style={styles.txtContinue}
-            underline
-          /> */}
       </SafeAreaView>
     );
   }
