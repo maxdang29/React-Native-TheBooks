@@ -4,17 +4,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
-    console.log('item book', item);
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>
-          <Image
-            style={styles.image}
-            source={{
-              uri:
-                'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
-            }}
-          />
+          <Image style={styles.image} source={{uri: item.Medias[0].ImageUrl}} />
         </View>
 
         <View style={styles.bookDescription}>

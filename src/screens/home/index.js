@@ -24,26 +24,26 @@ export default class Home extends Component {
     };
   }
   navigationButtonPressed({buttonId}) {
-    try {
-      Navigation.mergeOptions('sideBar', {
-        sideMenu: {
-          left: {
-            visible: true,
+    console.log('button id', buttonId);
+    if (buttonId === 'sideMenu') {
+      try {
+        Navigation.mergeOptions('sideBar', {
+          sideMenu: {
+            left: {
+              visible: true,
+            },
           },
-        },
-      });
-    } catch (error) {
-      console.log(error);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
   render() {
     return (
       <View>
-        <Text> Hello</Text>
         <SectionListBook />
-
-        <Text> Hello</Text>
       </View>
     );
   }
