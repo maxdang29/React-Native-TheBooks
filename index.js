@@ -5,17 +5,17 @@
 import {Navigation} from 'react-native-navigation';
 
 import App from './src/app';
-import Intro from './src/screens/Intro/index';
 
-Navigation.registerComponent('navigation.playground.WelcomeScreen', () => App);
-Navigation.registerComponent('Intro', () => Intro);
+import ColumnBookItem from './src/components/RowBookItem';
+
+import startApp from './src/navigation/bottomTab';
+
+Navigation.registerComponent('app', () => App);
+
+import {registerScreens} from './src/navigation/registerScreens';
+
+registerScreens();
 
 Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      component: {
-        name: 'Intro',
-      },
-    },
-  });
+  startApp();
 });

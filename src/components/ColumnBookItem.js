@@ -16,9 +16,7 @@ export default class RowBookItem extends Component {
         </View>
 
         <View style={styles.bookDescription}>
-          <Text style={styles.bookTitle}>
-            Gửi thời đơn thuần đẹp đẽ của chúng ta
-          </Text>
+          <Text style={styles.bookTitle}>Để con được ốm</Text>
           <Text style={styles.bookAuthor}>Amy Nguyen</Text>
           <View style={styles.viewFlexDirection}>
             <Icon style={styles.iconRankChecked} name="star" />
@@ -28,22 +26,6 @@ export default class RowBookItem extends Component {
             <Icon style={styles.iconRankUnchecked} name="star" />
             <Text style={styles.bookLike}> 342</Text>
           </View>
-
-          <View style={styles.viewFlexDirection}>
-            <View style={[styles.viewFlexDirection, styles.bottom]}>
-              <Icon style={styles.iconDirection} name="book" />
-              <Text style={styles.bookGrey}> 4 Quyển</Text>
-            </View>
-            <View
-              style={[
-                styles.viewFlexDirection,
-                styles.iconBottom,
-                styles.bottom,
-              ]}>
-              <Icon style={styles.iconDirection} name="tag" />
-              <Text style={[styles.bookGrey, styles.bookPrice]}>36.000</Text>
-            </View>
-          </View>
         </View>
       </View>
     );
@@ -52,24 +34,24 @@ export default class RowBookItem extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 75.5,
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    paddingVertical: 2,
+    flexDirection: 'column',
+    paddingHorizontal: 20,
+    paddingVertical: 3,
   },
   viewFlexDirection: {
     flexDirection: 'row',
   },
   image: {
-    width: 130,
+    width: 160,
     height: 210,
     borderRadius: 5,
   },
   shadowView: {
     height: 210,
-    width: 135,
+    width: 160,
     borderRadius: 5,
-    marginVertical: 15,
+    marginVertical: 10,
+    top: 4,
     elevation: 10,
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 4},
@@ -80,56 +62,34 @@ const styles = StyleSheet.create({
     // fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
     fontSize: 18,
-    width: 240,
+    width: 180,
+    top: -1,
   },
   bookAuthor: {
     // fontFamily: 'SVN-ProximaNova',
     color: '#bcbcbc',
     fontSize: 17,
     width: 230,
-    top: 1,
-  },
-  bookGrey: {
-    color: '#bcbcbc',
-    fontSize: 17,
-  },
-
-  bookPrice: {
-    left: 5,
-  },
-  iconDirection: {
-    color: '#fda942',
-    borderColor: '#000',
-    fontSize: 20,
-    right: 3,
-    top: 2,
+    top: -5,
   },
   bookDescription: {
-    marginHorizontal: 17,
+    width: 160,
     textAlign: 'center',
-    top: 45,
   },
 
-  iconBottom: {
-    left: 35,
-  },
-
-  bottom: {
-    top: 32,
-  },
   iconRankChecked: {
     color: '#fda942',
     marginRight: 3,
-    top: 10,
+    top: -1,
   },
   iconRankUnchecked: {
     color: '#bcbcbc',
     marginRight: 3,
-    top: 10,
+    top: -1,
   },
   bookLike: {
     color: '#bcbcbc',
     left: 10,
-    top: 5,
+    top: -5,
   },
 });
