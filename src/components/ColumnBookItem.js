@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-export default class RowBookItem extends Component {
+export default class ColumBookItem extends Component {
   render() {
+    const {item} = this.props;
+    console.log('item book', item);
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>
@@ -16,15 +18,15 @@ export default class RowBookItem extends Component {
         </View>
 
         <View style={styles.bookDescription}>
-          <Text style={styles.bookTitle}>Để con được ốm</Text>
-          <Text style={styles.bookAuthor}>Amy Nguyen</Text>
+          <Text style={styles.bookTitle}>{item.Title}</Text>
+          <Text style={styles.bookAuthor}>{item.Authors[0].Name}</Text>
           <View style={styles.viewFlexDirection}>
             <Icon style={styles.iconRankChecked} name="star" />
             <Icon style={styles.iconRankChecked} name="star" />
             <Icon style={styles.iconRankChecked} name="star" />
             <Icon style={styles.iconRankChecked} name="star" />
             <Icon style={styles.iconRankUnchecked} name="star" />
-            <Text style={styles.bookLike}> 342</Text>
+            <Text style={styles.bookLike}> {item.TotalReview} </Text>
           </View>
         </View>
       </View>
