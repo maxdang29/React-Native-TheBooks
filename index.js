@@ -4,7 +4,7 @@
 
 import {Navigation} from 'react-native-navigation';
 
-import App from './src/app';
+import ColumnBookItem from './src/components/RowBookItem';
 
 import startApp from './src/navigation/bottomTab';
 
@@ -17,39 +17,3 @@ registerScreens();
 Navigation.events().registerAppLaunchedListener(() => {
   startApp();
 });
-
-// Navigation.events().registerAppLaunchedListener(() => {
-//   Navigation.setRoot({
-//     root: {
-//       component: {
-//         name: 'app',
-//       },
-//     },
-//   });
-//   // Navigation.setRoot({
-//   //   root: {
-//   //     sideMenu: {
-//   //       id: "sideMenu",
-//   //       left: {
-//   //         component: {
-//   //           id: "Drawer",
-//   //           name: "app"
-//   //         }
-//   //       },
-//   //       center: {
-//   //         stack: {
-//   //           id: "AppRoot",
-//   //           children: [
-//   //             {
-//   //               component: {
-//   //                 id: "App",
-//   //                 name: "app"
-//   //               }
-//   //             }
-//   //           ]
-//   //         }
-//   //       }
-//   //     }
-//   //   }
-//   // });
-// });
