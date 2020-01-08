@@ -7,6 +7,7 @@ import Register from '../screens/Authentication/Register';
 import Home from '../screens/home/index';
 import SideBar from '../navigation/sideBar';
 import Login from '../screens/Authentication/Login';
+import SeeMore from '../screens/home/seeMore';
 
 function ReduxProvider(Component) {
   return props => (
@@ -36,5 +37,10 @@ export function registerScreens() {
     'Login',
     () => ReduxProvider(Login),
     () => Login,
+  );
+  Navigation.registerComponent(
+    'seeMore',
+    () => ReduxProvider(SeeMore),
+    () => SeeMore,
   );
 }

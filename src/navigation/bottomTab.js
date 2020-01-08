@@ -46,8 +46,7 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
                                   icon: menu,
                                   fontSize: 10,
                                 },
@@ -76,8 +75,7 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
                                   icon: menu,
                                   fontSize: 10,
                                 },
@@ -104,13 +102,6 @@ export default function startApp() {
                           name: 'Login',
                           options: {
                             topBar: {
-                              // leftButtons: [
-                              //   {
-                              //     id: 'backPress',
-                              //     text: 'Back',
-                              //     icon: menu,
-                              //   },
-                              // ],
                               visible: false,
                             },
                             bottomTab: {
@@ -135,8 +126,8 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
+
                                   icon: menu,
                                 },
                               ],
@@ -164,8 +155,8 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
+
                                   icon: menu,
                                 },
                               ],

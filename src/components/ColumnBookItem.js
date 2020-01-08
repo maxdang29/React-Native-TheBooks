@@ -4,14 +4,22 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>
-          <Image style={styles.image} source={{uri: item.Medias[0].ImageUrl}} />
+          <Image
+            style={styles.image}
+            source={{
+              uri: item.Medias[0].ImageUrl,
+              // uri:
+              //   'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
+            }}
+          />
         </View>
 
         <View style={styles.bookDescription}>
-          <Text style={styles.bookTitle}>{item.Title}</Text>
+          <Text style={styles.bookTitle}>{item.Title.substring(0, 15)}...</Text>
           <Text style={styles.bookAuthor}>{item.Authors[0].Name}</Text>
           <View style={styles.viewFlexDirection}>
             <Icon style={styles.iconRankChecked} name="star" />

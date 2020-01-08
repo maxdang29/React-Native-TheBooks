@@ -5,10 +5,9 @@ const init = {
   error: undefined,
 };
 
-const homeReducers = (state = init, action) => {
- 
+const SideBarReducers = (state = init, action) => {
   switch (action.type) {
-    case types.GET_ALL_BOOK_SUCCESS:
+    case types.GET_ALL_CATEGORIES_SUCCESS:
       return {...state, data: action.data};
 
     default:
@@ -16,4 +15,4 @@ const homeReducers = (state = init, action) => {
   }
 };
 
-export default homeReducers;
+export default SideBarReducers;

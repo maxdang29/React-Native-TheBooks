@@ -5,10 +5,9 @@ import store from '../store';
 import {getAllBookRequest} from '../../api/books';
 
 function* getAllBook(actions) {
-  console.log('object get all book ', actions);
   try {
     const response = yield call(getAllBookRequest, null);
-    console.log('rescponse', response.data.Data);
+
     if (response.data.Data) {
       yield put(BookActions.getAllBookSuccess(response.data.Data));
     }
