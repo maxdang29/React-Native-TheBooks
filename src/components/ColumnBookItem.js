@@ -11,7 +11,7 @@ export default class ColumBookItem extends Component {
         </View>
 
         <View style={styles.bookDescription}>
-          <Text style={styles.bookTitle}>{item.Title}</Text>
+          <Text style={styles.bookTitle}>{item.Title.substring(0, 15)}...</Text>
           <Text style={styles.bookAuthor}>{item.Authors[0].Name}</Text>
           <View style={styles.viewFlexDirection}>
             <Icon style={styles.iconRankChecked} name="star" />

@@ -10,7 +10,6 @@ export default class Home extends Component {
     Navigation.events().bindComponent(this);
   }
 
-  static options(passProps) {}
   navigationButtonPressed({buttonId}) {
     console.log('button id', buttonId);
     if (buttonId === 'sideMenu') {
