@@ -7,15 +7,14 @@ import {
   ScrollView,
 } from 'react-native';
 import {Navigation} from 'react-native-navigation';
-
+import {connect} from 'react-redux';
+import * as actionSideBar from '../redux/sideBar/actions/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownItem from 'react-native-drop-down-item';
 const IC_ARR_DOWN = require('../../Image/downwards-pointer.png');
 const IC_ARR_UP = require('../../Image/arr-up.png');
-import {offlineData} from '../utils/offlineData';
 
-const Categories = offlineData.Data.References.Categories;
-export default class SideBar extends Component {
+class SideBar extends Component {
   closeMenu = () => {
     Navigation.mergeOptions('sideBar', {
       sideMenu: {
@@ -25,7 +24,12 @@ export default class SideBar extends Component {
       },
     });
   };
+
+  componentDidMount() {
+    this.props.getAllCategories();
+  }
   render() {
+    const {categoriesData} = this.props;
     return (
       <View style={[styles.container]}>
         <View style={styles.titleContainer}>
@@ -40,8 +44,8 @@ export default class SideBar extends Component {
 
         <View style={styles.dropDown}>
           <ScrollView style={{alignSelf: 'stretch'}}>
-            {offlineData
-              ? Categories.map((param, i) => {
+            {categoriesData
+              ? categoriesData.map((param, i) => {
                   return (
                     <DropDownItem
                       key={i}
@@ -74,11 +78,29 @@ export default class SideBar extends Component {
     );
   }
 }
+
+const mapStateToProps = store => {
+  return {
+    categoriesData: store.SideBarReducers.data,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllCategories: () => {
+      dispatch(actionSideBar.getAllCategories());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     width: '100%',
     height: '100%',
+    marginBottom: 40,
   },
   titleContainer: {
     flexDirection: 'row',

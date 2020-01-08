@@ -13,7 +13,6 @@ export default class IntroViewer extends React.PureComponent {
   render() {
     const {data} = this.props;
     const {imageSource, title, subTitle, startButton} = data;
-    console.log('status', startButton);
     return (
       <View style={styles.slide}>
         <View style={{flex: 2.5, justifyContent: 'flex-end'}}>

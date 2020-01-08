@@ -46,8 +46,7 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
                                   icon: menu,
                                   fontSize: 10,
                                 },
@@ -76,8 +75,7 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
                                   icon: menu,
                                   fontSize: 10,
                                 },
@@ -106,8 +104,7 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
                                   icon: menu,
                                 },
                               ],
@@ -135,8 +132,8 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
+
                                   icon: menu,
                                 },
                               ],
@@ -164,8 +161,8 @@ export default function startApp() {
                             topBar: {
                               leftButtons: [
                                 {
-                                  id: 'backPress',
-                                  text: 'Back',
+                                  id: 'sideMenu',
+
                                   icon: menu,
                                 },
                               ],

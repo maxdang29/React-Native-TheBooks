@@ -10,7 +10,6 @@ export default class Home extends Component {
     Navigation.events().bindComponent(this);
   }
 
-  static options(passProps) {}
   navigationButtonPressed({buttonId}) {
     console.log('button id', buttonId);
     if (buttonId === 'sideMenu') {
@@ -21,7 +20,7 @@ export default class Home extends Component {
               visible: true,
             },
           },
-        });
+        }); 
       } catch (error) {
         console.log(error);
       }
