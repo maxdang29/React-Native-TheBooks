@@ -12,6 +12,7 @@ import {offlineData} from '../utils/offlineData';
 import {convertDataToSection} from '../utils/function';
 import {connect} from 'react-redux';
 import * as actionHome from '../redux/home/actions/action';
+import {pushScreen} from '../navigation/pushScreen';
 
 const NAME = {
   NewBooks: 'Sách Mới',
@@ -26,6 +27,11 @@ class SectionListBook extends Component {
   componentDidMount() {
     this.props.getAllBook();
   }
+
+  moveToSeeMoreScreen = (data, title) => {
+    pushScreen(this.props.componentId, 'seeMore', data, title);
+  };
+
   render() {
     const {bookData} = this.props;
 
@@ -37,7 +43,11 @@ class SectionListBook extends Component {
           renderSectionHeader={({section: {title}}) => (
             <View style={styles.header}>
               <Text style={styles.title}>{title}</Text>
-              <Text style={styles.seeMore}>Xem thêm</Text>
+              <Text
+                style={styles.seeMore}
+                onPress={() => this.moveToSeeMoreScreen(bookData, title)}>
+                Xem thêm
+              </Text>
             </View>
           )}
           renderItem={({item, index}) => {

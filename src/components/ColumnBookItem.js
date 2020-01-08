@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>
@@ -15,10 +16,6 @@ export default class ColumBookItem extends Component {
               //   'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
             }}
           />
-        </View>
-
-        <View style={styles.bookDescription}>
-          <Text style={styles.bookTitle}>{item.Title}...</Text>
         </View>
 
         <View style={styles.bookDescription}>

@@ -6,6 +6,7 @@ import store from '../redux/store';
 
 import Home from '../screens/home/index';
 import SideBar from '../navigation/sideBar';
+import SeeMore from '../screens/home/seeMore';
 
 function ReduxProvider(Component) {
   return props => (
@@ -25,5 +26,10 @@ export function registerScreens() {
     'sideBar',
     () => ReduxProvider(SideBar),
     () => SideBar,
+  );
+  Navigation.registerComponent(
+    'seeMore',
+    () => ReduxProvider(SeeMore),
+    () => SeeMore,
   );
 }
