@@ -7,9 +7,13 @@ import com.facebook.react.ReactPackage;
 import java.util.List;
 
 import java.util.Arrays;
+
+import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
+import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -30,7 +34,10 @@ public class MainApplication extends NavigationApplication {
     }
 
     protected List<ReactPackage> getPackages() {
-        return Arrays.<ReactPackage>asList();
+        return Arrays.<ReactPackage>asList(
+                new MainReactPackage(),
+                new RNCViewPagerPackage(), 
+                new VectorIconsPackage());
     }
 
     @Override

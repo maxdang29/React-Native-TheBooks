@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-export default class RowBookItem extends Component {
+export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
     return (
@@ -19,6 +19,10 @@ export default class RowBookItem extends Component {
 
         <View style={styles.bookDescription}>
           <Text style={styles.bookTitle}>{item.Title}...</Text>
+        </View>
+
+        <View style={styles.bookDescription}>
+          <Text style={styles.bookTitle}>{item.Title.substring(0, 15)}...</Text>
           <Text style={styles.bookAuthor}>{item.Authors[0].Name}</Text>
           <View style={styles.viewFlexDirection}>
             <Icon style={styles.iconRankChecked} name="star" />
@@ -26,7 +30,7 @@ export default class RowBookItem extends Component {
             <Icon style={styles.iconRankChecked} name="star" />
             <Icon style={styles.iconRankChecked} name="star" />
             <Icon style={styles.iconRankUnchecked} name="star" />
-            <Text style={styles.bookLike}> 342</Text>
+            <Text style={styles.bookLike}> {item.TotalReview} </Text>
           </View>
         </View>
       </View>
