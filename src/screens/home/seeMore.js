@@ -17,7 +17,7 @@ export default class SeeMore extends Component {
     const {data, title} = this.props;
     const dataFilter = this.filterData(data, title);
     const bookData = dataFilter[0].data[0].data;
-    console.log('data 32423', bookData);
+   
 
     return (
       <View>
