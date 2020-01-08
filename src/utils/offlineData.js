@@ -1,7 +1,8 @@
 export const offlineData = {
    "Message": "Tạo thông tin thành công",
    "Data": {
-      "NewBooks": [  
+      "NewBooks": [
+
          {
             "Medias": [
                {
