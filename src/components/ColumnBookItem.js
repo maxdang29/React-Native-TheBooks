@@ -7,7 +7,18 @@ export default class ColumBookItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>
-          <Image style={styles.image} source={{uri: item.Medias[0].ImageUrl}} />
+          <Image
+            style={styles.image}
+            source={{
+              uri: item.Medias[0].ImageUrl,
+              // uri:
+              //   'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
+            }}
+          />
+        </View>
+
+        <View style={styles.bookDescription}>
+          <Text style={styles.bookTitle}>{item.Title}...</Text>
         </View>
 
         <View style={styles.bookDescription}>
