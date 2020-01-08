@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import {Navigation} from 'react-native-navigation';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownItem from 'react-native-drop-down-item';
 const IC_ARR_DOWN = require('../../Image/downwards-pointer.png');
@@ -14,11 +16,20 @@ import {offlineData} from '../utils/offlineData';
 
 const Categories = offlineData.Data.References.Categories;
 export default class SideBar extends Component {
+  closeMenu = () => {
+    Navigation.mergeOptions('sideBar', {
+      sideMenu: {
+        left: {
+          visible: false,
+        },
+      },
+    });
+  };
   render() {
     return (
       <View style={[styles.container]}>
         <View style={styles.titleContainer}>
-          <TouchableOpacity style={styles.closeButton}>
+          <TouchableOpacity onPress={this.closeMenu} style={styles.closeButton}>
             <Icon name="ios-close" solid size={35} />
           </TouchableOpacity>
           <Text style={styles.textTitle}>Thể loại</Text>

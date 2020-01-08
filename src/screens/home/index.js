@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import SectionListBook from '../../components/sectionListBook';
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -10,23 +12,26 @@ export default class Home extends Component {
 
   static options(passProps) {}
   navigationButtonPressed({buttonId}) {
-    try {
-      Navigation.mergeOptions('sideBar', {
-        sideMenu: {
-          left: {
-            visible: true,
+    console.log('button id', buttonId);
+    if (buttonId === 'sideMenu') {
+      try {
+        Navigation.mergeOptions('sideBar', {
+          sideMenu: {
+            left: {
+              visible: true,
+            },
           },
-        },
-      });
-    } catch (error) {
-      console.log(error);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Hello, Home!</Text>
+      <View>
+        <SectionListBook />
       </View>
     );
   }
