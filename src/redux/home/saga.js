@@ -14,7 +14,7 @@ function* getAllBook(actions) {
     }
   } catch (error) {
     alert(error);
-    yield put(BookActions.getAllBookFailed(response));
+    yield put(BookActions.getAllBookFailed(error));
   }
 }
 

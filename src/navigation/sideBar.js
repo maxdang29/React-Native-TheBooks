@@ -10,8 +10,8 @@ import {Navigation} from 'react-native-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownItem from 'react-native-drop-down-item';
-const IC_ARR_DOWN = require('../../Image/downwards-pointer.png');
-const IC_ARR_UP = require('../../Image/arr-up.png');
+const IC_ARR_DOWN = require('../assets/img/downwards-pointer.png');
+const IC_ARR_UP = require('../assets/img/arr-up.png');
 import {offlineData} from '../utils/offlineData';
 
 const Categories = offlineData.Data.References.Categories;

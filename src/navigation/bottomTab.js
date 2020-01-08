@@ -101,17 +101,17 @@ export default function startApp() {
                     children: [
                       {
                         component: {
-                          name: 'Home',
+                          name: 'Login',
                           options: {
                             topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'backPress',
-                                  text: 'Back',
-                                  icon: menu,
-                                },
-                              ],
-                              visible: true,
+                              // leftButtons: [
+                              //   {
+                              //     id: 'backPress',
+                              //     text: 'Back',
+                              //     icon: menu,
+                              //   },
+                              // ],
+                              visible: false,
                             },
                             bottomTab: {
                               fontSize: 10,
