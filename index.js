@@ -4,7 +4,8 @@
 
 import {Navigation} from 'react-native-navigation';
 
-import ColumnBookItem from './src/components/RowBookItem';
+import ColumnBookItem from './src/screens/detail/bookDetail';
+// import ColumnBookItem from './src/components/ColumnBookItem';
 
 Navigation.registerComponent('ColumnBookItem', () => ColumnBookItem);
 
