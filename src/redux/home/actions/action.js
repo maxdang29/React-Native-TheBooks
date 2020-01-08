@@ -1,7 +1,7 @@
 import * as types from './typesAction';
 
 export const getAllBook = () => {
-  console.log('get all book');
+ 
   return {
     type: types.GET_ALL_BOOK,
   };

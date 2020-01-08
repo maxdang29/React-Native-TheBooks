@@ -59,7 +59,6 @@ class SectionListBook extends Component {
   }
 }
 const mapStateToProps = store => {
-  console.log('store ', convertDataToSection(store.homeReducer.data, NAME));
   return {
     bookData: convertDataToSection(store.homeReducer.data, NAME),
   };

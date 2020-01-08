@@ -20,7 +20,7 @@ export default class Home extends Component {
               visible: true,
             },
           },
-        });
+        }); 
       } catch (error) {
         console.log(error);
       }
