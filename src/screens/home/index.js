@@ -20,7 +20,7 @@ export default class Home extends Component {
               visible: true,
             },
           },
-        }); 
+        });
       } catch (error) {
         console.log(error);
       }
@@ -30,7 +30,7 @@ export default class Home extends Component {
   render() {
     return (
       <View>
-        <SectionListBook />
+        <SectionListBook componentId={this.props.componentId} />
       </View>
     );
   }

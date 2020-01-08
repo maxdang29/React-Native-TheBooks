@@ -6,7 +6,10 @@ export const pushScreen = (componentId, screenApp, passProps, title) => {
   Navigation.push(componentId, {
     component: {
       name: screenApp,
-      passProps: {passProps},
+      passProps: {
+        data: passProps,
+        title: title,
+      },
       options: {
         topBar: {
           title: {

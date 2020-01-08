@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class ColumBookItem extends Component {
+  
   render() {
     const {item} = this.props;
+    console.log('item see more', item.Title.substring(0, 15));
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>

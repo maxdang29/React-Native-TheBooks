@@ -28,6 +28,7 @@ class SideBar extends Component {
   componentDidMount() {
     this.props.getAllCategories();
   }
+
   render() {
     const {categoriesData} = this.props;
     return (
