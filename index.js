@@ -3,18 +3,23 @@
  */
 
 import {Navigation} from 'react-native-navigation';
+import startApp from './src/navigation/bottomTab';
+import App from './src/app';
+import Intro from './src/screens/Intro/index';
+import {AsyncStorage} from 'react-native';
+import intro from './src/navigation/intro';
 
-import ColumnBookItem from './src/screens/detail/bookDetail';
-// import ColumnBookItem from './src/components/ColumnBookItem';
+Navigation.registerComponent('app', () => App);
+Navigation.registerComponent('Intro', () => Intro);
 
-Navigation.registerComponent('ColumnBookItem', () => ColumnBookItem);
+import {registerScreens} from './src/navigation/registerScreens';
+registerScreens();
 
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      component: {
-        name: 'ColumnBookItem',
-      },
-    },
-  });
+Navigation.events().registerAppLaunchedListener(async () => {
+  const token = await AsyncStorage.getItem('token');
+  if (token) {
+    startApp();
+  } else {
+    intro();
+  }
 });

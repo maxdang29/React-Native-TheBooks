@@ -1,32 +1,27 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {countStars} from '../../src/utils/function';
 export default class CommentBook extends Component {
   render() {
-    // const {item} = this.props;
+    const {item} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.topBarCmt}>
           <Image
             style={styles.image}
             source={{
-              //   uri: item.Medias[0].ImageUrl,
-              uri:
-                'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
+              uri: item.UrlImageUser,
             }}
           />
           <View style={styles.alignCmt}>
-            <Text style={styles.cmtAuthor}>Author name</Text>
-            <View style={styles.viewFlexDirection}>
-              <Icon
-                style={[styles.iconRankChecked, styles.flex_st]}
-                name="star"
-              />
-              <Icon style={styles.iconRankChecked} name="star" />
-              <Icon style={styles.iconRankChecked} name="star" />
-              <Icon style={styles.iconRankChecked} name="star" />
-              <Icon style={styles.iconRankUnchecked} name="star" />
-              <Text style={styles.cmtLike}> 342</Text>
+            <Text style={styles.cmtAuthor}>{item.UserName}</Text>
+            <View style={[styles.viewFlexDirection, styles.flex_st]}>
+              {countStars(
+                item.StarRating,
+                styles.iconRankChecked,
+                styles.iconRankUnchecked,
+              )}
             </View>
           </View>
 
@@ -38,10 +33,7 @@ export default class CommentBook extends Component {
             <Icon style={styles.icon_delete} name="trash-o" />
           </TouchableOpacity>
         </View>
-        <Text style={styles.cmtContent}>
-          Don’t want to use the native fonts with React Native…well let’s add
-          some custom fonts then! I’ll show you both approaches to
-        </Text>
+        <Text style={styles.cmtContent}>{item.Content}</Text>
       </View>
     );
   }

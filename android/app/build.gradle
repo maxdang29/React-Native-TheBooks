@@ -184,7 +184,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-navigation')
     implementation project(':react-native-vector-icons')
-
+    implementation project(':@react-native-community_viewpager')
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
@@ -201,9 +201,9 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-project.ext.vectoricons = [
-        iconFontNames: ['FontAwesome.ttf','Ionicons.ttf' ] // Name of the font files you want to copy
-]
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+project.ext.vectoricons = [
+        iconFontNames: ['FontAwesome.ttf','Ionicons.ttf'] // Name of the font files you want to copy
+]
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
