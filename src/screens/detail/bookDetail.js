@@ -19,8 +19,7 @@ import CommentBook from '../../components/CommentBook';
 export default class RowBookItem extends Component {
   render() {
     const data = offlineData.Data.NewBooks;
-    console.log(data);
-    console.log(data[0].Medias[0].ImageUrl);
+
     return (
       <>
         <ScrollView style={styles.scrollView}>

@@ -21,169 +21,179 @@ export default function startApp() {
     Ionicons.getImageSource('ios-contact', 30),
     Ionicons.getImageSource('ios-journal', 30),
     Ionicons.getImageSource('ios-menu', 30),
-  ]).then(([listBook, orderHistory, notifications, user, library, menu]) => {
-    Navigation.setRoot({
-      root: {
-        sideMenu: {
-          left: {
-            component: {
-              name: 'sideBar',
-              id: 'sideBar',
+    Ionicons.getImageSource('ios-search', 30),
+  ]).then(
+    ([listBook, orderHistory, notifications, user, library, menu, search]) => {
+      Navigation.setRoot({
+        root: {
+          sideMenu: {
+            left: {
+              component: {
+                name: 'sideBar',
+                id: 'sideBar',
+              },
             },
-          },
-          center: {
-            bottomTabs: {
-              id: 'tabs',
-              children: [
-                {
-                  stack: {
-                    id: 'tab1',
-                    children: [
-                      {
-                        component: {
-                          name: 'Home',
-                          options: {
-                            topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
-                                  icon: menu,
-                                  fontSize: 10,
-                                },
-                              ],
-                              visible: true,
-                            },
-                            bottomTab: {
-                              fontSize: 10,
-                              icon: listBook,
-                              selectedIconColor: Colors.primary,
-                            },
-                          },
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  stack: {
-                    id: 'tab2',
-                    children: [
-                      {
-                        component: {
-                          name: 'Home',
-                          options: {
-                            topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
-                                  icon: menu,
-                                  fontSize: 10,
-                                },
-                              ],
-                              visible: true,
-                            },
-                            bottomTab: {
-                              fontSize: 10,
-                              icon: orderHistory,
-                              selectedIconColor: Colors.primary,
+            center: {
+              bottomTabs: {
+                id: 'tabs',
+                children: [
+                  {
+                    stack: {
+                      id: 'tab1',
+                      children: [
+                        {
+                          component: {
+                            name: 'Home',
+                            options: {
+                              topBar: {
+                                leftButtons: [
+                                  {
+                                    id: 'sideMenu',
+                                    icon: menu,
+                                    fontSize: 10,
+                                  },
+                                ],
+                                rightButtons: [
+                                  {
+                                    id: 'searchButton',
+                                    icon: search,
+                                    fontSize: 10,
+                                  },
+                                ],
+                                visible: true,
+                              },
+                              bottomTab: {
+                                fontSize: 10,
+                                icon: listBook,
+                                selectedIconColor: Colors.primary,
+                              },
                             },
                           },
                         },
-                      },
-                    ],
+                      ],
+                    },
                   },
-                },
-                {
-                  stack: {
-                    id: 'tab2',
-                    children: [
-                      {
-                        component: {
-                          name: 'Home',
-                          options: {
-                            topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
-                                  icon: menu,
-                                },
-                              ],
-                              visible: true,
-                            },
-                            bottomTab: {
-                              fontSize: 10,
-                              selectedIconColor: Colors.primary,
-                              icon: user,
+                  {
+                    stack: {
+                      id: 'tab2',
+                      children: [
+                        {
+                          component: {
+                            name: 'Home',
+                            options: {
+                              topBar: {
+                                leftButtons: [
+                                  {
+                                    id: 'sideMenu',
+                                    icon: menu,
+                                    fontSize: 10,
+                                  },
+                                ],
+                                visible: true,
+                              },
+                              bottomTab: {
+                                fontSize: 10,
+                                icon: orderHistory,
+                                selectedIconColor: Colors.primary,
+                              },
                             },
                           },
                         },
-                      },
-                    ],
+                      ],
+                    },
                   },
-                },
-                {
-                  stack: {
-                    id: 'tab2',
-                    children: [
-                      {
-                        component: {
-                          name: 'Home',
-                          options: {
-                            topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
+                  {
+                    stack: {
+                      id: 'tab2',
+                      children: [
+                        {
+                          component: {
+                            name: 'Home',
+                            options: {
+                              topBar: {
+                                leftButtons: [
+                                  {
+                                    id: 'sideMenu',
+                                    icon: menu,
+                                  },
+                                ],
+                                visible: true,
+                              },
+                              bottomTab: {
+                                fontSize: 10,
+                                selectedIconColor: Colors.primary,
+                                icon: user,
+                              },
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    stack: {
+                      id: 'tab2',
+                      children: [
+                        {
+                          component: {
+                            name: 'Home',
+                            options: {
+                              topBar: {
+                                leftButtons: [
+                                  {
+                                    id: 'sideMenu',
 
-                                  icon: menu,
-                                },
-                              ],
-                              visible: true,
-                            },
-                            bottomTab: {
-                              fontSize: 10,
-                              icon: notifications,
-                              selectedIconColor: Colors.primary,
+                                    icon: menu,
+                                  },
+                                ],
+                                visible: true,
+                              },
+                              bottomTab: {
+                                fontSize: 10,
+                                icon: notifications,
+                                selectedIconColor: Colors.primary,
+                              },
                             },
                           },
                         },
-                      },
-                    ],
+                      ],
+                    },
                   },
-                },
-                {
-                  stack: {
-                    id: 'tab2',
-                    children: [
-                      {
-                        component: {
-                          name: 'Home',
-                          options: {
-                            topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
+                  {
+                    stack: {
+                      id: 'tab2',
+                      children: [
+                        {
+                          component: {
+                            name: 'Home',
+                            options: {
+                              topBar: {
+                                leftButtons: [
+                                  {
+                                    id: 'sideMenu',
 
-                                  icon: menu,
-                                },
-                              ],
-                              visible: true,
-                            },
-                            bottomTab: {
-                              fontSize: 10,
-                              selectedIconColor: Colors.primary,
-                              icon: library,
+                                    icon: menu,
+                                  },
+                                ],
+                                visible: true,
+                              },
+                              bottomTab: {
+                                fontSize: 10,
+                                selectedIconColor: Colors.primary,
+                                icon: library,
+                              },
                             },
                           },
                         },
-                      },
-                    ],
+                      ],
+                    },
                   },
-                },
-              ],
+                ],
+              },
             },
           },
         },
-      },
-    });
-  });
+      });
+    },
+  );
 }

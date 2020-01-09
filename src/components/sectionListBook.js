@@ -25,7 +25,7 @@ class SectionListBook extends Component {
     super(props);
   }
   componentDidMount() {
-    this.props.getAllBook();
+    this.props.getCmsHomeSummary();
   }
 
   moveToSeeMoreScreen = (data, title) => {
@@ -76,8 +76,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllBook: () => {
-      dispatch(actionHome.getAllBook());
+    getCmsHomeSummary: () => {
+      dispatch(actionHome.getCmsHomeSummary());
     },
   };
 };
