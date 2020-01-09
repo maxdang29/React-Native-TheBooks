@@ -99,16 +99,10 @@ export default function startApp() {
                     children: [
                       {
                         component: {
-                          name: 'Home',
+                          name: 'Login',
                           options: {
                             topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
-                                  icon: menu,
-                                },
-                              ],
-                              visible: true,
+                              visible: false,
                             },
                             bottomTab: {
                               fontSize: 10,

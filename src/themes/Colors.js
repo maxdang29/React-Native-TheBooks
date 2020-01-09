@@ -10,7 +10,7 @@ const colors = {
 
   // secondary color
   darkGray: '#A9A9A9',
-  lightBlue: '#d9ee9f',
+  lightBlue: '#39b8c2',
   shadow: 'rgba(0,0,0,0.2)',
 
   //notification color
