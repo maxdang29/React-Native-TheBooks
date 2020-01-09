@@ -14,6 +14,7 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -37,7 +38,8 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
                 new RNCViewPagerPackage(), 
-                new VectorIconsPackage());
+                new VectorIconsPackage(),
+                new AsyncStoragePackage());
     }
 
     @Override

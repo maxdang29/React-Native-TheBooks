@@ -3,9 +3,10 @@ import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
 
 import store from '../redux/store';
-
+import Register from '../screens/Authentication/Register';
 import Home from '../screens/home/index';
 import SideBar from '../navigation/sideBar';
+import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 
 import Search from '../screens/search/search';
@@ -29,6 +30,16 @@ export function registerScreens() {
     'sideBar',
     () => ReduxProvider(SideBar),
     () => SideBar,
+  );
+  Navigation.registerComponent(
+    'Register',
+    () => ReduxProvider(Register),
+    () => Register,
+  );
+  Navigation.registerComponent(
+    'Login',
+    () => ReduxProvider(Login),
+    () => Login,
   );
   Navigation.registerComponent(
     'seeMore',
