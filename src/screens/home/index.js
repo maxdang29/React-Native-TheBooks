@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 import SectionListBook from '../../components/sectionListBook';
+import {pushScreen} from '../../navigation/pushScreen';
 
 export default class Home extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ export default class Home extends Component {
   }
 
   navigationButtonPressed({buttonId}) {
-    console.log('button id', buttonId);
     if (buttonId === 'sideMenu') {
       try {
         Navigation.mergeOptions('sideBar', {
@@ -24,6 +24,9 @@ export default class Home extends Component {
       } catch (error) {
         console.log(error);
       }
+    }
+    if (buttonId === 'searchButton') {
+      pushScreen(this.props.componentId, 'search', null, null);
     }
   }
 

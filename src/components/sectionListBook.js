@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  SectionList,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import {Text, View, StyleSheet, SectionList, FlatList} from 'react-native';
 import ColumBookItem from './ColumnBookItem';
-import {offlineData} from '../utils/offlineData';
 import {convertDataToSection} from '../utils/function';
 import {connect} from 'react-redux';
 import * as actionHome from '../redux/home/actions/action';
@@ -25,7 +17,7 @@ class SectionListBook extends Component {
     super(props);
   }
   componentDidMount() {
-    this.props.getAllBook();
+    this.props.getCmsHomeSummary();
   }
 
   moveToSeeMoreScreen = (data, title) => {
@@ -76,8 +68,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllBook: () => {
-      dispatch(actionHome.getAllBook());
+    getCmsHomeSummary: () => {
+      dispatch(actionHome.getCmsHomeSummary());
     },
   };
 };

@@ -6,7 +6,13 @@ import store from '../redux/store';
 
 import Home from '../screens/home/index';
 import SideBar from '../navigation/sideBar';
+import BookDetail from '../screens/detail/bookDetail';
+import Register from '../screens/Authentication/Register';
+import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
+
+import Search from '../screens/search/search';
+import SearchResult from '../screens/search/searchResult';
 
 function ReduxProvider(Component) {
   return props => (
@@ -28,8 +34,33 @@ export function registerScreens() {
     () => SideBar,
   );
   Navigation.registerComponent(
+    'BookDetail',
+    () => ReduxProvider(BookDetail),
+    () => BookDetail,
+  );
+  Navigation.registerComponent(
+    'Register',
+    () => ReduxProvider(Register),
+    () => Register,
+  );
+  Navigation.registerComponent(
+    'Login',
+    () => ReduxProvider(Login),
+    () => Login,
+  );
+  Navigation.registerComponent(
     'seeMore',
     () => ReduxProvider(SeeMore),
     () => SeeMore,
+  );
+  Navigation.registerComponent(
+    'search',
+    () => ReduxProvider(Search),
+    () => Search,
+  );
+  Navigation.registerComponent(
+    'searchResult',
+    () => ReduxProvider(SearchResult),
+    () => SearchResult,
   );
 }

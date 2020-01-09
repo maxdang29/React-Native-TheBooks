@@ -7,7 +7,6 @@ import {getAllCategoriesRequest} from '../../api/categories';
 function* getAllCategories(actions) {
   try {
     const response = yield call(getAllCategoriesRequest, null);
-  
     if (response) {
       yield put(sideBarActions.getCategoriesSuccess(response.data.Data));
     }
