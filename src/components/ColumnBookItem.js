@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {goDetail} from '../navigation/navigation';
-// import {connect} from 'react-redux';
-// import * as Action from '../redux/home/actions/action';
+import {goAnotherScreen} from '../navigation/navigation';
+import {countStars} from '../../src/utils/function';
 
 export default class ColumBookItem extends Component {
   render() {
@@ -12,7 +11,7 @@ export default class ColumBookItem extends Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => goDetail('BookDetail', item)}>
+        onPress={() => goAnotherScreen('CircleUserItem', null, 'nguoi dung')}>
         <View style={styles.shadowView}>
           <Image
             style={styles.image}
@@ -25,11 +24,11 @@ export default class ColumBookItem extends Component {
           <Text style={styles.bookTitle}>{item.Title.substring(0, 13)}...</Text>
           <Text style={styles.bookAuthor}>{item.Authors[0].Name}</Text>
           <View style={styles.viewFlexDirection}>
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankUnchecked} name="star" />
+            {countStars(
+              item.OverallStarRating,
+              styles.iconRankChecked,
+              styles.iconRankUnchecked,
+            )}
             <Text style={styles.bookLike}> {item.TotalReview} </Text>
           </View>
         </View>
@@ -37,22 +36,6 @@ export default class ColumBookItem extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => {
-//   return {
-//     data: state,
-//   };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     // show_book_detail: id => {
-//     //   dispatch(Action.showBookDetail(id));
-//     // },
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(ColumBookItem);
 
 const styles = StyleSheet.create({
   container: {

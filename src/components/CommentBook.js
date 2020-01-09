@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {countStars} from '../../src/utils/function';
-export default class CommentBook extends Component {
+import {connect} from 'react-redux';
+import moment from 'moment';
+
+class CommentBook extends Component {
   render() {
-    const {item} = this.props;
+    const {item, isUser} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.topBarCmt}>
@@ -24,20 +27,45 @@ export default class CommentBook extends Component {
               )}
             </View>
           </View>
-
-          <TouchableOpacity style={styles.btn_update}>
-            <Icon style={styles.icon_update} name="edit" />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.btn_delete}>
-            <Icon style={styles.icon_delete} name="trash-o" />
-          </TouchableOpacity>
+          {isUser ? (
+            <View>
+              <TouchableOpacity style={styles.btn_update}>
+                <Icon style={styles.icon_update} name="edit" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.btn_delete}>
+                <Icon style={styles.icon_delete} name="trash-o" />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View>
+              <Text>
+                {moment(item.UpdatedAt)
+                  .subtract(10, 'days')
+                  .calendar()}
+              </Text>
+            </View>
+          )}
         </View>
         <Text style={styles.cmtContent}>{item.Content}</Text>
       </View>
     );
   }
 }
+
+// const mapStateToProps = state => {
+//   console.log();
+//   return {
+//     data: state.homeReducer,
+//     idUser: state.loginReducer.data.Id,
+//   };
+// };
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//   };
+// };
+
+export default connect(null, null)(CommentBook);
 
 const styles = StyleSheet.create({
   cmtContent: {

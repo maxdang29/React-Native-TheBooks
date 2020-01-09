@@ -16,12 +16,13 @@ import {Navigation} from 'react-native-navigation';
 import ColumnBookItem from '../../components/ColumnBookItem';
 import CommentBook from '../../components/CommentBook';
 import * as Action from '../../redux/home/actions/action';
+import {countStars} from '../../utils/function';
 
 class BookDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: null,
+      expanded: false,
       bookContent: '',
     };
   }
@@ -37,50 +38,51 @@ class BookDetail extends Component {
   limitContent = content => {
     const {expanded} = this.state;
     if (content != null) {
-      if (expanded === true) {
-        this.setState({
-          bookContent: content,
-        });
-      } else if (expanded === false) {
-        if (content.length > 300) {
-          this.setState({
-            bookContent: content.substring(0, 300),
-          });
-        } else {
+      if (content.length > 300) {
+        if (expanded === true) {
           this.setState({
             bookContent: content,
+          });
+        } else if (expanded === false) {
+          this.setState({
+            bookContent: content.substring(0, 300) + '... ',
           });
         }
       } else {
-        if (content.length > 300) {
-          this.setState({
-            bookContent: content.substring(0, 300),
-          });
-        } else {
-          this.setState({
-            bookContent: content,
-          });
-        }
+        this.setState({
+          bookContent: content,
+        });
       }
     }
+    // else {
+    //   this.setState({
+    //     bookContent: '',
+    //   });
+    // }
   };
 
   expanded = () => {
-    this.setState({
-      expanded: true,
-    });
-
-    const {Content} = this.props.value;
-    this.limitContent(Content);
+    this.setState(
+      {
+        expanded: true,
+      },
+      () => {
+        const {Content} = this.props.value;
+        this.limitContent(Content);
+      },
+    );
   };
 
   unexpanded = () => {
-    this.setState({
-      expanded: false,
-    });
-
-    const {Content} = this.props.value;
-    this.limitContent(Content);
+    this.setState(
+      {
+        expanded: false,
+      },
+      () => {
+        const {Content} = this.props.value;
+        this.limitContent(Content);
+      },
+    );
   };
 
   navigationButtonPressed({buttonId}) {
@@ -89,11 +91,30 @@ class BookDetail extends Component {
     }
   }
 
+  showExpanded = expanded => {
+    if (expanded === true) {
+      return (
+        <Text style={styles.expanded} onPress={() => this.unexpanded()}>
+          {' '}
+          Thu lại
+        </Text>
+      );
+    } else if (expanded === false) {
+      return (
+        <Text style={styles.expanded} onPress={() => this.expanded()}>
+          Xem thêm
+        </Text>
+      );
+    } else {
+      return '';
+    }
+  };
+
   render() {
-    const {value} = this.props;
+    const {value, idUser} = this.props;
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
-
+    // console.log('review ===>', reviewBooks);
     return (
       <>
         <ScrollView style={styles.scrollView}>
@@ -109,14 +130,15 @@ class BookDetail extends Component {
             <View style={styles.bookDescription}>
               <Text style={styles.bookTitle}>{value.Title}</Text>
               <Text style={styles.bookAuthor}>{value.Authors[0].Name}</Text>
+
               <View style={styles.viewFlexDirection}>
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankUnchecked} name="star" />
+                {countStars(
+                  value.OverallStarRating,
+                  styles.iconRankChecked,
+                  styles.iconRankUnchecked,
+                )}
                 <Icon style={styles.iconDirection} name="tag" />
-                <Text style={[styles.bookWish]}>{value.TotalReview}</Text>
+                <Text style={[styles.bookWish]}>{value.FavoriteCount}</Text>
               </View>
 
               <View style={styles.viewFlexDirection}>
@@ -133,17 +155,7 @@ class BookDetail extends Component {
             <View style={styles.bookSubView}>
               <Text style={styles.bookSubText}>
                 {bookContent}
-                {expanded ? (
-                  <Text
-                    style={styles.expanded}
-                    onPress={() => this.unexpanded()}>
-                    Thu lại
-                  </Text>
-                ) : (
-                  <Text style={styles.expanded} onPress={() => this.expanded()}>
-                    Xem Thêm
-                  </Text>
-                )}
+                {this.showExpanded(expanded)}
               </Text>
             </View>
 
@@ -180,7 +192,11 @@ class BookDetail extends Component {
 
               <View style={[styles.bookFlatList]}>
                 {reviewBooks.map(item => {
-                  return <CommentBook item={item} />;
+                  if (idUser === item.UserId) {
+                    return <CommentBook item={item} isUser={true} />;
+                  } else {
+                    return <CommentBook item={item} isUser={false} />;
+                  }
                 })}
               </View>
             </View>
@@ -198,9 +214,9 @@ class BookDetail extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('review: ==>', state.homeReducer);
   return {
     data: state.homeReducer,
+    idUser: state.loginReducer.data.Id,
   };
 };
 
@@ -326,7 +342,7 @@ const styles = StyleSheet.create({
   },
   iconRankUnchecked: {
     color: '#bcbcbc',
-    marginRight: 20,
+    marginRight: 4,
     top: -1,
     fontSize: 17,
   },
@@ -341,6 +357,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     fontSize: 17,
     right: 3,
+    marginLeft: 20,
     top: -1,
   },
   bookWish: {

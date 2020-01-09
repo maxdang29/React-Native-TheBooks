@@ -10,9 +10,10 @@ import BookDetail from '../screens/detail/bookDetail';
 import Register from '../screens/Authentication/Register';
 import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
-
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
+
+import CircleUserItem from '../components/CircleUserItem';
 
 function ReduxProvider(Component) {
   return props => (
@@ -23,6 +24,11 @@ function ReduxProvider(Component) {
 }
 
 export function registerScreens() {
+  Navigation.registerComponent(
+    'CircleUserItem',
+    () => ReduxProvider(CircleUserItem),
+    () => CircleUserItem,
+  );
   Navigation.registerComponent(
     'Home',
     () => ReduxProvider(Home),
