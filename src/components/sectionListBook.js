@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  SectionList,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import {Text, View, StyleSheet, SectionList, FlatList} from 'react-native';
 import ColumBookItem from './ColumnBookItem';
-import {offlineData} from '../utils/offlineData';
 import {convertDataToSection} from '../utils/function';
 import {connect} from 'react-redux';
 import * as actionHome from '../redux/home/actions/action';

@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import React from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const convertDataToSection = (data, NAME) => {
   const arr = [];
@@ -10,6 +12,19 @@ export const convertDataToSection = (data, NAME) => {
 
   return arr;
 };
+
+export const countStars = (starsRating, styleChecked, styleUnChecked) => {
+  let star = [];
+  for (var i = 0; i < 5; i++) {
+    if (i < starsRating) {
+      star[i] = <Icon style={styleChecked} name="star" />;
+    } else {
+      star[i] = <Icon style={styleUnChecked} name="star" />;
+    }
+  }
+  return star;
+};
+
 export const validateEmpty = field => {
   return field !== '';
 };

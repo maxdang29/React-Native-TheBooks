@@ -38,6 +38,47 @@ export const getAllBookSuccess = data => {
   };
 };
 
+export const getRelatedBook = data => {
+  return {
+    type: types.GET_RELATED_BOOK,
+    data,
+  };
+};
+
+export const getRelatedBookSuccess = data => {
+  return {
+    type: types.GET_RELATED_BOOK_SUCCESS,
+    data,
+  };
+};
+
+export const getRelatedBookFailure = error => {
+  return {
+    type: types.GET_RELATED_BOOK_FAILURE,
+    error,
+  };
+};
+
+export const getReviewBook = data => {
+  return {
+    type: types.GET_REVIEW_BOOK,
+    data: data,
+  };
+};
+
+export const getReviewBookSuccess = data => {
+  return {
+    type: types.GET_REVIEW_BOOK_SUCCESS,
+    data,
+  };
+};
+
+export const getReviewBookFailure = error => {
+  return {
+    type: types.GET_REVIEW_BOOK_FAILURE,
+    error,
+  };
+};
 export const getBookSuggestion = () => {
   return {
     type: types.GET_BOOK_SUGGESTION,
