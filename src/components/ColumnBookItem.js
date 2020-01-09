@@ -8,6 +8,7 @@ import {goDetail} from '../navigation/navigation';
 export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
+
     return (
       <TouchableOpacity
         style={styles.container}

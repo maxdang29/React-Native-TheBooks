@@ -11,8 +11,9 @@ import {connect} from 'react-redux';
 import * as actionSideBar from '../redux/sideBar/actions/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropDownItem from 'react-native-drop-down-item';
-const IC_ARR_DOWN = require('../../Image/downwards-pointer.png');
-const IC_ARR_UP = require('../../Image/arr-up.png');
+const IC_ARR_DOWN = require('../assets/img/downwards-pointer.png');
+const IC_ARR_UP = require('../assets/img/arr-up.png');
+import {offlineData} from '../utils/offlineData';
 
 class SideBar extends Component {
   closeMenu = () => {
@@ -28,6 +29,7 @@ class SideBar extends Component {
   componentDidMount() {
     this.props.getAllCategories();
   }
+
   render() {
     const {categoriesData} = this.props;
     return (

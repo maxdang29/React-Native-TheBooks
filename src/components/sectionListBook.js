@@ -4,6 +4,7 @@ import ColumBookItem from './ColumnBookItem';
 import {convertDataToSection} from '../utils/function';
 import {connect} from 'react-redux';
 import * as actionHome from '../redux/home/actions/action';
+import {pushScreen} from '../navigation/pushScreen';
 
 const NAME = {
   NewBooks: 'Sách Mới',
@@ -16,8 +17,13 @@ class SectionListBook extends Component {
     super(props);
   }
   componentDidMount() {
-    this.props.getAllBook();
+    this.props.getCmsHomeSummary();
   }
+
+  moveToSeeMoreScreen = (data, title) => {
+    pushScreen(this.props.componentId, 'seeMore', data, title);
+  };
+
   render() {
     const {bookData} = this.props;
 
@@ -29,7 +35,11 @@ class SectionListBook extends Component {
           renderSectionHeader={({section: {title}}) => (
             <View style={styles.header}>
               <Text style={styles.title}>{title}</Text>
-              <Text style={styles.seeMore}>Xem thêm</Text>
+              <Text
+                style={styles.seeMore}
+                onPress={() => this.moveToSeeMoreScreen(bookData, title)}>
+                Xem thêm
+              </Text>
             </View>
           )}
           renderItem={({item, index}) => {
@@ -58,8 +68,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllBook: () => {
-      dispatch(actionHome.getAllBook());
+    getCmsHomeSummary: () => {
+      dispatch(actionHome.getCmsHomeSummary());
     },
   };
 };

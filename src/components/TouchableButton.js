@@ -30,7 +30,7 @@ export default class TouchableButton extends React.PureComponent {
         borderColor: buttonColor,
         borderWidth: StyleSheet.hairlineWidth,
       };
-      titleColor = buttonColor;
+      titleColor = Colors.darkGray;
     } else {
       buttonStyle = {
         backgroundColor: buttonColor,
