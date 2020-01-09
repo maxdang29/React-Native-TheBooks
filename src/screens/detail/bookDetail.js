@@ -84,8 +84,9 @@ class BookDetail extends Component {
   };
 
   navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
     if (buttonId === 'back') {
-      Navigation.dismissModal(this.props.componentId);
+      Navigation.dismissModal(componentId);
     }
   }
 
@@ -160,7 +161,7 @@ class BookDetail extends Component {
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   data={relatedBooks}
-                  keyExtractor={(item, index) => `${index}`}
+                  keyExtractor={(item, index) => item.Id}
                   renderItem={({item}) => <ColumnBookItem item={item} />}
                 />
               </View>
