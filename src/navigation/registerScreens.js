@@ -14,6 +14,8 @@ import SeeMore from '../screens/home/seeMore';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
 
+import SearchResultFilter from '../screens//search/searchResultWithFilter';
+
 function ReduxProvider(Component) {
   return props => (
     <Provider store={store}>
@@ -62,5 +64,11 @@ export function registerScreens() {
     'searchResult',
     () => ReduxProvider(SearchResult),
     () => SearchResult,
+  );
+
+  Navigation.registerComponent(
+    'searchResultFilter',
+    () => ReduxProvider(SearchResultFilter),
+    () => SearchResultFilter,
   );
 }

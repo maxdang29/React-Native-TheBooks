@@ -14,9 +14,19 @@ import SideBarItem from '../components/sideBarItem';
 import DropDownItem from 'react-native-drop-down-item';
 const IC_ARR_DOWN = require('../assets/img/downwards-pointer.png');
 const IC_ARR_UP = require('../assets/img/arr-up.png');
-import {offlineData} from '../utils/offlineData';
+import {pushScreen} from '../navigation/pushScreen';
 
 class SideBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      valueArray: [],
+    };
+    Navigation.events().registerComponentDidAppearListener(({componentId}) => {
+      console.log('sdfsdfsdf', componentId);
+    });
+  }
+
   closeMenu = () => {
     Navigation.mergeOptions('sideBar', {
       sideMenu: {
@@ -32,10 +42,34 @@ class SideBar extends Component {
   }
 
   filterCategory = data => {
-    console.log('data category filter', data);
     return data.filter(item => {
       return item.SubCategories.length > 0;
     });
+  };
+  onclickCheck = value => {
+    const {valueArray} = this.state;
+    let arr = valueArray;
+
+    if (arr.indexOf(value) !== -1) {
+      arr = valueArray.filter(item => {
+        return item !== value;
+      });
+    } else if (arr.indexOf(value) === -1) {
+      arr.push(value);
+    }
+
+    this.setState({
+      valueArray: arr,
+    });
+  };
+
+  onSearchBookWithCategory = () => {
+    this.closeMenu();
+    const {componentId} = this.props;
+    const {valueArray} = this.state;
+    console.log('switch screen', componentId, valueArray);
+    pushScreen(componentId, 'searchResultFilter', valueArray, 'Tìm kiếm');
+    console.log('switch screen', componentId, valueArray);
   };
 
   render() {
@@ -72,7 +106,10 @@ class SideBar extends Component {
                       <View>
                         {param.SubCategories.map((element, j) => {
                           return (
-                            <SideBarItem name={element.Name} key={j}>
+                            <SideBarItem
+                              onclickCheck={value => this.onclickCheck(value)}
+                              name={element.Name}
+                              key={j}>
                               >
                             </SideBarItem>
                           );
@@ -84,7 +121,9 @@ class SideBar extends Component {
               : null}
             <View />
 
-            <TouchableOpacity style={styles.searchButton}>
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={() => this.onSearchBookWithCategory()}>
               <Text style={styles.textSearch}>Tìm kết quả</Text>
             </TouchableOpacity>
             <View style={styles.space}></View>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, SafeAreaView, FlatList} from 'react-native';
 import ColumBookItem from '../components/ColumnBookItem';
+import RowBookItem from '../components//RowBookItem';
 
 export default class FlatListBookColumnItem extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class FlatListBookColumnItem extends Component {
   }
 
   render() {
-    const {data} = this.props;
+    const {data, row} = this.props;
 
     return (
       <View>
@@ -17,9 +18,16 @@ export default class FlatListBookColumnItem extends Component {
             data={data}
             numColumns={2}
             keyExtractor={(item, index) => index}
-            renderItem={({item}) => (
-              <ColumBookItem item={item} componentId={this.props.componentId} />
-            )}
+            renderItem={({item}) =>
+              row ? (
+                <ColumBookItem
+                  item={item}
+                  componentId={this.props.componentId}
+                />
+              ) : (
+                <RowBookItem item={item} componentId={this.props.componentId} />
+              )
+            }
           />
         </SafeAreaView>
       </View>
