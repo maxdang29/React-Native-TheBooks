@@ -6,7 +6,6 @@ const init = {
 };
 
 const homeReducers = (state = init, action) => {
- 
   switch (action.type) {
     case types.GET_ALL_BOOK_SUCCESS:
       return {...state, data: action.data};

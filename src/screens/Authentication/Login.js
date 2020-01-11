@@ -11,10 +11,10 @@ import {
 import TouchableButton from '../../components/TouchableButton';
 import {Navigation} from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-//import * as registerAction from '../../Redux/auth/Register/actions';
 import * as loginActions from '../../redux/auth/Login/actions';
 import {connect} from 'react-redux';
 import {Colors} from '../../themes';
+import Icons from 'react-native-vector-icons/thebook-appicon';
 
 class Login extends React.Component {
   static options(passProps) {
@@ -78,7 +78,6 @@ class Login extends React.Component {
   };
 
   render() {
-    console.log('store', this.props.tasks);
     return (
       <ScrollView style={{top: 20}}>
         <View

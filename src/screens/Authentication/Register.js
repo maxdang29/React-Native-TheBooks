@@ -188,7 +188,7 @@ class Register extends React.Component {
           <TouchableButton
             title={'Đăng ký'}
             style={styles.button}
-            buttonColor={Colors.primary}
+            buttonColor={Colors.lightBlue}
             onPress={this.onRegister}
             textStyle={styles.textButton}
             loading={this.props.isLoading}
@@ -226,11 +226,11 @@ const styles = StyleSheet.create({
   title: {fontSize: 30},
   button: {
     top: 10,
-    width: 145,
+    width: 140,
     borderRadius: 5,
     height: 45,
   },
-  textButton: {fontSize: 18},
+  textButton: {fontSize: 16, fontFamily: 'SVN-ProximaNova'},
 });
 // eslint-disable-next-line prettier/prettier
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

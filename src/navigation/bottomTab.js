@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/thebook-appicon';
 import Colors from '../themes/Colors';
 
 export const openDrawer = () => {
@@ -15,12 +16,12 @@ export const openDrawer = () => {
 
 export default function startApp() {
   Promise.all([
-    Ionicons.getImageSource('ios-bookmarks', 30),
-    Ionicons.getImageSource('ios-clipboard', 30),
-    Ionicons.getImageSource('ios-notifications', 30),
-    Ionicons.getImageSource('ios-contact', 30),
-    Ionicons.getImageSource('ios-journal', 30),
-    Ionicons.getImageSource('ios-menu', 30),
+    Icons.getImageSource('ic-home', 30),
+    Icons.getImageSource('ic-order', 30),
+    Icons.getImageSource('ic-notification-1', 30),
+    Icons.getImageSource('ic-user', 30),
+    Icons.getImageSource('ic-library', 30),
+    Icons.getImageSource('ic-menu', 25),
   ]).then(([listBook, orderHistory, notifications, user, library, menu]) => {
     Navigation.setRoot({
       root: {
@@ -70,7 +71,7 @@ export default function startApp() {
                     children: [
                       {
                         component: {
-                          name: 'Home',
+                          name: 'Login',
                           options: {
                             topBar: {
                               leftButtons: [
@@ -121,17 +122,10 @@ export default function startApp() {
                     children: [
                       {
                         component: {
-                          name: 'Home',
+                          name: 'UserProfile',
                           options: {
                             topBar: {
-                              leftButtons: [
-                                {
-                                  id: 'sideMenu',
-
-                                  icon: menu,
-                                },
-                              ],
-                              visible: true,
+                              visible: false,
                             },
                             bottomTab: {
                               fontSize: 10,
@@ -150,7 +144,7 @@ export default function startApp() {
                     children: [
                       {
                         component: {
-                          name: 'Home',
+                          name: 'Login',
                           options: {
                             topBar: {
                               leftButtons: [
