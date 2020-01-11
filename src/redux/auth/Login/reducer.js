@@ -7,7 +7,6 @@ const init = {
   loginLoading: false,
 };
 const loginReducer = (state = init, action) => {
-  console.log('action login', action.payload);
   switch (action.type) {
     case LoginType.LOGIN:
       return {...state, loginLoading: true};

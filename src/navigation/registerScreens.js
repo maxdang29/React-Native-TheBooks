@@ -3,9 +3,11 @@ import {Navigation} from 'react-native-navigation';
 import {Provider} from 'react-redux';
 
 import store from '../redux/store';
-import Register from '../screens/Authentication/Register';
+
 import Home from '../screens/home/index';
 import SideBar from '../navigation/sideBar';
+import BookDetail from '../screens/detail/bookDetail';
+import Register from '../screens/Authentication/Register';
 import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
@@ -18,6 +20,12 @@ import {
 } from '../components/Overlay';
 
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import Search from '../screens/search/search';
+import SearchResult from '../screens/search/searchResult';
+import Sort from '../screens/search/sort';
+
+import SearchResultFilter from '../screens//search/searchResultWithFilter';
+import CircleUserItem from '../components/CircleUserItem';
 
 function ReduxProvider(Component) {
   return props => (
@@ -29,6 +37,11 @@ function ReduxProvider(Component) {
 
 export function registerScreens() {
   Navigation.registerComponent(
+    'CircleUserItem',
+    () => ReduxProvider(CircleUserItem),
+    () => CircleUserItem,
+  );
+  Navigation.registerComponent(
     'Home',
     () => ReduxProvider(Home),
     () => gestureHandlerRootHOC(Home),
@@ -37,6 +50,11 @@ export function registerScreens() {
     'sideBar',
     () => ReduxProvider(SideBar),
     () => gestureHandlerRootHOC(SideBar),
+  );
+  Navigation.registerComponent(
+    'BookDetail',
+    () => ReduxProvider(BookDetail),
+    () => BookDetail,
   );
   Navigation.registerComponent(
     'Register',
@@ -72,5 +90,26 @@ export function registerScreens() {
     'InAppNotification',
     () => ReduxProvider(InAppNotification),
     () => gestureHandlerRootHOC(InAppNotification),
+  );
+  Navigation.registerComponent(
+    'search',
+    () => ReduxProvider(Search),
+    () => Search,
+  );
+  Navigation.registerComponent(
+    'searchResult',
+    () => ReduxProvider(SearchResult),
+    () => SearchResult,
+  );
+
+  Navigation.registerComponent(
+    'searchResultFilter',
+    () => ReduxProvider(SearchResultFilter),
+    () => SearchResultFilter,
+  );
+  Navigation.registerComponent(
+    'sort',
+    () => ReduxProvider(Sort),
+    () => Sort,
   );
 }

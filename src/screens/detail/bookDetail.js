@@ -8,19 +8,114 @@ import {
   FlatList,
   Dimensions,
   ScrollView,
-  TextInput,
 } from 'react-native';
+import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Navigation} from 'react-native-navigation';
 
-import {offlineData} from '../../utils/offlineData';
 import ColumnBookItem from '../../components/ColumnBookItem';
 import CommentBook from '../../components/CommentBook';
+import * as Action from '../../redux/home/actions/action';
+import {countStars} from '../../utils/function';
 
-export default class RowBookItem extends Component {
+class BookDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: false,
+      bookContent: '',
+    };
+  }
+
+  componentDidMount() {
+    const {Id, Content} = this.props.value;
+    this.props.get_related_book(Id);
+    this.props.get_review_book(Id);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+    this.limitContent(Content);
+  }
+
+  limitContent = content => {
+    const {expanded} = this.state;
+    if (content != null) {
+      if (content.length > 300) {
+        if (expanded === true) {
+          this.setState({
+            bookContent: content,
+          });
+        } else if (expanded === false) {
+          this.setState({
+            bookContent: content.substring(0, 300) + '... ',
+          });
+        }
+      } else {
+        this.setState({
+          bookContent: content,
+        });
+      }
+    }
+    // else {
+    //   this.setState({
+    //     bookContent: '',
+    //   });
+    // }
+  };
+
+  expanded = () => {
+    this.setState(
+      {
+        expanded: true,
+      },
+      () => {
+        const {Content} = this.props.value;
+        this.limitContent(Content);
+      },
+    );
+  };
+
+  unexpanded = () => {
+    this.setState(
+      {
+        expanded: false,
+      },
+      () => {
+        const {Content} = this.props.value;
+        this.limitContent(Content);
+      },
+    );
+  };
+
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
+  }
+
+  showExpanded = expanded => {
+    if (expanded === true) {
+      return (
+        <Text style={styles.expanded} onPress={() => this.unexpanded()}>
+          {' '}
+          Thu lại
+        </Text>
+      );
+    } else if (expanded === false) {
+      return (
+        <Text style={styles.expanded} onPress={() => this.expanded()}>
+          Xem thêm
+        </Text>
+      );
+    } else {
+      return '';
+    }
+  };
+
   render() {
-    const data = offlineData.Data.NewBooks;
-    console.log(data);
-    console.log(data[0].Medias[0].ImageUrl);
+    const {value, idUser} = this.props;
+    const {relatedBooks, reviewBooks} = this.props.data;
+    const {bookContent, expanded} = this.state;
+
     return (
       <>
         <ScrollView style={styles.scrollView}>
@@ -29,47 +124,42 @@ export default class RowBookItem extends Component {
               <Image
                 style={styles.image}
                 source={{
-                  uri:
-                    'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
+                  uri: value.Medias[0].ImageUrl,
                 }}
               />
             </View>
             <View style={styles.bookDescription}>
-              <Text style={styles.bookTitle}>Để con được ốm thêm vài lần</Text>
-              <Text style={styles.bookAuthor}>Nguyễn Trí Đoàn</Text>
+              <Text style={styles.bookTitle}>{value.Title}</Text>
+              <Text style={styles.bookAuthor}>{value.Authors[0].Name}</Text>
+
               <View style={styles.viewFlexDirection}>
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankChecked} name="star" />
-                <Icon style={styles.iconRankUnchecked} name="star" />
+                {countStars(
+                  value.OverallStarRating,
+                  styles.iconRankChecked,
+                  styles.iconRankUnchecked,
+                )}
                 <Icon style={styles.iconDirection} name="tag" />
-                <Text style={[styles.bookWish]}>36.000</Text>
+                <Text style={[styles.bookWish]}>{value.FavoriteCount}</Text>
               </View>
 
               <View style={styles.viewFlexDirection}>
-                <TouchableOpacity style={styles.btnBookType}>
-                  <Text style={styles.textBookType}>Tình cảm</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBookType}>
-                  <Text style={styles.textBookType}>Đời sống</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnBookType}>
-                  <Text style={styles.textBookType}>Học đường</Text>
-                </TouchableOpacity>
+                {value.Categories.map(item => {
+                  return (
+                    <TouchableOpacity style={styles.btnBookType}>
+                      <Text style={styles.textBookType}>{item.Name}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
 
             <View style={styles.bookSubView}>
               <Text style={styles.bookSubText}>
-                Don’t want to use the native fonts with React Native…well let’s
-                add some custom fonts then! I’ll show you both approaches to
-                installing custom fonts, one method uses react-native link,
-                while the other method is linking manually, which I started with
-                since I wanted to understand first-hand how the fonts were being
-                set-up in Xcode.
+                {bookContent}
+                {this.showExpanded(expanded)}
               </Text>
             </View>
+
             <View style={styles.viewOfCategory}>
               <View style={styles.titleOfCategory}>
                 <Text
@@ -82,20 +172,18 @@ export default class RowBookItem extends Component {
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
-                  data={data}
-                  keyExtractor={(item, index) => `${index}`}
+                  data={relatedBooks}
+                  keyExtractor={(item, index) => item.Id + index}
                   renderItem={({item}) => <ColumnBookItem item={item} />}
                 />
               </View>
             </View>
-
             <View style={styles.viewOfCmt}>
               <View style={styles.titleOfCategory}>
                 <Text
                   style={[styles.textTitleOfCategory, styles.titleOfCategory]}>
                   Nhận Xét
                 </Text>
-                {/* <Text style={styles.seeMore}>Xem thêm</Text> */}
               </View>
               <TouchableOpacity style={styles.btnCmt}>
                 <Text style={styles.textCmt}>
@@ -104,8 +192,13 @@ export default class RowBookItem extends Component {
               </TouchableOpacity>
 
               <View style={[styles.bookFlatList]}>
-                <CommentBook />
-                <CommentBook />
+                {reviewBooks.map(item => {
+                  if (idUser === item.UserId) {
+                    return <CommentBook item={item} isUser={true} />;
+                  } else {
+                    return <CommentBook item={item} isUser={false} />;
+                  }
+                })}
               </View>
             </View>
             <Text style={[styles.showAllCmt]}>Xem tất cả nhận xét</Text>
@@ -121,12 +214,35 @@ export default class RowBookItem extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    data: state.homeReducer,
+    idUser: state.loginReducer.data.Id,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    get_related_book: id => {
+      dispatch(Action.getRelatedBook(id));
+    },
+    get_review_book: id => {
+      dispatch(Action.getReviewBook(id));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetail);
+
 const styles = StyleSheet.create({
+  expanded: {
+    color: '#1d9dd8',
+  },
   textCmt: {
     color: '#1d9dd8',
   },
   showAllCmt: {
-    marginTop: 45,
+    marginTop: 25,
     textAlign: 'center',
     color: '#1d9dd8',
     fontSize: 17,
@@ -154,15 +270,16 @@ const styles = StyleSheet.create({
   },
 
   viewOfCmt: {
-    top: 40,
+    top: 30,
     flexDirection: 'column',
   },
   scrollView: {
     marginTop: 20,
   },
   viewOfCategory: {
-    top: 70,
+    top: 45,
     flexDirection: 'column',
+    marginVertical: 15,
   },
 
   titleOfCategory: {
@@ -181,7 +298,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     marginHorizontal: 20,
-    bottom: 20,
+    bottom: 10,
   },
   image: {
     width: 230,
@@ -211,6 +328,7 @@ const styles = StyleSheet.create({
   bookTitle: {
     color: '#4a4a4a',
     fontSize: 22,
+    textAlign: 'center',
   },
 
   viewFlexDirection: {
@@ -225,7 +343,7 @@ const styles = StyleSheet.create({
   },
   iconRankUnchecked: {
     color: '#bcbcbc',
-    marginRight: 20,
+    marginRight: 4,
     top: -1,
     fontSize: 17,
   },
@@ -240,6 +358,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     fontSize: 17,
     right: 3,
+    marginLeft: 20,
     top: -1,
   },
   bookWish: {

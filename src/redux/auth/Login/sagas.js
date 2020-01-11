@@ -22,7 +22,6 @@ function* login(action) {
   }
 }
 // function* logout() {
-//   console.log('logout1');
 //   try {
 //     yield put(AsyncStorage.clear());
 //     yield put(
