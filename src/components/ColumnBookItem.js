@@ -11,7 +11,7 @@ export default class ColumBookItem extends Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => goAnotherScreen('CircleUserItem', null, 'nguoi dung')}>
+        onPress={() => goAnotherScreen('BookDetail', item, 'Chi tiết')}>
         <View style={styles.shadowView}>
           <Image
             style={styles.image}

@@ -78,7 +78,6 @@ class Login extends React.Component {
   };
 
   render() {
-    console.log('store', this.props.tasks);
     return (
       <ScrollView style={{top: 20}}>
         <View

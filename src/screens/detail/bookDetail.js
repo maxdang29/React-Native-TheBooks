@@ -115,7 +115,7 @@ class BookDetail extends Component {
     const {value, idUser} = this.props;
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
-    // console.log('review ===>', reviewBooks);
+
     return (
       <>
         <ScrollView style={styles.scrollView}>
@@ -173,7 +173,7 @@ class BookDetail extends Component {
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   data={relatedBooks}
-                  keyExtractor={(item, index) => item.Id}
+                  keyExtractor={(item, index) => item.Id + index}
                   renderItem={({item}) => <ColumnBookItem item={item} />}
                 />
               </View>

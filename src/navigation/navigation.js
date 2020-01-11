@@ -1,6 +1,12 @@
 import {Navigation} from 'react-native-navigation';
 
-export const goAnotherScreen = (modal_name, value, pageTitle) => {
+export const goAnotherScreen = (
+  modal_name,
+  value,
+  pageTitle,
+  visible,
+  passPropsOption,
+) => {
   Navigation.showModal({
     stack: {
       children: [
@@ -9,6 +15,7 @@ export const goAnotherScreen = (modal_name, value, pageTitle) => {
             name: modal_name,
             passProps: {
               value,
+              passPropsOption,
             },
             options: {
               topBar: {
@@ -21,6 +28,7 @@ export const goAnotherScreen = (modal_name, value, pageTitle) => {
                     icon: require('../assets/img/arrowBack.png'),
                   },
                 ],
+                visible: visible,
               },
             },
           },

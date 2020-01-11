@@ -12,7 +12,9 @@ import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
+import Sort from '../screens/search/sort';
 
+import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 
 function ReduxProvider(Component) {
@@ -68,5 +70,16 @@ export function registerScreens() {
     'searchResult',
     () => ReduxProvider(SearchResult),
     () => SearchResult,
+  );
+
+  Navigation.registerComponent(
+    'searchResultFilter',
+    () => ReduxProvider(SearchResultFilter),
+    () => SearchResultFilter,
+  );
+  Navigation.registerComponent(
+    'sort',
+    () => ReduxProvider(Sort),
+    () => Sort,
   );
 }
