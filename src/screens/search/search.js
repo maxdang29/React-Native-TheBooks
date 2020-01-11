@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import * as actionBooks from '../../redux/home/actions/action';
 import {pushScreen} from '../../navigation/pushScreen';
-import {goDetail} from '../../navigation/navigation';
+import {goAnotherScreen} from '../../navigation/navigation';
 import {Navigation} from 'react-native-navigation';
 class Search extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class Search extends Component {
   };
   moveToDetailBookScreen = data => {
     const {componentId} = this.props;
-    goDetail('BookDetail', data);
+    goAnotherScreen('BookDetail', data, 'Chi tiết');
   };
 
   filterBook = (data, text) => {

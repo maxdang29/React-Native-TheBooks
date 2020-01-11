@@ -28,7 +28,6 @@ export default class SideBarItem extends Component {
   render() {
     const {name} = this.props;
     const {checked} = this.state;
-    console.log('check123', checked);
     return (
       <TouchableOpacity
         onPress={() => {

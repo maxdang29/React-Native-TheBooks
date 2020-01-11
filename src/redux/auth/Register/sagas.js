@@ -9,9 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 function* register(action) {
   try {
-    console.log('log-action.payload ', action.payload);
     const response = yield call(registerApi, action.payload);
-    console.log('respon', response);
     yield put(registerActions.registerSuccess(response.data.Data));
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
     ToastAndroid.show('Register Success', ToastAndroid.SHORT);

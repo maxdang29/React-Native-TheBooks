@@ -19,6 +19,6 @@ export default class SeeMore extends Component {
     const dataFilter = this.filterData(data, title);
     const bookData = dataFilter[0].data[0].data;
 
-    return <FlatListBookColumnItem data={bookData} row={true} />;
+    return <FlatListBookColumnItem data={bookData}  />;
   }
 }

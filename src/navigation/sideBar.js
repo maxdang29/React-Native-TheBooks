@@ -14,17 +14,16 @@ import SideBarItem from '../components/sideBarItem';
 import DropDownItem from 'react-native-drop-down-item';
 const IC_ARR_DOWN = require('../assets/img/downwards-pointer.png');
 const IC_ARR_UP = require('../assets/img/arr-up.png');
-import {pushScreen} from '../navigation/pushScreen';
+import {goAnotherScreen} from '../navigation/navigation';
 
 class SideBar extends Component {
   constructor(props) {
     super(props);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+
     this.state = {
       valueArray: [],
     };
-    Navigation.events().registerComponentDidAppearListener(({componentId}) => {
-      console.log('sdfsdfsdf', componentId);
-    });
   }
 
   closeMenu = () => {
@@ -64,12 +63,8 @@ class SideBar extends Component {
   };
 
   onSearchBookWithCategory = () => {
-    this.closeMenu();
-    const {componentId} = this.props;
     const {valueArray} = this.state;
-    console.log('switch screen', componentId, valueArray);
-    pushScreen(componentId, 'searchResultFilter', valueArray, 'Tìm kiếm');
-    console.log('switch screen', componentId, valueArray);
+    goAnotherScreen('searchResultFilter', valueArray, 'Tìm kiếm');
   };
 
   render() {
