@@ -12,11 +12,13 @@ import {
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Navigation} from 'react-native-navigation';
+import {goAnotherScreen} from '../../navigation/navigation';
 
 import ColumnBookItem from '../../components/ColumnBookItem';
 import CommentBook from '../../components/CommentBook';
 import * as Action from '../../redux/home/actions/action';
 import {countStars} from '../../utils/function';
+
 
 class BookDetail extends Component {
   constructor(props) {
@@ -54,11 +56,6 @@ class BookDetail extends Component {
         });
       }
     }
-    // else {
-    //   this.setState({
-    //     bookContent: '',
-    //   });
-    // }
   };
 
   expanded = () => {
@@ -109,6 +106,10 @@ class BookDetail extends Component {
     } else {
       return '';
     }
+  };
+
+  showModalReview = () => {
+    goAnotherScreen('modalWriteReview');
   };
 
   render() {
@@ -185,7 +186,9 @@ class BookDetail extends Component {
                   Nhận Xét
                 </Text>
               </View>
-              <TouchableOpacity style={styles.btnCmt}>
+              <TouchableOpacity
+                style={styles.btnCmt}
+                onPress={() => this.showModalReview()}>
                 <Text style={styles.textCmt}>
                   Viết nhận xét cho cuốn sách này!
                 </Text>

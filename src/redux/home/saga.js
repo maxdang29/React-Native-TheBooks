@@ -16,7 +16,6 @@ import {
 function* getCmsHomeSummary(actions) {
   try {
     const response = yield call(getCmsHomeSummaryRequest, null);
-    console.log('response ', response);
     if (response.data.Data) {
       yield put(BookActions.getCmsHomeSummarySuccess(response.data.Data));
     }
@@ -93,7 +92,6 @@ function* getBestUser(actions) {
 function* getBestReview(actions) {
   try {
     const response = yield call(getBestReviewRequest, null);
-    console.log('response best review', response.data.Data.Reviewers);
     if (response.data.Data) {
       yield put(
         BookActions.getBestReviewsSuccess(response.data.Data.Reviewers),
