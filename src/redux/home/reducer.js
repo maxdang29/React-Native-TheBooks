@@ -7,6 +7,8 @@ const init = {
   search: [],
   error: undefined,
   searchSuggestion: [],
+  bestUser: [],
+  bestReview: [],
 };
 
 const homeReducers = (state = init, action) => {
@@ -22,6 +24,11 @@ const homeReducers = (state = init, action) => {
       return {...state, search: action.data};
     case types.GET_BOOK_SUGGESTION_SUCCESS:
       return {...state, searchSuggestion: action.data};
+
+    case types.GET_BEST_USER_SUCCESS:
+      return {...state, bestUser: action.data};
+    case types.GET_BEST_REVIEW_SUCCESS:
+      return {...state, bestReview: action.data};
 
     default:
       return state;
