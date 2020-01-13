@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "generateIconFontComponent": "./node_modules/.bin/generate-icon ./src/assets/Fonts/styles.css --componentName=thebook-appicon --fontFamily=thebook-appicon > ./node_modules/react-native-vector-icons/thebook-appicon.js",
-    "copyIconFontToNodeModules": "copy ./src/assets/Fonts/thebook-appicon.ttf ./node_modules/react-native-vector-icons/Fonts",
+    "copyIconFontToNodeModules": "cp ./src/assets/Fonts/thebook-appicon.ttf ./node_modules/react-native-vector-icons/Fonts",
     "createIconFont": "yarn run generateIconFontComponent && yarn run copyIconFontToNodeModules"
   },
   "peerDependencies": {

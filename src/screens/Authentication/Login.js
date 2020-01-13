@@ -96,7 +96,7 @@ class Login extends React.Component {
             }}
             isRequired
             validateType="email"
-            value="tata46996@gmail.com"
+            value="huong99@gmail.com"
             errorMessage={'Email không hợp lệ'}
             placeholder={'Nhập Email'}
             onSubmitEditing={() => {
@@ -112,6 +112,7 @@ class Login extends React.Component {
             // secureTextEntry
             isRequired
             validateType="password"
+            value="123456789"
             errorMessage={'Mật khẩu không hợp lệ'}
             placeholder={'Nhập mật khẩu'}
           />

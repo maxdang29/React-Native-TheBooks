@@ -12,13 +12,14 @@ import {
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Navigation} from 'react-native-navigation';
-import {goAnotherScreen} from '../../navigation/navigation';
 
 import ColumnBookItem from '../../components/ColumnBookItem';
 import CommentBook from '../../components/CommentBook';
 import * as Action from '../../redux/home/actions/action';
+import * as cartAction from '../../redux/cart/actions/actions';
 import {countStars} from '../../utils/function';
-
+import {goAnotherScreen} from '../../navigation/navigation';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class BookDetail extends Component {
   constructor(props) {
@@ -109,14 +110,25 @@ class BookDetail extends Component {
   };
 
   showModalReview = () => {
-    goAnotherScreen('modalWriteReview');
+    const bookId = this.props.value.Id;
+    goAnotherScreen('modalWriteReview', bookId);
+  };
+  onAddToCart = async (bookID, quantity) => {
+    const userId = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      BookId: bookID,
+      Quantity: quantity,
+      UserId: userId,
+    };
+    this.props.add_to_cart(data, token);
   };
 
   render() {
-    const {value, idUser} = this.props;
+    const {value, idUser, token, idCart} = this.props;
+    console.log('idcart from bookdetail !', value);
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
-
     return (
       <>
         <ScrollView style={styles.scrollView}>
@@ -208,8 +220,15 @@ class BookDetail extends Component {
           </View>
         </ScrollView>
         <View>
-          <TouchableOpacity style={styles.footer}>
-            <Text style={styles.footer_text}>Thêm Vào Giỏ</Text>
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
+            <Text style={styles.footer_text}>Go to cart</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => this.onAddToCart(value.Id, 1)}>
+            <Text style={styles.footer_text}>Thêm Vào Cart</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -217,10 +236,16 @@ class BookDetail extends Component {
   }
 }
 
+async function getStore() {
+  const cartId = await AsyncStorage.getItem('cartId');
+  return cartId;
+}
+
 const mapStateToProps = state => {
   return {
     data: state.homeReducer,
     idUser: state.loginReducer.data.Id,
+    token: state.loginReducer.token,
   };
 };
 
@@ -231,6 +256,9 @@ const mapDispatchToProps = dispatch => {
     },
     get_review_book: id => {
       dispatch(Action.getReviewBook(id));
+    },
+    add_to_cart: (data, token) => {
+      dispatch(cartAction.addToCart(data, token));
     },
   };
 };

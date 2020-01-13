@@ -27,6 +27,7 @@ import Sort from '../screens/search/sort';
 
 import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
+import Cart from '../screens/Cart/cart';
 
 function ReduxProvider(Component) {
   return props => (
@@ -37,6 +38,12 @@ function ReduxProvider(Component) {
 }
 
 export function registerScreens() {
+  Navigation.registerComponent(
+    'Cart',
+    () => ReduxProvider(Cart),
+    () => Cart,
+  );
+
   Navigation.registerComponent(
     'CircleUserItem',
     () => ReduxProvider(CircleUserItem),

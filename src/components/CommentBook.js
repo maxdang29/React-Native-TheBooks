@@ -14,7 +14,9 @@ class CommentBook extends Component {
           <Image
             style={styles.image}
             source={{
-              uri: item.UrlImageUser,
+              uri: item.UrlImageUser
+                ? item.UrlImageUser
+                : 'https://the-books-dev-files.s3.amazonaws.com/Image/nguyen%20huong_1545511306138.png',
             }}
           />
           <View style={styles.alignCmt}>

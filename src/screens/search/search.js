@@ -72,7 +72,8 @@ class Search extends Component {
             placeholder="Hãy nhập tên sách mà bạn muốn tim !"
             type="default"
             onSubmitEditing={() => this.onSearch({dataSearch})}
-            size={40}></TextInput>
+            size={40}
+          />
           <TouchableOpacity
             style={styles.searchButton}
             onPress={() => {

@@ -6,12 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Icons from 'react-native-vector-icons/thebook-appicon';
+import * as commentAction from '../redux/comment/action/actions';
 
 const arrayStar = [false, false, false, false, false];
 
-export default class ModalWriteReview extends Component {
+class ModalWriteReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,6 +33,25 @@ export default class ModalWriteReview extends Component {
     this.setState({
       valueText: text.text,
     });
+  };
+  postComment = async () => {
+    const {value} = this.props;
+    const {valueText, stars} = this.state;
+    const userId = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    console.log('token', token);
+    const StarRating = stars.filter(item => item === true).length;
+
+    const data = {
+      BookId: value,
+      UserId: userId,
+      Content: valueText,
+      StarRating: StarRating,
+      IsDeleted: false,
+      IsOutstanding: false,
+    };
+
+    this.props.postComment(data, token);
   };
   render() {
     const {stars} = this.state;
@@ -78,7 +100,8 @@ export default class ModalWriteReview extends Component {
                   styles.starContainer,
                   styles.button,
                   styles.buttonSendReview,
-                ]}>
+                ]}
+                onPress={() => this.postComment()}>
                 <Text style={styles.text}>Gửi nhận xét</Text>
               </TouchableOpacity>
             </View>
@@ -88,6 +111,17 @@ export default class ModalWriteReview extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    postComment: (data, token) => {
+      dispatch(commentAction.postComment(data, token));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ModalWriteReview);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

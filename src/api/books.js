@@ -20,10 +20,21 @@ export const getBookSuggestionRequest = data => {
   return callApi('/api/Search/Suggestion', 'GET', data);
 };
 
+export const addToCartRequest = (data, Token) => {
+  return callApi('/api/basket', 'POST', data, Token);
+};
+
+export const getAllItemInCartRequest = (data, Token) => {
+  return callApi('/api/basket/' + data, 'GET', null, Token);
+};
 export const getBestUserRequest = data => {
   return callApi('/api/cms/bestusers', 'GET', data);
 };
 
 export const getBestReviewRequest = data => {
   return callApi('/api/cms/reviews', 'GET', data);
+};
+
+export const postCommentRequest = (data, token) => {
+  return callApi('/api/reviews', 'POST', data, token);
 };
