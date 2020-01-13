@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 export default class CircleUserItem extends Component {
   render() {
     return (

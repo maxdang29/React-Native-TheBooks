@@ -12,8 +12,9 @@ import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
-
+import RowBookItem from '../components/RowBookItem';
 import CircleUserItem from '../components/CircleUserItem';
+import Cart from '../screens/Cart/cart';
 
 function ReduxProvider(Component) {
   return props => (
@@ -24,6 +25,16 @@ function ReduxProvider(Component) {
 }
 
 export function registerScreens() {
+  Navigation.registerComponent(
+    'Cart',
+    () => ReduxProvider(Cart),
+    () => Cart,
+  );
+  Navigation.registerComponent(
+    'RowBookItem',
+    () => ReduxProvider(RowBookItem),
+    () => RowBookItem,
+  );
   Navigation.registerComponent(
     'CircleUserItem',
     () => ReduxProvider(CircleUserItem),

@@ -19,3 +19,11 @@ export const getAllBookRequest = data => {
 export const getBookSuggestionRequest = data => {
   return callApi('/api/Search/Suggestion', 'GET', data);
 };
+
+export const addToCartRequest = (data, Token) => {
+  return callApi('/api/basket', 'POST', data, Token);
+};
+
+export const getAllItemInCartRequest = (data, Token) => {
+  return callApi('/api/basket/' + data, 'GET', null, Token);
+};

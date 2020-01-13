@@ -4,10 +4,10 @@ export const login = data => ({
   type: LoginTypes.LOGIN,
   payload: data,
 });
-export const loginSuccess = response => ({
+export const loginSuccess = (response, token) => ({
   type: LoginTypes.LOGIN_SUCCESS,
   payload: response,
-  token: response.token,
+  token: token,
 });
 export const loginFail = error => ({
   type: LoginTypes.LOGIN_FAIL,
