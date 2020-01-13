@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {goAnotherScreen} from '../navigation/navigation';
 import {countStars} from '../../src/utils/function';
 

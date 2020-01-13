@@ -6,34 +6,39 @@ import {countStars} from '../../src/utils/function';
 
 export default class RowBookItem extends Component {
   render() {
-    const {item} = this.props;
-
+    const {item, isInCart} = this.props;
+    console.log('item trong row', item);
     return (
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => goAnotherScreen('BookDetail', item, 'Chi tiết')}>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => goAnotherScreen('BookDetail', item.Book, 'Chi tiết')}>
           <View style={styles.shadowView}>
             <Image
               style={styles.image}
               resizeMode="stretch"
               source={{
-                uri: item.Medias[0].ImageUrl,
+                uri: item.Book.Medias[0].ImageUrl,
               }}
             />
           </View>
-          <View style={styles.bookDescription}>
-            <Text style={styles.bookTitle}>{item.Title}</Text>
-            <Text style={styles.bookAuthor}>{item.Authors[0].Name}</Text>
-            <View style={styles.viewFlexDirection}>
-              {countStars(
-                item.OverallStarRating,
-                styles.iconRankChecked,
-                styles.iconRankUnchecked,
-              )}
-              <Text style={styles.bookLike}> {item.TotalReview}</Text>
-            </View>
+        </TouchableOpacity>
 
+        <View style={styles.bookDescription}>
+          <Icon style={styles.cancelItem} name="remove" />
+          <Text style={styles.bookTitle}>
+            {item.Book.Title.substring(0, 13)} ...
+          </Text>
+          <Text style={styles.bookAuthor}>{item.Book.Authors[0].Name}</Text>
+          <View style={styles.viewFlexDirection}>
+            {countStars(
+              item.OverallStarRating,
+              styles.iconRankChecked,
+              styles.iconRankUnchecked,
+            )}
+            <Text style={styles.bookLike}> {item.Book.TotalReview}</Text>
+          </View>
+
+          {!isInCart ? (
             <View style={styles.viewFlexDirection}>
               <View style={[styles.viewFlexDirection, styles.bottom]}>
                 <Icon style={styles.iconDirection} name="book" />
@@ -51,18 +56,58 @@ export default class RowBookItem extends Component {
                 </Text>
               </View>
             </View>
-          </View>
+          ) : (
+            <View style={styles.viewFlexDirection}>
+              <View style={[styles.viewFlexDirection, styles.bottom]}>
+                <Icon style={styles.iconDirection} name="dollar" />
+                <Text style={styles.bookGrey}>{item.Book.Price}</Text>
+              </View>
+              <View
+                style={[
+                  styles.viewFlexDirection,
+                  styles.iconBottom,
+                  styles.bottom,
+                ]}>
+                <TouchableOpacity style={styles.UDQuantity}>
+                  <Text style={[styles.textUD]}>-</Text>
+                </TouchableOpacity>
+
+                <Text style={[styles.bookQuantity]}>{item.Quantity}</Text>
+
+                <TouchableOpacity style={styles.UDQuantity}>
+                  <Text style={styles.textUD}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  cancelItem: {
+    marginLeft: 210,
+    top: -12,
+    fontSize: 17,
+  },
+  bookQuantity: {
+    fontSize: 17,
+    color: '#bcbcbc',
+  },
+  textUD: {
+    fontSize: 17,
+    color: '#bcbcbc',
+  },
+  UDQuantity: {
+    width: 50,
+    alignItems: 'center',
+  },
   container: {
     flexDirection: 'row',
-    paddingHorizontal: 15,
-    paddingVertical: 2,
+    paddingHorizontal: 10,
+    // paddingVertical: ,
   },
   viewFlexDirection: {
     flexDirection: 'row',
@@ -70,16 +115,16 @@ const styles = StyleSheet.create({
   image: {
     width: 130,
     height: 210,
-    borderRadius: 5,
+    borderRadius: 6,
   },
   shadowView: {
     height: 210,
-    width: 135,
-    borderRadius: 5,
-    marginVertical: 15,
+    width: 136,
+    borderRadius: 6,
+    marginVertical: 16,
     elevation: 10,
     shadowColor: 'black',
-    shadowOffset: {width: 3, height: 4},
+    shadowOffset: {width: 4, height: 4},
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
@@ -112,9 +157,9 @@ const styles = StyleSheet.create({
     top: 2,
   },
   bookDescription: {
-    marginHorizontal: 17,
+    marginHorizontal: 16,
     textAlign: 'center',
-    top: 45,
+    top: 35,
   },
 
   iconBottom: {
