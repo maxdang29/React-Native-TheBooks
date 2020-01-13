@@ -19,3 +19,11 @@ export const getAllBookRequest = data => {
 export const getBookSuggestionRequest = data => {
   return callApi('/api/Search/Suggestion', 'GET', data);
 };
+
+export const getBestUserRequest = data => {
+  return callApi('/api/cms/bestusers', 'GET', data);
+};
+
+export const getBestReviewRequest = data => {
+  return callApi('/api/cms/reviews', 'GET', data);
+};

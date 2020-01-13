@@ -67,14 +67,6 @@ class Login extends React.Component {
         },
       },
     });
-    // const data = {
-    //   username: 'tannguyen11',
-    //   email: 'tata469936@gmail.com',
-    //   password: '123456789',
-    //   name: 'nguyenminhanh',
-    //   phoneNumber: '0975675720',
-    // };
-    // this.props.register(data);
   };
 
   render() {
@@ -198,5 +190,5 @@ const styles = StyleSheet.create({
   },
   textButton: {fontSize: 16, fontFamily: 'SVN-ProximaNova'},
 });
-// eslint-disable-next-line prettier/prettier
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -9,11 +9,14 @@ import {
   getRelatedBookRequest,
   getReviewBookRequest,
   getBookSuggestionRequest,
+  getBestUserRequest,
+  getBestReviewRequest,
 } from '../../api/books';
 
 function* getCmsHomeSummary(actions) {
   try {
     const response = yield call(getCmsHomeSummaryRequest, null);
+    console.log('response ', response);
     if (response.data.Data) {
       yield put(BookActions.getCmsHomeSummarySuccess(response.data.Data));
     }
@@ -74,11 +77,41 @@ function* getReviewBook(actions) {
   }
 }
 
+function* getBestUser(actions) {
+  try {
+    const response = yield call(getBestUserRequest, null);
+
+    if (response.data.Data) {
+      yield put(BookActions.getBestUsersSuccess(response.data.Data));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(BookActions.getBestUsersFailed(error));
+  }
+}
+
+function* getBestReview(actions) {
+  try {
+    const response = yield call(getBestReviewRequest, null);
+    console.log('response best review', response.data.Data.Reviewers);
+    if (response.data.Data) {
+      yield put(
+        BookActions.getBestReviewsSuccess(response.data.Data.Reviewers),
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(BookActions.getBestReviewsFailed(error));
+  }
+}
+
 const rootSagaHome = () => [
   takeLatest(ActionTypes.GET_ALL_BOOK, getAllBook),
   takeLatest(ActionTypes.GET_RELATED_BOOK, getRelatedBook),
   takeLatest(ActionTypes.GET_REVIEW_BOOK, getReviewBook),
   takeLatest(ActionTypes.GET_CMS_HOME_SUMMARY, getCmsHomeSummary),
   takeLatest(ActionTypes.GET_BOOK_SUGGESTION, getBookSuggestion),
+  takeLatest(ActionTypes.GET_BEST_USER, getBestUser),
+  takeLatest(ActionTypes.GET_BEST_REVIEW, getBestReview),
 ];
 export default rootSagaHome();
