@@ -7,7 +7,10 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "generateIconFontComponent": "./node_modules/.bin/generate-icon ./src/assets/Fonts/styles.css --componentName=thebook-appicon --fontFamily=thebook-appicon > ./node_modules/react-native-vector-icons/thebook-appicon.js",
+    "copyIconFontToNodeModules": "copy ./src/assets/Fonts/thebook-appicon.ttf ./node_modules/react-native-vector-icons/Fonts",
+    "createIconFont": "yarn run generateIconFontComponent && yarn run copyIconFontToNodeModules"
   },
   "peerDependencies": {
     "react-native": ">=0.20.0"
@@ -21,8 +24,11 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-drop-down-item": "^1.1.0",
+    "react-native-gesture-handler": "^1.5.3",
     "react-native-logger": "^1.0.3",
     "react-native-navigation": "^4.2.0",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-tab-view": "^2.11.0",
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.1.3",
     "redux": "^4.0.5",

@@ -10,6 +10,16 @@ import BookDetail from '../screens/detail/bookDetail';
 import Register from '../screens/Authentication/Register';
 import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
+import UserProfile from '../screens/UserProfile/UserProfile';
+
+// import your components here
+import {
+  ConfirmAlert,
+  InAppNotification,
+  QRCodeOverlay,
+} from '../components/Overlay';
+
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
 import Sort from '../screens/search/sort';
@@ -34,12 +44,12 @@ export function registerScreens() {
   Navigation.registerComponent(
     'Home',
     () => ReduxProvider(Home),
-    () => Home,
+    () => gestureHandlerRootHOC(Home),
   );
   Navigation.registerComponent(
     'sideBar',
     () => ReduxProvider(SideBar),
-    () => SideBar,
+    () => gestureHandlerRootHOC(SideBar),
   );
   Navigation.registerComponent(
     'BookDetail',
@@ -49,17 +59,37 @@ export function registerScreens() {
   Navigation.registerComponent(
     'Register',
     () => ReduxProvider(Register),
-    () => Register,
+    () => gestureHandlerRootHOC(Register),
   );
   Navigation.registerComponent(
     'Login',
     () => ReduxProvider(Login),
-    () => Login,
+    () => gestureHandlerRootHOC(Login),
   );
   Navigation.registerComponent(
     'seeMore',
     () => ReduxProvider(SeeMore),
-    () => SeeMore,
+    () => gestureHandlerRootHOC(SeeMore),
+  );
+  Navigation.registerComponent(
+    'UserProfile',
+    () => ReduxProvider(UserProfile),
+    () => gestureHandlerRootHOC(UserProfile),
+  );
+  Navigation.registerComponent(
+    'QRCodeOverlay',
+    () => ReduxProvider(QRCodeOverlay),
+    () => gestureHandlerRootHOC(QRCodeOverlay),
+  );
+  Navigation.registerComponent(
+    'ConfirmAlert',
+    () => ReduxProvider(ConfirmAlert),
+    () => gestureHandlerRootHOC(ConfirmAlert),
+  );
+  Navigation.registerComponent(
+    'InAppNotification',
+    () => ReduxProvider(InAppNotification),
+    () => gestureHandlerRootHOC(InAppNotification),
   );
   Navigation.registerComponent(
     'search',
