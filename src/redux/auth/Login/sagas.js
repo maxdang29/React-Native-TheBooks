@@ -5,6 +5,7 @@ import * as loginActions from './actions';
 import AsyncStorage from '@react-native-community/async-storage';
 // import Navigation from 'react-native-navigation';
 import {ToastAndroid} from 'react-native';
+import {showInAppNotification} from '../../../navigation/showInAppNotification';
 
 function* login(action) {
   try {
@@ -15,12 +16,13 @@ function* login(action) {
         response.data.Token.access_token,
       ),
     );
+    showInAppNotification('Đăng kí', 'Chào mừng đến với The Books');
     ToastAndroid.show('Login Success', ToastAndroid.SHORT);
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
     yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);
     yield AsyncStorage.setItem('userId', response.data.Data.Id);
   } catch (error) {
-    alert('errr' + JSON.stringify(error.data.Message));
+    showInAppNotification('Đăng nhập', error.data.Message, 'error');
     put(loginActions.loginFail(error));
   }
 }

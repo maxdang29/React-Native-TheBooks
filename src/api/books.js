@@ -27,3 +27,10 @@ export const addToCartRequest = (data, Token) => {
 export const getAllItemInCartRequest = (data, Token) => {
   return callApi('/api/basket/' + data, 'GET', null, Token);
 };
+export const getBestUserRequest = data => {
+  return callApi('/api/cms/bestusers', 'GET', data);
+};
+
+export const getBestReviewRequest = data => {
+  return callApi('/api/cms/reviews', 'GET', data);
+};

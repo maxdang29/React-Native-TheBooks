@@ -1,77 +1,85 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {goAnotherScreen} from '../navigation/navigation';
+import {countStars} from '../../src/utils/function';
+
 export default class RowBookItem extends Component {
   render() {
-    const {item} = this.props;
-    console.log('item ben row', item);
+    const {item, isInCart} = this.props;
+    console.log('item trong row', item);
     return (
       <View style={styles.container}>
-        <View style={styles.shadowView}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: item.Book.Medias[0].ImageUrl,
-              // uri:
-              //   'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          onPress={() => goAnotherScreen('BookDetail', item.Book, 'Chi tiết')}>
+          <View style={styles.shadowView}>
+            <Image
+              style={styles.image}
+              resizeMode="stretch"
+              source={{
+                uri: item.Book.Medias[0].ImageUrl,
+              }}
+            />
+          </View>
+        </TouchableOpacity>
 
         <View style={styles.bookDescription}>
           <Icon style={styles.cancelItem} name="remove" />
-
           <Text style={styles.bookTitle}>
-            {item.Book.Title.substring(0, 18)} ...
+            {item.Book.Title.substring(0, 13)} ...
           </Text>
-          <Text style={styles.bookAuthor}>Amy Nguyen</Text>
+          <Text style={styles.bookAuthor}>{item.Book.Authors[0].Name}</Text>
           <View style={styles.viewFlexDirection}>
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankChecked} name="star" />
-            <Icon style={styles.iconRankUnchecked} name="star" />
-            <Text style={styles.bookLike}> 342</Text>
+            {countStars(
+              item.OverallStarRating,
+              styles.iconRankChecked,
+              styles.iconRankUnchecked,
+            )}
+            <Text style={styles.bookLike}> {item.Book.TotalReview}</Text>
           </View>
 
-          <View style={styles.viewFlexDirection}>
-            <View style={[styles.viewFlexDirection, styles.bottom]}>
-              <Icon style={styles.iconDirection} name="book" />
-              <Text style={styles.bookGrey}> 4 Quyển</Text>
+          {!isInCart ? (
+            <View style={styles.viewFlexDirection}>
+              <View style={[styles.viewFlexDirection, styles.bottom]}>
+                <Icon style={styles.iconDirection} name="book" />
+                <Text style={styles.bookGrey}>{item.Quantity}</Text>
+              </View>
+              <View
+                style={[
+                  styles.viewFlexDirection,
+                  styles.iconBottom,
+                  styles.bottom,
+                ]}>
+                <Icon style={styles.iconDirection} name="tag" />
+                <Text style={[styles.bookGrey, styles.bookPrice]}>
+                  {item.Price}
+                </Text>
+              </View>
             </View>
-            <View
-              style={[
-                styles.viewFlexDirection,
-                styles.iconBottom,
-                styles.bottom,
-              ]}>
-              <Icon style={styles.iconDirection} name="tag" />
-              <Text style={[styles.bookGrey, styles.bookPrice]}>36.000</Text>
-            </View>
-          </View>
+          ) : (
+            <View style={styles.viewFlexDirection}>
+              <View style={[styles.viewFlexDirection, styles.bottom]}>
+                <Icon style={styles.iconDirection} name="dollar" />
+                <Text style={styles.bookGrey}>{item.Book.Price}</Text>
+              </View>
+              <View
+                style={[
+                  styles.viewFlexDirection,
+                  styles.iconBottom,
+                  styles.bottom,
+                ]}>
+                <TouchableOpacity style={styles.UDQuantity}>
+                  <Text style={[styles.textUD]}>-</Text>
+                </TouchableOpacity>
 
-          <View style={styles.viewFlexDirection}>
-            <View style={[styles.viewFlexDirection, styles.bottom]}>
-              <Icon style={styles.iconDirection} name="dollar" />
-              <Text style={styles.bookGrey}> 18.000</Text>
-            </View>
-            <View
-              style={[
-                styles.viewFlexDirection,
-                styles.iconBottom,
-                styles.bottom,
-              ]}>
-              <TouchableOpacity style={styles.UDQuantity}>
-                <Text style={[styles.textUD]}>-</Text>
-              </TouchableOpacity>
+                <Text style={[styles.bookQuantity]}>{item.Quantity}</Text>
 
-              <Text style={[styles.bookQuantity]}>2</Text>
-
-              <TouchableOpacity style={styles.UDQuantity}>
-                <Text style={styles.textUD}>+</Text>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.UDQuantity}>
+                  <Text style={styles.textUD}>+</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </View>
     );
@@ -97,10 +105,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    // height: 76,
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingHorizontal: 10,
+    // paddingVertical: ,
   },
   viewFlexDirection: {
     flexDirection: 'row',

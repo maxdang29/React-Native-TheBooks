@@ -10,12 +10,22 @@ import {Navigation} from 'react-native-navigation';
 import {connect} from 'react-redux';
 import * as actionSideBar from '../redux/sideBar/actions/actions';
 import Icon from 'react-native-vector-icons/Ionicons';
+import SideBarItem from '../components/sideBarItem';
 import DropDownItem from 'react-native-drop-down-item';
 const IC_ARR_DOWN = require('../assets/img/downwards-pointer.png');
 const IC_ARR_UP = require('../assets/img/arr-up.png');
-import {offlineData} from '../utils/offlineData';
+import {goAnotherScreen} from '../navigation/navigation';
 
 class SideBar extends Component {
+  constructor(props) {
+    super(props);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+
+    this.state = {
+      valueArray: [],
+    };
+  }
+
   closeMenu = () => {
     Navigation.mergeOptions('sideBar', {
       sideMenu: {
@@ -30,8 +40,36 @@ class SideBar extends Component {
     this.props.getAllCategories();
   }
 
+  filterCategory = data => {
+    return data.filter(item => {
+      return item.SubCategories.length > 0;
+    });
+  };
+  onclickCheck = value => {
+    const {valueArray} = this.state;
+    let arr = valueArray;
+
+    if (arr.indexOf(value) !== -1) {
+      arr = valueArray.filter(item => {
+        return item !== value;
+      });
+    } else if (arr.indexOf(value) === -1) {
+      arr.push(value);
+    }
+
+    this.setState({
+      valueArray: arr,
+    });
+  };
+
+  onSearchBookWithCategory = () => {
+    const {valueArray} = this.state;
+    goAnotherScreen('searchResultFilter', valueArray, 'Tìm kiếm');
+  };
+
   render() {
     const {categoriesData} = this.props;
+    const filterCategory = this.filterCategory(categoriesData);
     return (
       <View style={[styles.container]}>
         <View style={styles.titleContainer}>
@@ -44,10 +82,10 @@ class SideBar extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.dropDown}>
-          <ScrollView style={{alignSelf: 'stretch'}}>
-            {categoriesData
-              ? categoriesData.map((param, i) => {
+        <View>
+          <ScrollView>
+            {filterCategory
+              ? filterCategory.map((param, i) => {
                   return (
                     <DropDownItem
                       key={i}
@@ -56,16 +94,19 @@ class SideBar extends Component {
                       invisibleImage={IC_ARR_DOWN}
                       visibleImage={IC_ARR_UP}
                       header={
-                        <View style={[styles.header]}>
+                        <View style={[styles.header, styles.dropDown]}>
                           <Text style={styles.text}>{param.Name}</Text>
                         </View>
                       }>
                       <View>
                         {param.SubCategories.map((element, j) => {
                           return (
-                            <View style={[styles.subCategories]} key={j}>
-                              <Text style={styles.text}>{element.Name}</Text>
-                            </View>
+                            <SideBarItem
+                              onclickCheck={value => this.onclickCheck(value)}
+                              name={element.Name}
+                              key={j}>
+                              >
+                            </SideBarItem>
                           );
                         })}
                       </View>
@@ -74,6 +115,13 @@ class SideBar extends Component {
                 })
               : null}
             <View />
+
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={() => this.onSearchBookWithCategory()}>
+              <Text style={styles.textSearch}>Tìm kết quả</Text>
+            </TouchableOpacity>
+            <View style={styles.space}></View>
           </ScrollView>
         </View>
       </View>
@@ -134,6 +182,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 10,
   },
+
   dropDownItem: {
     marginBottom: 15,
     marginTop: 15,
@@ -146,13 +195,26 @@ const styles = StyleSheet.create({
     fontFamily: 'SVN-ProximaNova',
     fontSize: 16,
   },
-  subCategories: {
-    marginBottom: 10,
-    marginTop: 10,
-    width: 500,
-  },
+
   border: {
     borderBottomColor: '#e9e9e9',
     borderBottomWidth: 0.5,
+  },
+  searchButton: {
+    backgroundColor: '#fc9619',
+    height: 60,
+    marginBottom: 50,
+
+    justifyContent: 'center',
+  },
+  textSearch: {
+    textAlign: 'center',
+    fontFamily: 'SVN-Futura',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 25,
+  },
+  space: {
+    height: 40,
   },
 });

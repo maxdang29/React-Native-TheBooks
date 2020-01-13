@@ -187,7 +187,7 @@ class BookDetail extends Component {
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                   data={relatedBooks}
-                  keyExtractor={(item, index) => item.Id}
+                  keyExtractor={(item, index) => item.Id + index}
                   renderItem={({item}) => <ColumnBookItem item={item} />}
                 />
               </View>

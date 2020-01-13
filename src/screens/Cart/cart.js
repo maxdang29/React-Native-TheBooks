@@ -31,7 +31,9 @@ class BookDetail extends Component {
                 <FlatList
                   data={data}
                   keyExtractor={(item, index) => item.Id}
-                  renderItem={({item}) => <RowBookItem item={item} />}
+                  renderItem={({item}) => (
+                    <RowBookItem item={item} isInCart={true} />
+                  )}
                 />
               </View>
             </>

@@ -26,7 +26,6 @@ class SectionListBook extends Component {
 
   render() {
     const {bookData} = this.props;
-
     return (
       <View style={styles.container}>
         <SectionList
@@ -46,11 +45,13 @@ class SectionListBook extends Component {
             return (
               <FlatList
                 data={item.data}
-                horizontal
+                horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={item => {
+                  return item.Id.toString() + Date.now().toString();
+                }}
                 renderItem={({item, index}) => (
-                  <ColumBookItem item={item} index={index} />
+                  <ColumBookItem item={item} key={Date.now().toString()} />
                 )}
               />
             );

@@ -2,19 +2,27 @@ import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 export default class CircleUserItem extends Component {
   render() {
+    const {item, type} = this.props;
+    const ImageUrl = item.ImageUrl
+      ? item.ImageUrl
+      : 'https://the-books-dev-files.s3.amazonaws.com/Image/nguyen huong_1545511306138.png';
+    const itemName = item.Name;
+    const quantity = item.BooksCount
+      ? item.BooksCount + ' lượt mượn'
+      : item.ReviewCount + ' nhận xét';
     return (
       <View style={styles.container}>
         <View style={styles.shadowView}>
           <Image
             style={styles.image}
+            resizeMode="stretch"
             source={{
-              uri:
-                'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&w=1000&q=80',
+              uri: ImageUrl,
             }}
           />
         </View>
-        <Text style={styles.borrowAuthor}>Amy Nguyen</Text>
-        <Text style={[styles.bookGrey, styles.borrowQuantity]}>36.000</Text>
+        <Text style={styles.borrowAuthor}>{itemName}</Text>
+        <Text style={[styles.bookGrey, styles.borrowQuantity]}>{quantity}</Text>
       </View>
     );
   }
@@ -48,6 +56,7 @@ const styles = StyleSheet.create({
   borrowAuthor: {
     // fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
+    textAlign: 'center',
   },
   borrowQuantity: {
     color: '#adadad',
