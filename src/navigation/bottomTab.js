@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/thebook-appicon';
 import Colors from '../themes/Colors';
 
 export const openDrawer = () => {
@@ -15,13 +16,13 @@ export const openDrawer = () => {
 
 export default function startApp() {
   Promise.all([
-    Ionicons.getImageSource('ios-bookmarks', 30),
-    Ionicons.getImageSource('ios-clipboard', 30),
-    Ionicons.getImageSource('ios-notifications', 30),
-    Ionicons.getImageSource('ios-contact', 30),
-    Ionicons.getImageSource('ios-journal', 30),
-    Ionicons.getImageSource('ios-menu', 30),
-    Ionicons.getImageSource('ios-search', 30),
+    Icons.getImageSource('ic-home', 30),
+    Icons.getImageSource('ic-order', 30),
+    Icons.getImageSource('ic-notification-1', 30),
+    Icons.getImageSource('ic-user', 30),
+    Icons.getImageSource('ic-library', 30),
+    Icons.getImageSource('ic-menu', 25),
+    Icons.getImageSource('ic-search', 25),
   ]).then(
     ([listBook, orderHistory, notifications, user, library, menu, search]) => {
       Navigation.setRoot({
@@ -73,6 +74,7 @@ export default function startApp() {
                       ],
                     },
                   },
+
                   {
                     stack: {
                       id: 'tab2',
@@ -124,13 +126,14 @@ export default function startApp() {
                       ],
                     },
                   },
+
                   {
                     stack: {
                       id: 'tab2',
                       children: [
                         {
                           component: {
-                            name: 'Login',
+                            name: 'UserProfile',
                             options: {
                               topBar: {
                                 visible: false,
@@ -146,6 +149,7 @@ export default function startApp() {
                       ],
                     },
                   },
+
                   {
                     stack: {
                       id: 'tab2',
