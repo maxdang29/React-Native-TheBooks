@@ -96,7 +96,7 @@ class Login extends React.Component {
             }}
             isRequired
             validateType="email"
-            value="huong99@gmail.com"
+            value="namdang@gmail.com"
             errorMessage={'Email không hợp lệ'}
             placeholder={'Nhập Email'}
             onSubmitEditing={() => {

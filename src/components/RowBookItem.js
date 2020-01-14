@@ -3,11 +3,19 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {goAnotherScreen} from '../navigation/navigation';
 import {countStars} from '../../src/utils/function';
+import Icons from 'react-native-vector-icons/thebook-appicon';
 
 export default class RowBookItem extends Component {
   render() {
     const {item, isInCart} = this.props;
-    console.log('item trong row', item);
+    const urlImage = item.Book
+      ? item.Book.Medias[0].ImageUrl
+      : item.Medias[0].ImageUrl;
+    const Authors = item.Book
+      ? item.Book.Authors[0].Name
+      : item.Authors[0].Name;
+    const TotalReview = item.Book ? item.Book.TotalReview : item.TotalReview;
+    const title = item.Book ? item.Book.Title : item.Title;
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -17,32 +25,33 @@ export default class RowBookItem extends Component {
               style={styles.image}
               resizeMode="stretch"
               source={{
-                uri: item.Book.Medias[0].ImageUrl,
+                uri: urlImage,
               }}
             />
           </View>
         </TouchableOpacity>
 
         <View style={styles.bookDescription}>
-          <Icon style={styles.cancelItem} name="remove" />
-          <Text style={styles.bookTitle}>
-            {item.Book.Title.substring(0, 13)} ...
-          </Text>
-          <Text style={styles.bookAuthor}>{item.Book.Authors[0].Name}</Text>
+          {isInCart ? (
+            <Icons style={styles.cancelItem} name="ic-delete" />
+          ) : null}
+
+          <Text style={styles.bookTitle}>{title} ...</Text>
+          <Text style={styles.bookAuthor}>{Authors}</Text>
           <View style={styles.viewFlexDirection}>
             {countStars(
               item.OverallStarRating,
               styles.iconRankChecked,
               styles.iconRankUnchecked,
             )}
-            <Text style={styles.bookLike}> {item.Book.TotalReview}</Text>
+            <Text style={styles.bookLike}> {TotalReview}</Text>
           </View>
 
           {!isInCart ? (
             <View style={styles.viewFlexDirection}>
               <View style={[styles.viewFlexDirection, styles.bottom]}>
                 <Icon style={styles.iconDirection} name="book" />
-                <Text style={styles.bookGrey}>{item.Quantity}</Text>
+                <Text style={styles.bookGrey}>{item.Quantity} quyển</Text>
               </View>
               <View
                 style={[
@@ -88,9 +97,11 @@ export default class RowBookItem extends Component {
 
 const styles = StyleSheet.create({
   cancelItem: {
-    marginLeft: 210,
-    top: -12,
-    fontSize: 17,
+    textAlign: 'right',
+    marginTop: -10,
+    fontSize: 12,
+    marginRight: 10,
+    marginBottom: 10,
   },
   bookQuantity: {
     fontSize: 17,
@@ -129,13 +140,12 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   bookTitle: {
-    // fontFamily: 'SVN-ProximaNova',
+    fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
-    fontSize: 18,
+    fontSize: 16,
     width: 240,
   },
   bookAuthor: {
-    // fontFamily: 'SVN-ProximaNova',
     color: '#bcbcbc',
     fontSize: 17,
     width: 230,

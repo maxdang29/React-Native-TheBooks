@@ -23,7 +23,14 @@ class ModalWriteReview extends Component {
     };
   }
   checkedStar = index => {
-    arrayStar[index] = !arrayStar[index];
+    arrayStar.map((item, i) => {
+      if (i <= index) {
+        arrayStar[i] = true;
+      } else {
+        arrayStar[i] = false;
+      }
+    });
+
     this.setState({
       stars: arrayStar,
     });
