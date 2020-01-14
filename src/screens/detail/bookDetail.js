@@ -27,8 +27,21 @@ class BookDetail extends Component {
     this.state = {
       expanded: false,
       bookContent: '',
+      userId: '',
+      token: '',
+      numberReview: 1,
     };
   }
+  getInforUser = async () => {
+    const userId = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+
+    await this.setState({
+      userId: userId,
+      token: token,
+    });
+    console.log('id user ', this.state.userId);
+  };
 
   componentDidMount() {
     const {Id, Content} = this.props.value;
@@ -36,6 +49,7 @@ class BookDetail extends Component {
     this.props.get_review_book(Id);
     this.navigationEventListener = Navigation.events().bindComponent(this);
     this.limitContent(Content);
+    this.getInforUser();
   }
 
   limitContent = content => {
@@ -57,11 +71,6 @@ class BookDetail extends Component {
         });
       }
     }
-    // else {
-    //   this.setState({
-    //     bookContent: '',
-    //   });
-    // }
   };
 
   expanded = () => {
@@ -99,7 +108,6 @@ class BookDetail extends Component {
     if (expanded === true) {
       return (
         <Text style={styles.expanded} onPress={() => this.unexpanded()}>
-          {' '}
           Thu lại
         </Text>
       );
@@ -114,9 +122,12 @@ class BookDetail extends Component {
     }
   };
 
+  showModalReview = () => {
+    const bookId = this.props.value.Id;
+    goAnotherScreen('modalWriteReview', bookId);
+  };
   onAddToCart = async (bookID, quantity) => {
-    const userId = await AsyncStorage.getItem('userId');
-    const token = await AsyncStorage.getItem('token');
+    const {userId, token} = this.state;
     const data = {
       BookId: bookID,
       Quantity: quantity,
@@ -124,12 +135,24 @@ class BookDetail extends Component {
     };
     this.props.add_to_cart(data, token);
   };
+  setNumberReview = () => {
+    const {reviewBooks} = this.props.data;
+    const {numberReview} = this.state;
+    const length = reviewBooks.length;
+
+    const number = numberReview === 1 ? length : 1;
+
+    this.setState({
+      numberReview: number,
+    });
+  };
 
   render() {
-    const {value, idUser, token, idCart} = this.props;
-    // console.log('idcart from bookdetail !', idCart);
+    const {value} = this.props;
+    const {userId, token, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
+    console.log('user id', userId);
     return (
       <>
         <ScrollView style={styles.scrollView}>
@@ -199,24 +222,34 @@ class BookDetail extends Component {
                   Nhận Xét
                 </Text>
               </View>
-              <TouchableOpacity style={styles.btnCmt}>
+              <TouchableOpacity
+                style={styles.btnCmt}
+                onPress={() => this.showModalReview()}>
                 <Text style={styles.textCmt}>
                   Viết nhận xét cho cuốn sách này!
                 </Text>
               </TouchableOpacity>
 
               <View style={[styles.bookFlatList]}>
-                {reviewBooks.map(item => {
-                  if (idUser === item.UserId) {
-                    return <CommentBook item={item} isUser={true} />;
-                  } else {
-                    return <CommentBook item={item} isUser={false} />;
+                {reviewBooks.map((item, index) => {
+                  if (index < numberReview) {
+                    if (userId === item.UserId) {
+                      return <CommentBook item={item} isUser={true} />;
+                    } else {
+                      return <CommentBook item={item} isUser={false} />;
+                    }
                   }
                 })}
               </View>
             </View>
-            <Text style={[styles.showAllCmt]}>Xem tất cả nhận xét</Text>
           </View>
+          <TouchableOpacity onPress={() => this.setNumberReview()}>
+            {numberReview === 1 ? (
+              <Text style={[styles.showAllCmt]}>Xem tất cả nhận xét</Text>
+            ) : (
+              <Text style={[styles.showAllCmt]}>Thu gọn</Text>
+            )}
+          </TouchableOpacity>
         </ScrollView>
         <View>
           <TouchableOpacity
@@ -272,7 +305,7 @@ const styles = StyleSheet.create({
     color: '#1d9dd8',
   },
   showAllCmt: {
-    marginTop: 25,
+    marginTop: 45,
     textAlign: 'center',
     color: '#1d9dd8',
     fontSize: 17,

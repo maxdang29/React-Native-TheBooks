@@ -9,7 +9,7 @@ class BookDetail extends Component {
   async componentDidMount() {
     const cartId = await AsyncStorage.getItem('cartId');
     const token = await AsyncStorage.getItem('token');
-    console.log('3333: ', cartId, token);
+
     this.props.get_all_item_in_cart(cartId, token);
   }
 
@@ -21,7 +21,6 @@ class BookDetail extends Component {
         : false
       : false;
 
-    console.log('item trong cart', data);
     return (
       <>
         <View>
@@ -47,7 +46,6 @@ class BookDetail extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('initial data ==>', state.cartReducers);
   return {
     data: state.cartReducers.data,
   };

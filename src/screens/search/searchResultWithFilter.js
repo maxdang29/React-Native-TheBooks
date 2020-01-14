@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import * as actionBooks from '../../redux/home/actions/action';
 import FlatListBookColumnItem from '../../components/flatListColumBookItem';
 import {Navigation} from 'react-native-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/thebook-appicon';
+
 import {goAnotherScreen} from '../../navigation/navigation';
 
 class SearchResultFilter extends Component {
@@ -23,6 +24,7 @@ class SearchResultFilter extends Component {
   }
   filterBookFollowCategory = () => {
     const {value, bookData} = this.props;
+
     let array = [];
     bookData.map(element => {
       element.Categories.map(item => {
@@ -31,13 +33,15 @@ class SearchResultFilter extends Component {
         }
       });
     });
-
+    console.log('value 444444', array);
     return array;
   };
   render() {
-    const {value, passPropsOption} = this.props;
+    const {value, passPropsOption, bookData} = this.props;
     const bookFilter = this.filterBookFollowCategory();
     const data = passPropsOption ? value : bookFilter;
+    console.log('value 66666677', data);
+
     return (
       <View>
         <View style={styles.container}>
@@ -45,18 +49,23 @@ class SearchResultFilter extends Component {
             style={[styles.containerItem, styles.left]}
             onPress={() => goAnotherScreen('sideBar', null, '', false)}>
             <Text style={[styles.titleFilter]}>Thể loại</Text>
-            <Icon name="ios-funnel" solid size={35} />
+            <Icons name="filter" solid size={18} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.containerItem, styles.content]}
             onPress={() => goAnotherScreen('sort', data, 'Sắp xếp', true)}>
             <Text style={[styles.titleFilter]}>Sắp xếp</Text>
-            <Icon name="ios-funnel" solid size={35} />
+            <Icons name="select" solid size={18} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.right}>
-            <Icon name="ios-apps" solid size={35} style={styles.icon} />
+            <Icons
+              name="ic-filter-change-2"
+              solid
+              size={18}
+              style={styles.icon}
+            />
           </TouchableOpacity>
         </View>
         <View style={{marginBottom: 170}}>
@@ -81,12 +90,14 @@ const styles = StyleSheet.create({
     borderRightWidth: 0.5,
     paddingRight: 10,
     paddingLeft: 10,
+    height: 50,
   },
   titleFilter: {
     flex: 1,
   },
   icon: {
     alignItems: 'center',
+    margin: 5,
   },
   left: {
     flex: 1,

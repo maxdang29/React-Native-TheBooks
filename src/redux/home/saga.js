@@ -16,7 +16,6 @@ import {
 function* getCmsHomeSummary(actions) {
   try {
     const response = yield call(getCmsHomeSummaryRequest, null);
-    console.log('response ', response);
     if (response.data.Data) {
       yield put(BookActions.getCmsHomeSummarySuccess(response.data.Data));
     }
@@ -30,6 +29,10 @@ function* getAllBook(actions) {
     const response = yield call(getAllBookRequest, null);
 
     if (response.data) {
+      response.data.Books = response.data.Books.filter(item => {
+        return item.IsDeleted === false;
+      });
+
       yield put(BookActions.getAllBookSuccess(response.data.Books));
     }
   } catch (error) {
@@ -51,7 +54,13 @@ function* getBookSuggestion(actions) {
 function* getRelatedBook(actions) {
   try {
     const response = yield call(getRelatedBookRequest, actions.data);
+
     if (response.data.Data) {
+      response.data.Data.RelatedBooks = response.data.Data.RelatedBooks.filter(
+        item => {
+          return item.IsDeleted === false;
+        },
+      );
       yield put(
         BookActions.getRelatedBookSuccess(response.data.Data.RelatedBooks),
       );
@@ -63,10 +72,11 @@ function* getRelatedBook(actions) {
 }
 
 function* getReviewBook(actions) {
+  console.log('book id', actions);
   try {
     const response = yield call(getReviewBookRequest, null);
     const reviews = response.data.Reviews.filter(
-      item => item.BookId === 'NwiXs4tl',
+      item => item.BookId === actions.data,
     );
     if (reviews) {
       yield put(BookActions.getReviewBookSuccess(reviews));
@@ -93,7 +103,6 @@ function* getBestUser(actions) {
 function* getBestReview(actions) {
   try {
     const response = yield call(getBestReviewRequest, null);
-    console.log('response best review', response.data.Data.Reviewers);
     if (response.data.Data) {
       yield put(
         BookActions.getBestReviewsSuccess(response.data.Data.Reviewers),

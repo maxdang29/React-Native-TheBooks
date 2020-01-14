@@ -60,7 +60,6 @@ class UserProfile extends React.Component {
 
   render() {
     let {slideUpValue, fadeValue, SlideInLeft} = this.state;
-    //console.log('QR', this.props.UserData.data);
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 2}} />
