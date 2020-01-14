@@ -7,7 +7,8 @@ import {
   Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/thebook-appicon';
+
 import {Colors} from '../themes';
 
 import {
@@ -78,8 +79,8 @@ export default class SpecialInput extends React.Component {
         {this.props.secureTextEntry && (
           <TouchableWithoutFeedback onPress={this.onChangeSecureState}>
             <View style={styles.iconSecure}>
-              <Icon
-                name={isSecure ? 'ios-eye-off' : 'ios-eye'}
+              <Icons
+                name={isSecure ? 'ic-hide-password' : 'ic-show-password'}
                 color={Colors.black}
                 size={25}
               />
@@ -190,10 +191,10 @@ const styles = StyleSheet.create({
   },
   iconSecure: {
     position: 'absolute',
-    top: 4,
-    right: 8,
-    width: 30,
-    height: 40,
+    top: 1,
+    right: 1,
+    width: 45,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
   },

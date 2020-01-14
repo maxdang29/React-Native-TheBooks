@@ -20,6 +20,7 @@ import * as cartAction from '../../redux/cart/actions/actions';
 import {countStars} from '../../utils/function';
 import {goAnotherScreen} from '../../navigation/navigation';
 import AsyncStorage from '@react-native-community/async-storage';
+import {showCommentForm} from '../../navigation/showCommentForm';
 
 class BookDetail extends Component {
   constructor(props) {
@@ -123,8 +124,14 @@ class BookDetail extends Component {
 
   showModalReview = () => {
     const bookId = this.props.value.Id;
-    goAnotherScreen('modalWriteReview', bookId);
+    showCommentForm('', '', [
+      {
+        text: 'Submit',
+        value: bookId,
+      },
+    ]);
   };
+
   onAddToCart = async (bookID, quantity) => {
     const {userId, token} = this.state;
     const data = {

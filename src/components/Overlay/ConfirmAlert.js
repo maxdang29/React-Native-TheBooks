@@ -3,7 +3,6 @@ import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {Text, TouchableButton} from '../index';
 import {Navigation} from 'react-native-navigation';
-
 import {Colors, Metrics} from '../../themes';
 
 export default class ConfirmAlert extends PureComponent {
