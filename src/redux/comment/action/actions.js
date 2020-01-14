@@ -1,7 +1,6 @@
 import * as types from './typesAction';
 
 export const postComment = (data, token) => {
-  console.log('data rate', data);
   return {
     type: types.ADD_COMMENT,
     data,

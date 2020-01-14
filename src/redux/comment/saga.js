@@ -12,13 +12,11 @@ function* postComment(actions) {
       actions.data,
       actions.token,
     );
-    console.log('error comment', response.data);
     if (response) {
       yield put(commentAction.postCommentSuccess(response.data.Data));
     }
   } catch (error) {
     alert(error.data.Message);
-    console.log('error comment', error.data);
     yield put(commentAction.postCommentFailed(error.data.Message));
   }
 }

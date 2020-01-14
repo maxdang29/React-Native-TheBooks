@@ -84,9 +84,10 @@ const styles = StyleSheet.create({
   header: {
     marginLeft: 20,
     flexDirection: 'row',
+    marginTop: 15,
   },
   title: {
-    fontSize: 25,
+    fontSize: 20,
     flex: 1,
   },
   seeMore: {

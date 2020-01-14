@@ -46,7 +46,6 @@ class ModalWriteReview extends Component {
     const {valueText, stars} = this.state;
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
-    console.log('token', token);
     const StarRating = stars.filter(item => item === true).length;
 
     const data = {

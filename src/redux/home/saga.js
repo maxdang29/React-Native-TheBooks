@@ -72,7 +72,6 @@ function* getRelatedBook(actions) {
 }
 
 function* getReviewBook(actions) {
-  console.log('book id', actions);
   try {
     const response = yield call(getReviewBookRequest, null);
     const reviews = response.data.Reviews.filter(

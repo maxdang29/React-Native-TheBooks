@@ -4,13 +4,23 @@ import {connect} from 'react-redux';
 import * as Action from '../../redux/cart/actions/actions';
 import RowBookItem from '../../components/RowBookItem';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Navigation} from 'react-native-navigation';
 
 class BookDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+  }
   async componentDidMount() {
     const cartId = await AsyncStorage.getItem('cartId');
     const token = await AsyncStorage.getItem('token');
-
     this.props.get_all_item_in_cart(cartId, token);
+  }
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
   }
 
   render() {

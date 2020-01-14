@@ -40,7 +40,6 @@ class BookDetail extends Component {
       userId: userId,
       token: token,
     });
-    console.log('id user ', this.state.userId);
   };
 
   componentDidMount() {
@@ -152,7 +151,6 @@ class BookDetail extends Component {
     const {userId, token, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
-    console.log('user id', userId);
     return (
       <>
         <ScrollView style={styles.scrollView}>
