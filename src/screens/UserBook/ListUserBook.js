@@ -10,41 +10,46 @@ import {
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import Login from '../Authentication/Login';
-import ListUserBook from '../UserBook/ListUserBook';
 import Register from '../Authentication/Register';
+import EmptyView from '../../components/EmptyView';
 import {Text, TouchableButton} from '../../components';
 import {Colors, Metrics} from '../../themes';
 import {connect} from 'react-redux';
 import * as loginActions from '../../redux/auth/Login/actions';
 import {showQRCode} from '../../navigation/showQRCode';
 import Icons from 'react-native-vector-icons/thebook-appicon';
-import EmptyView from '../../components/EmptyView';
 
-class UserProfile extends React.Component {
+class ListUserBook extends React.Component {
   state = {
     index: 0,
     routes: [
       {
         key: 'first',
-        title: 'Sách của bạn',
+        title: 'Đang mượn',
       },
       {
         key: 'second',
-        title: 'Sách yêu cầu',
+        title: 'Đang chờ',
       },
       {
         key: 'third',
-        title: 'Gói thành viên',
+        title: 'Yêu thích',
       },
     ],
   };
   _renderScene = SceneMap({
-    first: ListUserBook,
+    first: () => <EmptyView message={'Không có sách nào '} />,
     second: () => <EmptyView message={'Không có sách nào '} />,
-    third: () => (
-      <EmptyView message={'Bạn chưa là thành viên của '} TheBooks={true} />
-    ),
+    third: () => <EmptyView message={'Không có sách nào '} />,
   });
+
+  renderEmptyView = () => {
+    return (
+      <View>
+        <EmptyView />
+      </View>
+    );
+  };
 
   onShowQRCode = () => {
     showQRCode('', this.props.UserData.QrCode, [
@@ -54,115 +59,21 @@ class UserProfile extends React.Component {
       },
     ]);
   };
+  renderLabel = ({route, focused, color}) => {
+    return (
+      <View>
+        <Text
+          style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}>
+          {route.title}
+        </Text>
+      </View>
+    );
+  };
 
   render() {
     console.log('QR', this.props.UserData);
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 2}} />
-
-        <ImageBackground
-          style={styles.imageBackground}
-          source={{
-            uri:
-              'https://lh3.googleusercontent.com/-SZN4fL4-8rI/XhazmUR5f_I/AAAAAAAABgg/HBl3APUI3hg-WBvfwIbeFTl3tYvdbTEegCK8BGAsYHg/s0/2020-01-08.jpg',
-          }}
-          blurRadius={3}>
-          <View style={styles.profileContainer}>
-            <View style={styles.QrCodeContainer}>
-              <TouchableWithoutFeedback
-                style={{marginHorizontal: 50}}
-                onPress={this.onShowQRCode}>
-                <View style={styles.QRContainer}>
-                  <Icons
-                    name="code"
-                    size={18}
-                    color="black"
-                    style={styles.QRIcon}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-            <View style={styles.settingContainer}>
-              <TouchableWithoutFeedback
-                style={{marginHorizontal: 50}}
-                onPress={this.onShowQRCode}>
-                <Icons
-                  name="ic-setting"
-                  size={24}
-                  color="white"
-                  style={styles.settingIcon}
-                />
-              </TouchableWithoutFeedback>
-            </View>
-
-            <View>
-              <Image
-                source={{
-                  uri:
-                    'https://lh3.googleusercontent.com/-SZN4fL4-8rI/XhazmUR5f_I/AAAAAAAABgg/HBl3APUI3hg-WBvfwIbeFTl3tYvdbTEegCK8BGAsYHg/s0/2020-01-08.jpg',
-                }}
-                style={styles.avatar}
-              />
-            </View>
-
-            <View style={{marginVertical: 12}}>
-              <Text
-                style={styles.textshadow}
-                type="bold"
-                color={Colors.white}
-                sizeType="large">
-                {this.props.UserData.FullName}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingRight: 19,
-              }}>
-              <TouchableWithoutFeedback
-                style={{marginHorizontal: 50}}
-                onPress={this.onShowQRCode}>
-                <View style={styles.upGrateContainer}>
-                  <Text
-                    style={styles.textshadow}
-                    type="light"
-                    color={Colors.white}
-                    sizeType="mini">
-                    Nâng cấp
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <View style={styles.divideContainer}>
-                <Text
-                  style={styles.textshadow}
-                  type="light"
-                  color={Colors.white}
-                  sizeType="large">
-                  |
-                </Text>
-              </View>
-              <View style={styles.totalPointContainer}>
-                <Icons
-                  name="star"
-                  size={15}
-                  color="#EC9921"
-                  style={styles.totalPoint}
-                />
-              </View>
-              <Text
-                style={[
-                  styles.textshadow,
-                  {marginHorizontal: 5, marginVertical: 5},
-                ]}
-                type="light"
-                color={Colors.white}
-                sizeType="mini">
-                {this.props.UserData.TotalPoint}
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
         <TabView
           style={{flex: 3}}
           navigationState={this.state}
@@ -175,7 +86,8 @@ class UserProfile extends React.Component {
               indicatorStyle={styles.indicator}
               tabStyle={styles.bubble}
               labelStyle={styles.label}
-              style={{backgroundColor: 'transparent'}}
+              renderLabel={this.renderLabel}
+              style={{backgroundColor: Colors.white}}
             />
           )}
           swipeEnabled={true}
@@ -197,19 +109,19 @@ const mapDispatchToProps = (dispatch, props) => {
   };
 };
 // export default UserProfile;
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(ListUserBook);
 const styles = StyleSheet.create({
   scene: {
     flex: 1,
   },
   label: {
-    color: 'white',
     textTransform: 'capitalize',
     fontSize: 13,
   },
   bubble: {
     backgroundColor: 'transparent',
     top: 3,
+    height: 54,
   },
 
   profileContainer: {
@@ -275,11 +187,9 @@ const styles = StyleSheet.create({
     paddingBottom: 1.5,
   },
   indicator: {
-    backgroundColor: 'white',
-    width: 55,
-    height: 3,
-    marginHorizontal: Metrics.screenWidth / 8 - 15,
-    marginBottom: 4,
+    backgroundColor: Colors.lightBlue,
+    width: Metrics.screenWidth / 3,
+    height: 60,
   },
   totalPointContainer: {
     marginVertical: 5,
@@ -331,5 +241,11 @@ const styles = StyleSheet.create({
     width: 20,
     top: 2,
     marginHorizontal: 7,
+  },
+  activeTabTextColor: {
+    color: Colors.white,
+  },
+  tabTextColor: {
+    color: Colors.lightBlue,
   },
 });

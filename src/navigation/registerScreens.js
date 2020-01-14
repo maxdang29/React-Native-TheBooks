@@ -11,6 +11,7 @@ import Register from '../screens/Authentication/Register';
 import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
+import ListUserBook from '../screens/UserBook/ListUserBook';
 
 // import your components here
 import {
@@ -18,6 +19,8 @@ import {
   InAppNotification,
   QRCodeOverlay,
 } from '../components/Overlay';
+import EmptyView from '../components/EmptyView';
+//components
 
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Search from '../screens/search/search';
@@ -111,5 +114,15 @@ export function registerScreens() {
     'sort',
     () => ReduxProvider(Sort),
     () => Sort,
+  );
+  Navigation.registerComponent(
+    'ListUserBook',
+    () => ReduxProvider(ListUserBook),
+    () => ListUserBook,
+  );
+  Navigation.registerComponent(
+    'EmptyView',
+    () => ReduxProvider(EmptyView),
+    () => EmptyView,
   );
 }

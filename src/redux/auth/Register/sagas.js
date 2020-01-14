@@ -16,8 +16,6 @@ function* register(action) {
     //pushBottomTab();
     //startApp();
   } catch (error) {
-    console.log('log-er ', error);
-    alert(JSON.stringify(error.data.Message));
     put(registerActions.registerFail(error));
   }
 }

@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import TouchableButton from '../../components/TouchableButton';
 import {Navigation} from 'react-native-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
 import * as loginActions from '../../redux/auth/Login/actions';
 import {connect} from 'react-redux';
 import {Colors} from '../../themes';
-import Icons from 'react-native-vector-icons/thebook-appicon';
+import UserProfile from '../UserProfile/UserProfile';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends React.Component {
   static options(passProps) {
@@ -24,6 +24,7 @@ class Login extends React.Component {
   }
   constructor(props) {
     super(props);
+    this.state = {Token: ''};
   }
 
   focusNextField(nextField) {
@@ -67,18 +68,26 @@ class Login extends React.Component {
         },
       },
     });
-    // const data = {
-    //   username: 'tannguyen11',
-    //   email: 'tata469936@gmail.com',
-    //   password: '123456789',
-    //   name: 'nguyenminhanh',
-    //   phoneNumber: '0975675720',
-    // };
-    // this.props.register(data);
+  };
+  renderUserProfile = () => {
+    return <UserProfile />;
   };
 
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem('token');
+    if (token) {
+      this.setState({Token: token});
+    }
+  }
+
   render() {
-    return (
+    console.log('token', this.state.Token);
+    console.log('changeBottomTab', this.props.userData.changeBottomTab);
+    return this.state.Token !== 'startApp' ? (
+      this.renderUserProfile()
+    ) : this.props.userData.changeBottomTab ? (
+      this.renderUserProfile()
+    ) : (
       <ScrollView style={{top: 20}}>
         <View
           style={{
@@ -165,6 +174,7 @@ class Login extends React.Component {
 const mapStateToProps = state => {
   return {
     isLoading: state.loginReducer.loginLoading,
+    userData: state.loginReducer,
   };
 };
 
