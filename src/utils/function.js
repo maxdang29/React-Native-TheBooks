@@ -6,6 +6,10 @@ export const convertDataToSection = (data, NAME) => {
   const arr = [];
   _.map(data, (value, key) => {
     if (NAME[key] && value.length > 0) {
+      value = value.filter(item => {
+        return item.IsDeleted === false;
+      });
+      console.log('value filter', value);
       arr.push({title: NAME[key], key: key, data: [{data: value}]});
     }
   });

@@ -113,7 +113,7 @@ class Login extends React.Component {
             }}
             isRequired
             validateType="email"
-            value="tata46996@gmail.com"
+            value="namdang@gmail.com"
             errorMessage={'Email không hợp lệ'}
             placeholder={'Nhập Email'}
             onSubmitEditing={() => {
@@ -129,6 +129,7 @@ class Login extends React.Component {
             // secureTextEntry
             isRequired
             validateType="password"
+            value="123456789"
             errorMessage={'Mật khẩu không hợp lệ'}
             placeholder={'Nhập mật khẩu'}
           />
@@ -208,5 +209,5 @@ const styles = StyleSheet.create({
   },
   textButton: {fontSize: 16, fontFamily: 'SVN-ProximaNova'},
 });
-// eslint-disable-next-line prettier/prettier
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -60,6 +60,7 @@ export default class Sort extends Component {
         return 0;
       }
     });
+    
     goAnotherScreen('searchResultFilter', arr, 'Tìm kiếm', true, true);
   };
 

@@ -56,7 +56,6 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    console.log('QR', this.props.UserData);
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 2}} />

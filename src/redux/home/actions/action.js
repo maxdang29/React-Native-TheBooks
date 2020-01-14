@@ -97,3 +97,44 @@ export const getBookSuggestionSuccess = data => {
     data,
   };
 };
+
+//getBestUsers
+
+export const getBestUsers = () => {
+  return {
+    type: types.GET_BEST_USER,
+  };
+};
+
+export const getBestUsersFailed = error => {
+  return {
+    type: types.GET_BEST_USER_FAILED,
+    error,
+  };
+};
+export const getBestUsersSuccess = data => {
+  return {
+    type: types.GET_BEST_USER_SUCCESS,
+    data,
+  };
+};
+
+//getBestReviews
+export const getBestReviews = () => {
+  return {
+    type: types.GET_BEST_REVIEW,
+  };
+};
+
+export const getBestReviewsFailed = error => {
+  return {
+    type: types.GET_BEST_REVIEW_FAILED,
+    error,
+  };
+};
+export const getBestReviewsSuccess = data => {
+  return {
+    type: types.GET_BEST_REVIEW_SUCCESS,
+    data,
+  };
+};
