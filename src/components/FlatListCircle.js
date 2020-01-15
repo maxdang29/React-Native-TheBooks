@@ -11,7 +11,6 @@ export default class FlatListCircle extends Component {
     const {passData, title, type} = this.props;
 
     const data = passData ? Array.isArray(passData) : undefined;
-    console.log('best user 22222', data);
 
     return data ? (
       <View>

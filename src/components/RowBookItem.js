@@ -6,6 +6,7 @@ import {countStars} from '../../src/utils/function';
 import {connect} from 'react-redux';
 import * as Action from '../redux/cart/actions/actions';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icons from 'react-native-vector-icons/thebook-appicon';
 
 class RowBookItem extends Component {
   updateQuantity = async (quantity, bookId) => {
@@ -33,6 +34,14 @@ class RowBookItem extends Component {
 
   render() {
     const {item, isInCart} = this.props;
+    const urlImage = item.Book
+      ? item.Book.Medias[0].ImageUrl
+      : item.Medias[0].ImageUrl;
+    const Authors = item.Book
+      ? item.Book.Authors[0].Name
+      : item.Authors[0].Name;
+    const TotalReview = item.Book ? item.Book.TotalReview : item.TotalReview;
+    const title = item.Book ? item.Book.Title : item.Title;
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -42,35 +51,36 @@ class RowBookItem extends Component {
               style={styles.image}
               resizeMode="stretch"
               source={{
-                uri: item.Book.Medias[0].ImageUrl,
+                uri: urlImage,
               }}
             />
           </View>
         </TouchableOpacity>
 
         <View style={styles.bookDescription}>
-          <TouchableOpacity onPress={() => this.deleteItemInCart(item.Book.Id)}>
-            <Icon style={styles.cancelItem} name="remove" />
-          </TouchableOpacity>
+          {isInCart ? (
+            <TouchableOpacity
+              onPress={() => this.deleteItemInCart(item.Book.Id)}>
+              <Icons style={styles.cancelItem} name="ic-delete" />
+            </TouchableOpacity>
+          ) : null}
 
-          <Text style={styles.bookTitle}>
-            {item.Book.Title.substring(0, 16)} ...
-          </Text>
-          <Text style={styles.bookAuthor}>{item.Book.Authors[0].Name}</Text>
+          <Text style={styles.bookTitle}>{title} ...</Text>
+          <Text style={styles.bookAuthor}>{Authors}</Text>
           <View style={styles.viewFlexDirection}>
             {countStars(
               item.OverallStarRating,
               styles.iconRankChecked,
               styles.iconRankUnchecked,
             )}
-            <Text style={styles.bookLike}> {item.Book.TotalReview}</Text>
+            <Text style={styles.bookLike}> {TotalReview}</Text>
           </View>
 
           {!isInCart ? (
             <View style={styles.viewFlexDirection}>
               <View style={[styles.viewFlexDirection, styles.bottom]}>
                 <Icon style={styles.iconDirection} name="book" />
-                <Text style={styles.bookGrey}>{item.Quantity}</Text>
+                <Text style={styles.bookGrey}>{item.Quantity} quyển</Text>
               </View>
               <View
                 style={[
@@ -147,9 +157,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(RowBookItem);
 
 const styles = StyleSheet.create({
   cancelItem: {
-    top: -12,
-    paddingLeft: 150,
-    fontSize: 17,
+    // textAlign: 'right',
+    // marginTop: -10,
+    // fontSize: 12,
+    // marginRight: 20,
+    // marginBottom: 10,
   },
   bookQuantity: {
     fontSize: 17,
@@ -188,13 +200,12 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   bookTitle: {
-    // fontFamily: 'SVN-ProximaNova',
+    fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
-    fontSize: 18,
+    fontSize: 16,
     width: 240,
   },
   bookAuthor: {
-    // fontFamily: 'SVN-ProximaNova',
     color: '#bcbcbc',
     fontSize: 17,
     width: 230,

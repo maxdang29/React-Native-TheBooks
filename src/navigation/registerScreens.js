@@ -11,6 +11,7 @@ import Register from '../screens/Authentication/Register';
 import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
+import ModalWriteReview from '../components/modalWriteReview';
 
 // import your components here
 import {
@@ -118,5 +119,10 @@ export function registerScreens() {
     'sort',
     () => ReduxProvider(Sort),
     () => Sort,
+  );
+  Navigation.registerComponent(
+    'modalWriteReview',
+    () => ReduxProvider(ModalWriteReview),
+    () => ModalWriteReview,
   );
 }

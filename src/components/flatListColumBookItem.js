@@ -10,6 +10,7 @@ export default class FlatListBookColumnItem extends Component {
 
   render() {
     const {data, row} = this.props;
+    console.log('data33333', data);
 
     return (
       <FlatList

@@ -42,3 +42,7 @@ export const updateItemInCartRequest = (idBasket, data, token) => {
 export const deleteItemInCartRequest = (data, token) => {
   return callApi('/api/basket/', 'DELETE', data, token);
 };
+
+export const postCommentRequest = (data, token) => {
+  return callApi('/api/reviews', 'POST', data, token);
+};
