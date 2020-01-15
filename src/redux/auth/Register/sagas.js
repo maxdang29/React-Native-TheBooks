@@ -18,7 +18,7 @@ function* register(action) {
   } catch (error) {
     console.log('log-er ', error);
     alert(JSON.stringify(error.data.Message));
-    put(registerActions.registerFail(error));
+    yield put(registerActions.registerFail(error));
   }
 }
 // export default function* rootSagaRegister() {

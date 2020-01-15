@@ -16,7 +16,6 @@ export default function callApi(endpoint, method = 'GET', body, Token) {
     },
   })
     .then(function(response) {
-      console.log('response888888888 ', response);
       return response;
     })
     .catch(err => {

@@ -38,6 +38,18 @@ class BookDetail extends Component {
     this.limitContent(Content);
   }
 
+  checkContent = content => {
+    if (content.length > 300) {
+      this.setState({
+        expanded: false,
+      });
+    } else {
+      this.setState({
+        expanded: null,
+      });
+    }
+  };
+
   limitContent = content => {
     const {expanded} = this.state;
     if (content != null) {
@@ -54,14 +66,15 @@ class BookDetail extends Component {
       } else {
         this.setState({
           bookContent: content,
+          expanded: null,
         });
       }
+    } else {
+      this.setState({
+        bookContent: content,
+        expanded: null,
+      });
     }
-    // else {
-    //   this.setState({
-    //     bookContent: '',
-    //   });
-    // }
   };
 
   expanded = () => {
@@ -126,8 +139,7 @@ class BookDetail extends Component {
   };
 
   render() {
-    const {value, idUser, token, idCart} = this.props;
-    // console.log('idcart from bookdetail !', idCart);
+    const {value, idUser} = this.props;
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
     return (
@@ -157,13 +169,15 @@ class BookDetail extends Component {
               </View>
 
               <View style={styles.viewFlexDirection}>
-                {value.Categories.map(item => {
-                  return (
-                    <TouchableOpacity style={styles.btnBookType}>
-                      <Text style={styles.textBookType}>{item.Name}</Text>
-                    </TouchableOpacity>
-                  );
-                })}
+                {value.Categories
+                  ? value.Categories.map(item => {
+                      return (
+                        <TouchableOpacity style={styles.btnBookType}>
+                          <Text style={styles.textBookType}>{item.Name}</Text>
+                        </TouchableOpacity>
+                      );
+                    })
+                  : null}
               </View>
             </View>
 
@@ -219,11 +233,6 @@ class BookDetail extends Component {
           </View>
         </ScrollView>
         <View>
-          <TouchableOpacity
-            style={styles.footer}
-            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
-            <Text style={styles.footer_text}>Go to cart</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.footer}
             onPress={() => this.onAddToCart(value.Id, 1)}>
