@@ -14,17 +14,45 @@ import FlatListCircle from '../../components/FlatListCircle';
 
 import {connect} from 'react-redux';
 import * as actionUser from '../../redux/home/actions/action';
+import * as actionHome from '../../redux/home/actions/action';
 import Icons from 'react-native-vector-icons/thebook-appicon';
-
+import SplashScreen from '../splashScreen';
+import {convertDataToSection} from '../../utils/function';
+const NAME = {
+  NewBooks: 'Sách Mới',
+  HotTrendBooks: 'Sách Được Yêu thích',
+  MostBorrowBooks: 'Sách Mượn Nhiều',
+};
 class Home extends Component {
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this);
-    
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        visible: false,
+      },
+      bottomTabs: {
+        visible: false,
+      },
+    });
   }
   componentDidMount() {
+    this.props.getCmsHomeSummary();
     this.props.getBestUsers();
     this.props.getBestReviews();
+  }
+  componentDidUpdate() {
+    const {loading} = this.props;
+    if (loading === false) {
+      Navigation.mergeOptions(this.props.componentId, {
+        topBar: {
+          visible: true,
+        },
+        bottomTabs: {
+          visible: true,
+        },
+      });
+    }
   }
   navigationButtonPressed({buttonId}) {
     if (buttonId === 'sideMenu') {
@@ -46,11 +74,18 @@ class Home extends Component {
   }
 
   render() {
-    const {bestUser, bestReview} = this.props;
+    const {bestUser, bestReview, loading, bookData} = this.props;
+
+    if (loading) {
+      return <SplashScreen />;
+    }
     return (
       <View>
         <ScrollView>
-          <SectionListBook componentId={this.props.componentId} />
+          <SectionListBook
+            componentId={this.props.componentId}
+            bookData={bookData}
+          />
           <FlatListCircle
             passData={bestUser}
             title={'Top 10 bạn đọc mượn sách'}
@@ -88,14 +123,20 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = store => {
+  console.log('store 33', store.homeReducer.loading);
   return {
+    bookData: convertDataToSection(store.homeReducer.data, NAME),
     bestUser: store.homeReducer.bestUser,
     bestReview: store.homeReducer.bestReview,
+    loading: store.homeReducer.loading,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    getCmsHomeSummary: () => {
+      dispatch(actionHome.getCmsHomeSummary());
+    },
     getBestUsers: () => {
       dispatch(actionUser.getBestUsers());
     },

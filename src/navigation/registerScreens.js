@@ -33,6 +33,8 @@ import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
 
+import SplashScreen from '../screens/splashScreen';
+
 function ReduxProvider(Component) {
   return props => (
     <Provider store={store}>
@@ -143,5 +145,11 @@ export function registerScreens() {
     'UserSetting',
     () => ReduxProvider(UserSetting),
     () => UserSetting,
+  );
+
+  Navigation.registerComponent(
+    'splashScreen',
+    () => ReduxProvider(SplashScreen),
+    () => SplashScreen,
   );
 }

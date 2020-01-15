@@ -9,15 +9,17 @@ const init = {
   searchSuggestion: [],
   bestUser: [],
   bestReview: [],
+  loading: false,
 };
 
 const homeReducers = (state = init, action) => {
   switch (action.type) {
+    case types.GET_CMS_HOME_SUMMARY:
+      return {...state, loading: true};
     case types.GET_CMS_HOME_SUMMARY_SUCCESS:
-      return {...state, data: action.data};
+      return {...state, data: action.data, loading: false};
     case types.GET_RELATED_BOOK_SUCCESS:
       return {...state, relatedBooks: action.data};
-
 
     case types.GET_ALL_BOOK_SUCCESS:
       return {...state, search: action.data};
