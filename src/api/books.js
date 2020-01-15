@@ -8,10 +8,6 @@ export const getRelatedBookRequest = data => {
   return callApi('/api/books/' + data + '/relatedbooks', 'GET', null);
 };
 
-export const getReviewBookRequest = data => {
-  return callApi('/api/reviews', 'GET', null);
-};
-
 export const getAllBookRequest = data => {
   return callApi('/api/books', 'GET', data);
 };
@@ -33,8 +29,4 @@ export const getBestUserRequest = data => {
 
 export const getBestReviewRequest = data => {
   return callApi('/api/cms/reviews', 'GET', data);
-};
-
-export const postCommentRequest = (data, token) => {
-  return callApi('/api/reviews', 'POST', data, token);
 };

@@ -5,10 +5,44 @@ import Icons from 'react-native-vector-icons/thebook-appicon';
 import {countStars} from '../../src/utils/function';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import {showCommentForm} from '../navigation/showCommentForm';
+import {showConfirmAlert} from '../navigation/showConfirmAlert';
+import * as actionComment from '../redux/comment/action/actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class CommentBook extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  onUpdate = () => {
+    const {item} = this.props;
+    console.log('item show', item);
+    showCommentForm('', '', [
+      {
+        text: 'Submit',
+        value: {item, update: true},
+      },
+    ]);
+  };
+  onDeleteComment = async () => {
+    const token = await AsyncStorage.getItem('token');
+    const {item} = this.props;
+    showConfirmAlert('Bạn có muốn xóa nhận xét này', '', [
+      {
+        text: 'Đóng',
+      },
+      {
+        text: 'Xóa',
+        onPress: () => {
+          this.props.deleteReviewBook(item.Id, token);
+        },
+      },
+    ]);
+  };
   render() {
     const {item, isUser} = this.props;
+    console.log('item22222222', item);
     return (
       <>
         <View style={styles.container}>
@@ -35,10 +69,14 @@ class CommentBook extends Component {
 
           {isUser ? (
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => this.onUpdate()}>
                 <Icons style={styles.icon} name="ic-edit-comment" />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => this.onDeleteComment()}>
                 <Icons style={styles.icon} name="ic-trash" />
               </TouchableOpacity>
             </View>
@@ -58,7 +96,19 @@ class CommentBook extends Component {
   }
 }
 
-export default connect(null, null)(CommentBook);
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteReviewBook: (id, token) => {
+      dispatch(actionComment.deleteReviewBook(id, token));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentBook);
 
 const styles = StyleSheet.create({
   cmtContent: {

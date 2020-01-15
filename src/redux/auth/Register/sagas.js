@@ -12,7 +12,7 @@ function* register(action) {
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
     showInAppNotification('Đăng Kí thành công', 'Chào mừng đến với The Books');
   } catch (error) {
-    showInAppNotification('Đăng kí', error.data.Message, 'error');
+    showInAppNotification('Đăng kí', error.data.Message, 'error'); 
     yield put(registerActions.registerFail(error));
   }
 }

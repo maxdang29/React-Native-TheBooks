@@ -71,21 +71,6 @@ function* getRelatedBook(actions) {
   }
 }
 
-function* getReviewBook(actions) {
-  try {
-    const response = yield call(getReviewBookRequest, null);
-    const reviews = response.data.Reviews.filter(
-      item => item.BookId === actions.data,
-    );
-    if (reviews) {
-      yield put(BookActions.getReviewBookSuccess(reviews));
-    }
-  } catch (error) {
-    console.log(error);
-    yield put(BookActions.getReviewBookFailure(error));
-  }
-}
-
 function* getBestUser(actions) {
   try {
     const response = yield call(getBestUserRequest, null);
@@ -116,7 +101,6 @@ function* getBestReview(actions) {
 const rootSagaHome = () => [
   takeLatest(ActionTypes.GET_ALL_BOOK, getAllBook),
   takeLatest(ActionTypes.GET_RELATED_BOOK, getRelatedBook),
-  takeLatest(ActionTypes.GET_REVIEW_BOOK, getReviewBook),
   takeLatest(ActionTypes.GET_CMS_HOME_SUMMARY, getCmsHomeSummary),
   takeLatest(ActionTypes.GET_BOOK_SUGGESTION, getBookSuggestion),
   takeLatest(ActionTypes.GET_BEST_USER, getBestUser),

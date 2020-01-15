@@ -3,9 +3,7 @@ import * as ActionTypes from '../cart/actions/typesAction';
 import * as CartActions from '../cart/actions/actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ToastAndroid} from 'react-native';
-import store from '../store';
 
-// import store from '../store';
 import {addToCartRequest, getAllItemInCartRequest} from '../../api/books';
 
 function* addToCart(actions) {

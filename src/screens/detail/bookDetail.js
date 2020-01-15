@@ -15,8 +15,10 @@ import {Navigation} from 'react-native-navigation';
 
 import ColumnBookItem from '../../components/ColumnBookItem';
 import CommentBook from '../../components/CommentBook';
-import * as Action from '../../redux/home/actions/action';
+import * as bookAction from '../../redux/home/actions/action';
 import * as cartAction from '../../redux/cart/actions/actions';
+import * as commentAction from '../../redux/comment/action/actions';
+
 import {countStars} from '../../utils/function';
 import {goAnotherScreen} from '../../navigation/navigation';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -50,6 +52,14 @@ class BookDetail extends Component {
     this.navigationEventListener = Navigation.events().bindComponent(this);
     this.limitContent(Content);
     this.getInforUser();
+  }
+  componentDidUpdate() {
+    const {commentLoading} = this.props;
+    console.log('commentLoading', commentLoading);
+    if (commentLoading) {
+      const {Id} = this.props.value;
+      this.props.get_review_book(Id);
+    }
   }
 
   limitContent = content => {
@@ -134,15 +144,16 @@ class BookDetail extends Component {
 
   onAddToCart = async (bookID, quantity) => {
     const {userId, token} = this.state;
+
     const data = {
       BookId: bookID,
       Quantity: quantity,
       UserId: userId,
     };
-    this.props.add_to_cart(data, token);
+    await this.props.add_to_cart(data, token);
   };
   setNumberReview = () => {
-    const {reviewBooks} = this.props.data;
+    const {reviewBooks} = this.props;
     const {numberReview} = this.state;
     const length = reviewBooks.length;
 
@@ -154,9 +165,11 @@ class BookDetail extends Component {
   };
 
   render() {
+    console.log('render');
     const {value} = this.props;
     const {userId, token, numberReview} = this.state;
-    const {relatedBooks, reviewBooks} = this.props.data;
+    const {relatedBooks, reviewBooks} = this.props;
+    console.log('reviews book', reviewBooks);
     const {bookContent, expanded} = this.state;
     return (
       <>
@@ -227,6 +240,7 @@ class BookDetail extends Component {
                   Nhận Xét
                 </Text>
               </View>
+
               <TouchableOpacity
                 style={styles.btnCmt}
                 onPress={() => this.showModalReview()}>
@@ -279,20 +293,23 @@ async function getStore() {
 }
 
 const mapStateToProps = state => {
+  console.log('store', state.commentReducers);
   return {
-    data: state.homeReducer,
+    relatedBooks: state.homeReducer.relatedBooks,
+    reviewBooks: state.commentReducers.comment,
     idUser: state.loginReducer.data.Id,
     token: state.loginReducer.token,
+    commentLoading: state.commentReducers.commentLoading,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     get_related_book: id => {
-      dispatch(Action.getRelatedBook(id));
+      dispatch(bookAction.getRelatedBook(id));
     },
     get_review_book: id => {
-      dispatch(Action.getReviewBook(id));
+      dispatch(commentAction.getReviewBook(id));
     },
     add_to_cart: (data, token) => {
       dispatch(cartAction.addToCart(data, token));

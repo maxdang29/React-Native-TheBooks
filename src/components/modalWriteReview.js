@@ -24,6 +24,7 @@ class ModalWriteReview extends Component {
     this.state = {
       stars: arrayStar,
       valueText: '',
+      update: false,
     };
   }
   onActionButtonPress = actionFunc => {
@@ -58,25 +59,44 @@ class ModalWriteReview extends Component {
   };
   postComment = async () => {
     const actions = this.props.actions;
-    const {valueText, stars} = this.state;
+    const {valueText, stars, update} = this.state;
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
     const StarRating = stars.filter(item => item === true).length;
-
+    const BookId = update ? actions[0].value.item.BookId : actions[0].value;
     const data = {
-      BookId: actions[0].value,
+      BookId: BookId,
       UserId: userId,
       Content: valueText,
       StarRating: StarRating,
       IsDeleted: false,
       IsOutstanding: false,
     };
-
-    this.props.postComment(data, token);
-    this.onActionButtonPress(actions[0].onPress);
+    if (update) {
+      const {actions} = this.props;
+      const id = actions[0].value.item.Id;
+      console.log('id', id);
+      await this.props.updateComment(id, data, token);
+    } else {
+      await this.props.postComment(data, token);
+    }
+    this.dismiss();
   };
+  componentDidMount() {
+    const {actions} = this.props;
+
+    if (typeof actions[0].value.update !== 'undefined') {
+      const item = actions[0].value.item;
+      console.log('action modal', item);
+      this.setState({
+        valueText: item.Content,
+        update: true,
+      });
+      this.checkedStar(item.StarRating);
+    }
+  }
   render() {
-    const {stars} = this.state;
+    const {stars, valueText, update} = this.state;
     const actions = this.props.actions;
     return (
       <ScrollView>
@@ -87,9 +107,10 @@ class ModalWriteReview extends Component {
               <View style={styles.starContainer}>
                 {stars.map((item, index) => {
                   return (
-                    <TouchableOpacity onPress={() => this.checkedStar(index)}>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => this.checkedStar(index)}>
                       <Icons
-                        key={index}
                         name="star"
                         size={40}
                         color="black"
@@ -108,12 +129,13 @@ class ModalWriteReview extends Component {
               <View>
                 <TextInput
                   multiline={true}
-                  numberOfLines={8}
+                  numberOfLines={6}
                   style={styles.textInput}
                   placeholder={
                     'Nhập nội dung nhận xét ở đây, tối thiểu 30 ký tự, tối đa 2000 ký tự'
                   }
                   onChangeText={text => this.onChangeText({text})}
+                  value={valueText}
                 />
                 <View style={styles.starContainer}>
                   <TouchableButton
@@ -121,12 +143,12 @@ class ModalWriteReview extends Component {
                     style={styles.button}
                     isOutlineMode={true}
                     buttonColor={Colors.lightBlue}
-                    onPress={() => this.onActionButtonPress(actions[0].onPress)}
+                    onPress={() => this.dismiss()}
                     textStyle={styles.textButton}
                     loading={this.props.isLoading}
                   />
                   <TouchableButton
-                    title={'Gửi nhận xét'}
+                    title={update ? 'Sữa nhận xét' : 'Gửi nhận xét'}
                     style={styles.button}
                     buttonColor={Colors.lightBlue}
                     onPress={() => this.postComment()}
@@ -164,6 +186,9 @@ const mapDispatchToProps = dispatch => {
     postComment: (data, token) => {
       dispatch(commentAction.postComment(data, token));
     },
+    updateComment: (id, data, token) => {
+      dispatch(commentAction.updateComment(id, data, token));
+    },
   };
 };
 
@@ -190,7 +215,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   childContainer: {
-    marginBottom: 40,
+    marginBottom: 15,
   },
   icon: {
     height: 50,
@@ -210,8 +235,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SVN-ProximaNova',
     color: '#393939',
     fontSize: 18,
-    marginBottom: 15,
-    marginTop: 20,
+    marginBottom: 5,
+    marginTop: 15,
   },
   textInput: {
     borderColor: '#cecece',
@@ -221,10 +246,10 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    margin: 20,
+    margin: 10,
     borderColor: '#41b8c1',
     borderWidth: 1,
-    width: 140,
+    width: 130,
     borderRadius: 3,
   },
   buttonSendReview: {
