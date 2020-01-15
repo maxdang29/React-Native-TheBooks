@@ -21,6 +21,7 @@ class Search extends Component {
     this.state = {
       value: '',
     };
+    this.navigationEventListener = Navigation.events().bindComponent(this);
   }
   static options(passProps) {
     return {
@@ -31,7 +32,12 @@ class Search extends Component {
       },
     };
   }
-
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
+  }
   componentDidMount() {
     this.props.getAllBook();
     this.props.getBookSuggestion();

@@ -126,7 +126,6 @@ export default function startApp() {
                       ],
                     },
                   },
-
                   {
                     stack: {
                       id: 'tab2',
@@ -156,7 +155,7 @@ export default function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'Login',
+                            name: 'EmptyView',
                             options: {
                               topBar: {
                                 leftButtons: [

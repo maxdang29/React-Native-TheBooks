@@ -15,11 +15,14 @@ import {Navigation} from 'react-native-navigation';
 
 import ColumnBookItem from '../../components/ColumnBookItem';
 import CommentBook from '../../components/CommentBook';
-import * as Action from '../../redux/home/actions/action';
+import * as bookAction from '../../redux/home/actions/action';
 import * as cartAction from '../../redux/cart/actions/actions';
+import * as commentAction from '../../redux/comment/action/actions';
+
 import {countStars} from '../../utils/function';
 import {goAnotherScreen} from '../../navigation/navigation';
 import AsyncStorage from '@react-native-community/async-storage';
+import {showCommentForm} from '../../navigation/showCommentForm';
 
 class BookDetail extends Component {
   constructor(props) {
@@ -42,12 +45,21 @@ class BookDetail extends Component {
   };
 
   componentDidMount() {
+    console.log('mount');
     const {Id, Content} = this.props.value;
     this.props.get_related_book(Id);
     this.props.get_review_book(Id);
     this.navigationEventListener = Navigation.events().bindComponent(this);
     this.limitContent(Content);
     this.getInforUser();
+  }
+  componentDidUpdate() {
+    const {commentLoading} = this.props;
+    console.log('commentLoading', commentLoading);
+    if (commentLoading) {
+      const {Id} = this.props.value;
+      this.props.get_review_book(Id);
+    }
   }
 
   checkContent = content => {
@@ -140,19 +152,26 @@ class BookDetail extends Component {
 
   showModalReview = () => {
     const bookId = this.props.value.Id;
-    goAnotherScreen('modalWriteReview', bookId);
+    showCommentForm('', '', [
+      {
+        text: 'Submit',
+        value: bookId,
+      },
+    ]);
   };
+
   onAddToCart = async (bookID, quantity) => {
     const {userId, token} = this.state;
+
     const data = {
       BookId: bookID,
       Quantity: quantity,
       UserId: userId,
     };
-    this.props.add_to_cart(data, token);
+    await this.props.add_to_cart(data, token);
   };
   setNumberReview = () => {
-    const {reviewBooks} = this.props.data;
+    const {reviewBooks} = this.props;
     const {numberReview} = this.state;
     const length = reviewBooks.length;
 
@@ -164,9 +183,10 @@ class BookDetail extends Component {
   };
 
   render() {
+    console.log('render');
     const {value} = this.props;
     const {userId, numberReview} = this.state;
-    const {relatedBooks, reviewBooks} = this.props.data;
+    const {relatedBooks, reviewBooks} = this.props;
     const {bookContent, expanded} = this.state;
     return (
       <>
@@ -223,13 +243,15 @@ class BookDetail extends Component {
                 <Text style={styles.seeMore}>Xem thêm</Text>
               </View>
               <View style={[styles.bookFlatList]}>
-                <FlatList
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  data={relatedBooks}
-                  keyExtractor={(item, index) => item.Id + index}
-                  renderItem={({item}) => <ColumnBookItem item={item} />}
-                />
+                {relatedBooks ? (
+                  <FlatList
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    data={relatedBooks}
+                    keyExtractor={(item, index) => item.Id + index}
+                    renderItem={({item}) => <ColumnBookItem item={item} />}
+                  />
+                ) : null}
               </View>
             </View>
             <View style={styles.viewOfCmt}>
@@ -239,6 +261,7 @@ class BookDetail extends Component {
                   Nhận Xét
                 </Text>
               </View>
+
               <TouchableOpacity
                 style={styles.btnCmt}
                 onPress={() => this.showModalReview()}>
@@ -248,15 +271,17 @@ class BookDetail extends Component {
               </TouchableOpacity>
 
               <View style={[styles.bookFlatList]}>
-                {reviewBooks.map((item, index) => {
-                  if (index < numberReview) {
-                    if (userId === item.UserId) {
-                      return <CommentBook item={item} isUser={true} />;
-                    } else {
-                      return <CommentBook item={item} isUser={false} />;
-                    }
-                  }
-                })}
+                {reviewBooks
+                  ? reviewBooks.map((item, index) => {
+                      if (index < numberReview) {
+                        if (userId === item.UserId) {
+                          return <CommentBook item={item} isUser={true} />;
+                        } else {
+                          return <CommentBook item={item} isUser={false} />;
+                        }
+                      }
+                    })
+                  : null}
               </View>
             </View>
           </View>
@@ -286,20 +311,23 @@ async function getStore() {
 }
 
 const mapStateToProps = state => {
+  console.log('store', state);
   return {
-    data: state.homeReducer,
+    relatedBooks: state.homeReducer.relatedBooks,
+    reviewBooks: state.commentReducers.comment,
     idUser: state.loginReducer.data.Id,
     token: state.loginReducer.token,
+    commentLoading: state.commentReducers.commentLoading,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     get_related_book: id => {
-      dispatch(Action.getRelatedBook(id));
+      dispatch(bookAction.getRelatedBook(id));
     },
     get_review_book: id => {
-      dispatch(Action.getReviewBook(id));
+      dispatch(commentAction.getReviewBook(id));
     },
     add_to_cart: (data, token) => {
       dispatch(cartAction.addToCart(data, token));

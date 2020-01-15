@@ -2,7 +2,6 @@ import {put, takeLatest, call, all} from 'redux-saga/effects';
 import {registerApi} from '../../../api/auth';
 import * as registerType from './actionTypes';
 import * as registerActions from './actions';
-import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {showInAppNotification} from '../../../navigation/showInAppNotification';
 

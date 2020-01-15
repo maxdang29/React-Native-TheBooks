@@ -14,7 +14,6 @@ const cartReducers = (state = init, action) => {
       return {...state, data: action.data, loadingCart: false};
     case types.ADD_TO_CART_FAILED:
       return {...state, error: action.error, loadingCart: false};
-
     case types.GET_ALL_ITEM_IN_CART:
       return {...state, loadingCart: true};
     case types.GET_ALL_ITEM_IN_CART_FAILED:

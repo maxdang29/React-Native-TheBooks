@@ -6,7 +6,6 @@ import {countStars} from '../../src/utils/function';
 export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
-    console.log('item 66612345', item.Medias[0].ImageUrl);
     return (
       <TouchableOpacity
         style={styles.container}

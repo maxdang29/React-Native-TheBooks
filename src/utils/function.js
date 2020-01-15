@@ -9,7 +9,6 @@ export const convertDataToSection = (data, NAME) => {
       value = value.filter(item => {
         return item.IsDeleted === false;
       });
-      console.log('value filter', value);
       arr.push({title: NAME[key], key: key, data: [{data: value}]});
     }
   });

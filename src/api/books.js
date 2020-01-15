@@ -8,10 +8,6 @@ export const getRelatedBookRequest = data => {
   return callApi('/api/books/' + data + '/relatedbooks', 'GET', null);
 };
 
-export const getReviewBookRequest = data => {
-  return callApi('/api/reviews', 'GET', null);
-};
-
 export const getAllBookRequest = data => {
   return callApi('/api/books', 'GET', data);
 };
