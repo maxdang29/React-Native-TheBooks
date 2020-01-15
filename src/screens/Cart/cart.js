@@ -1,53 +1,113 @@
 import React, {Component} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {connect} from 'react-redux';
 import * as Action from '../../redux/cart/actions/actions';
 import RowBookItem from '../../components/RowBookItem';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Navigation} from 'react-native-navigation';
 
-class BookDetail extends Component {
+class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+  }
   async componentDidMount() {
     const cartId = await AsyncStorage.getItem('cartId');
     const token = await AsyncStorage.getItem('token');
-
     this.props.get_all_item_in_cart(cartId, token);
+  }
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
   }
 
   render() {
     const {data} = this.props;
+    let {loading} = this.props;
     let isExistsData = Array.isArray(data)
       ? data.length !== 0
         ? true
         : false
-      : false;
+      : (loading = true);
 
-    return (
+    return loading ? (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" />
+      </View>
+    ) : isExistsData ? (
       <>
-        <View>
-          {isExistsData ? (
-            <>
-              <View>
-                <FlatList
-                  data={data}
-                  keyExtractor={(item, index) => item.Id}
-                  renderItem={({item}) => (
-                    <RowBookItem item={item} isInCart={true} />
-                  )}
-                />
-              </View>
-            </>
-          ) : (
-            <Text>không có sản phẩm nào!</Text>
-          )}
+        <ScrollView>
+          <View>
+            <FlatList
+              data={data}
+              keyExtractor={(item, index) => item.Id}
+              renderItem={({item}) => (
+                <RowBookItem item={item} isInCart={true} />
+              )}
+            />
+          </View>
+        </ScrollView>
+
+        <View style={styles.footer}>
+          <TouchableOpacity>
+            <Text style={styles.footer_text}>Đặt hàng</Text>
+          </TouchableOpacity>
         </View>
       </>
+    ) : (
+      <View>
+        <Image
+          style={{width: 200, height: 200}}
+          resizeMode="stretch"
+          source={{
+            uri:
+              'https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png',
+          }}
+        />
+      </View>
     );
   }
 }
 
+const height = Dimensions.get('window').height / 2;
+const styles = StyleSheet.create({
+  footer: {
+    backgroundColor: '#fc9619',
+    height: 70,
+    alignItems: 'center',
+    paddingTop: 10,
+    width: Dimensions.get('window').width,
+  },
+
+  footer_text: {
+    color: 'white',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+
+  loading: {
+    color: '#0f0',
+    alignItems: 'center',
+    marginVertical: height,
+  },
+});
+
 const mapStateToProps = state => {
   return {
     data: state.cartReducers.data,
+    loading: state.cartReducers.loadingCart,
   };
 };
 
@@ -59,4 +119,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

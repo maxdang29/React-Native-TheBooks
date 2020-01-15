@@ -33,14 +33,12 @@ class SearchResultFilter extends Component {
         }
       });
     });
-    console.log('value 444444', array);
     return array;
   };
   render() {
     const {value, passPropsOption, bookData} = this.props;
     const bookFilter = this.filterBookFollowCategory();
     const data = passPropsOption ? value : bookFilter;
-    console.log('value 66666677', data);
 
     return (
       <View>

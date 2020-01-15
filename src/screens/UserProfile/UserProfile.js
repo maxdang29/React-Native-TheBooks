@@ -38,6 +38,7 @@ class UserProfile extends React.Component {
       },
     ],
   };
+
   _renderScene = SceneMap({
     first: ListUserBook,
     second: () => <EmptyView message={'Không có sách nào '} />,
@@ -93,10 +94,10 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    // console.log('voooooooooo', JSON.parse(this.props.UserData));
-    console.log('vaoffffffffffff', this.props.token);
-    console.log('yahooooo', this.props.userData.data);
-    return this.props.isLoading ? (
+    console.log('render', this.props.isRender);
+    return this.props.isRender === false ? (
+      <Login />
+    ) : this.props.token ? (
       <View style={{flex: 1}}>
         <View style={{flex: 2}} />
 
@@ -224,7 +225,7 @@ class UserProfile extends React.Component {
           swipeEnabled={true}
         />
       </View>
-    ) : this.props.token ? (
+    ) : this.props.isChangeBottomTab ? (
       <View style={{flex: 1}}>
         <View style={{flex: 2}} />
 
@@ -359,8 +360,9 @@ class UserProfile extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    isLoading: state.loginReducer.changeBottomTab,
+    isChangeBottomTab: state.loginReducer.changeBottomTab,
     userData: state.loginReducer.data,
+    isRender: state.loginReducer.reRender,
   };
 };
 

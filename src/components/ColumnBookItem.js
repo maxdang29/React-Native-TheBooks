@@ -6,7 +6,6 @@ import {countStars} from '../../src/utils/function';
 export default class ColumBookItem extends Component {
   render() {
     const {item} = this.props;
-    console.log('item 66612345', item.Medias[0].ImageUrl);
     return (
       <TouchableOpacity
         style={styles.container}
@@ -15,7 +14,9 @@ export default class ColumBookItem extends Component {
           <Image
             style={styles.image}
             source={{
-              uri: item.Medias[0].ImageUrl,
+              uri: item.Medias[0].ImageUrl
+                ? item.Medias[0].ImageUrl
+                : 'https://member.thebooks.vn/static/media/Bia_sach.01b3a899.jpg',
             }}
           />
         </View>

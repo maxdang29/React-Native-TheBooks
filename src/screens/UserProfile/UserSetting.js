@@ -30,12 +30,12 @@ class UserSetting extends React.Component {
     ]);
   };
   logout = async () => {
-    AsyncStorage.clear();
-    AsyncStorage.setItem('start', 'startApp');
     this.props.logout();
+    await AsyncStorage.clear();
+    await AsyncStorage.setItem('start', 'startApp');
     setTimeout(() => {
       Navigation.dismissModal(this.state.componentId);
-    }, 100);
+    }, 3000);
   };
 
   onLogout = () => {

@@ -29,8 +29,12 @@ function* login(action) {
 function* logout() {
   try {
     yield call(logoutApi);
+    yield AsyncStorage.clear();
+    yield AsyncStorage.setItem('start', 'startApp');
     yield put(loginActions.logout());
-  } catch (error) {}
+  } catch (error) {
+    console.log('error', error);
+  }
 }
 
 const rootSagaLogin = () => [

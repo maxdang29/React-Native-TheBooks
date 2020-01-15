@@ -59,26 +59,7 @@ export const getRelatedBookFailure = error => {
   };
 };
 
-export const getReviewBook = data => {
-  return {
-    type: types.GET_REVIEW_BOOK,
-    data: data,
-  };
-};
 
-export const getReviewBookSuccess = data => {
-  return {
-    type: types.GET_REVIEW_BOOK_SUCCESS,
-    data,
-  };
-};
-
-export const getReviewBookFailure = error => {
-  return {
-    type: types.GET_REVIEW_BOOK_FAILURE,
-    error,
-  };
-};
 export const getBookSuggestion = () => {
   return {
     type: types.GET_BOOK_SUGGESTION,

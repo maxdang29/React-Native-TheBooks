@@ -27,7 +27,7 @@ export default class ConfirmAlert extends PureComponent {
               type="bold"
               sizeType="xLarge"
               center
-              color={Colors.primary}
+              color={Colors.lightBlue}
               style={styles.title}>
               {this.props.title}
             </Text>
@@ -44,13 +44,13 @@ export default class ConfirmAlert extends PureComponent {
             <View style={styles.rowButtonContainer}>
               <TouchableButton
                 isOutlineMode
-                buttonColor={Colors.primary}
+                buttonColor={Colors.lightBlue}
                 title={actions[0].text}
                 style={[styles.button, {marginRight: 15}]}
                 onPress={() => this.onActionButtonPress(actions[0].onPress)}
               />
               <TouchableButton
-                buttonColor={Colors.primary}
+                buttonColor={Colors.lightBlue}
                 title={actions[1].text}
                 style={styles.button}
                 onPress={() => this.onActionButtonPress(actions[1].onPress)}

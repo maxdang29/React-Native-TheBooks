@@ -6,4 +6,4 @@ export const showCommentForm = (title, message, actions) => {
     message,
     actions,
   });
-};
+}; 

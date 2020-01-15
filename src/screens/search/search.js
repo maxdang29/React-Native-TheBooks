@@ -21,6 +21,7 @@ class Search extends Component {
     this.state = {
       value: '',
     };
+    this.navigationEventListener = Navigation.events().bindComponent(this);
   }
   static options(passProps) {
     return {
@@ -31,7 +32,12 @@ class Search extends Component {
       },
     };
   }
-
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
+  }
   componentDidMount() {
     this.props.getAllBook();
     this.props.getBookSuggestion();
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
   },
   keyWordCommon: {
     color: '#ababab',
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
   textItem: {
     fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 10,
   },
   flatList: {
