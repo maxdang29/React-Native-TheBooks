@@ -6,19 +6,19 @@ import {
   ImageBackground,
   Image,
   TouchableWithoutFeedback,
-  Animated,
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import Login from '../Authentication/Login';
 import ListUserBook from '../UserBook/ListUserBook';
-import Register from '../Authentication/Register';
-import {Text, TouchableButton} from '../../components';
+import {Text} from '../../components';
 import {Colors, Metrics} from '../../themes';
 import {connect} from 'react-redux';
 import * as loginActions from '../../redux/auth/Login/actions';
 import {showQRCode} from '../../navigation/showQRCode';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import EmptyView from '../../components/EmptyView';
+import {Navigation} from 'react-native-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+import Login from '../Authentication/Login';
 
 class UserProfile extends React.Component {
   state = {
@@ -47,16 +47,56 @@ class UserProfile extends React.Component {
   });
 
   onShowQRCode = () => {
-    showQRCode('', this.props.UserData.QrCode, [
+    const {UserData, userData} = this.props;
+    showQRCode('', UserData ? JSON.parse(UserData).QrCode : userData.QrCode, [
       {
         text: 'Submit',
-        link: this.props.UserData.QrCodeUrl,
+        link: UserData ? JSON.parse(UserData).QrCodeUrl : userData.QrCodeUrl,
       },
     ]);
   };
 
+  onShowSetting = () => {
+    Promise.all([
+      Icons.getImageSource('ic-back', 25),
+      Icons.getImageSource('ic-order', 30),
+    ]).then(([back, orderHistory]) => {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'UserSetting',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'Cài đặt thông tin',
+                      fontSize: 22,
+                      fontFamily: 'SVN-ProximaNova',
+                      alignment: 'center',
+                    },
+                    leftButtons: [
+                      {
+                        icon: back,
+                        color: 'black',
+                        id: 'back',
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
+      });
+    });
+  };
+
   render() {
-    return (
+    // console.log('voooooooooo', JSON.parse(this.props.UserData));
+    console.log('vaoffffffffffff', this.props.token);
+    console.log('yahooooo', this.props.userData.data);
+    return this.props.isLoading ? (
       <View style={{flex: 1}}>
         <View style={{flex: 2}} />
 
@@ -85,7 +125,7 @@ class UserProfile extends React.Component {
             <View style={styles.settingContainer}>
               <TouchableWithoutFeedback
                 style={{marginHorizontal: 50}}
-                onPress={this.onShowQRCode}>
+                onPress={this.onShowSetting}>
                 <Icons
                   name="ic-setting"
                   size={24}
@@ -111,7 +151,9 @@ class UserProfile extends React.Component {
                 type="bold"
                 color={Colors.white}
                 sizeType="large">
-                {this.props.UserData.FullName}
+                {this.props.UserData
+                  ? JSON.parse(this.props.UserData).FullName
+                  : this.props.userData.FullName}
               </Text>
             </View>
             <View
@@ -157,7 +199,9 @@ class UserProfile extends React.Component {
                 type="light"
                 color={Colors.white}
                 sizeType="mini">
-                {this.props.UserData.TotalPoint}
+                {this.props.UserData
+                  ? JSON.parse(this.props.UserData).TotalPoint
+                  : this.props.userData.TotalPoint}
               </Text>
             </View>
           </View>
@@ -180,22 +224,151 @@ class UserProfile extends React.Component {
           swipeEnabled={true}
         />
       </View>
+    ) : this.props.token ? (
+      <View style={{flex: 1}}>
+        <View style={{flex: 2}} />
+
+        <ImageBackground
+          style={styles.imageBackground}
+          source={{
+            uri:
+              'https://lh3.googleusercontent.com/-SZN4fL4-8rI/XhazmUR5f_I/AAAAAAAABgg/HBl3APUI3hg-WBvfwIbeFTl3tYvdbTEegCK8BGAsYHg/s0/2020-01-08.jpg',
+          }}
+          blurRadius={3}>
+          <View style={styles.profileContainer}>
+            <View style={styles.QrCodeContainer}>
+              <TouchableWithoutFeedback
+                style={{marginHorizontal: 50}}
+                onPress={this.onShowQRCode}>
+                <View style={styles.QRContainer}>
+                  <Icons
+                    name="code"
+                    size={18}
+                    color="black"
+                    style={styles.QRIcon}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+            <View style={styles.settingContainer}>
+              <TouchableWithoutFeedback
+                style={{marginHorizontal: 50}}
+                onPress={this.onShowSetting}>
+                <Icons
+                  name="ic-setting"
+                  size={24}
+                  color="white"
+                  style={styles.settingIcon}
+                />
+              </TouchableWithoutFeedback>
+            </View>
+
+            <View>
+              <Image
+                source={{
+                  uri:
+                    'https://lh3.googleusercontent.com/-SZN4fL4-8rI/XhazmUR5f_I/AAAAAAAABgg/HBl3APUI3hg-WBvfwIbeFTl3tYvdbTEegCK8BGAsYHg/s0/2020-01-08.jpg',
+                }}
+                style={styles.avatar}
+              />
+            </View>
+
+            <View style={{marginVertical: 12}}>
+              <Text
+                style={styles.textshadow}
+                type="bold"
+                color={Colors.white}
+                sizeType="large">
+                {this.props.UserData
+                  ? JSON.parse(this.props.UserData).FullName
+                  : this.props.userData.FullName}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingRight: 19,
+              }}>
+              <TouchableWithoutFeedback
+                style={{marginHorizontal: 50}}
+                onPress={this.onShowQRCode}>
+                <View style={styles.upGrateContainer}>
+                  <Text
+                    style={styles.textshadow}
+                    type="light"
+                    color={Colors.white}
+                    sizeType="mini">
+                    Nâng cấp
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <View style={styles.divideContainer}>
+                <Text
+                  style={styles.textshadow}
+                  type="light"
+                  color={Colors.white}
+                  sizeType="large">
+                  |
+                </Text>
+              </View>
+              <View style={styles.totalPointContainer}>
+                <Icons
+                  name="star"
+                  size={15}
+                  color="#EC9921"
+                  style={styles.totalPoint}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.textshadow,
+                  {marginHorizontal: 5, marginVertical: 5},
+                ]}
+                type="light"
+                color={Colors.white}
+                sizeType="mini">
+                {this.props.UserData
+                  ? JSON.parse(this.props.UserData).TotalPoint
+                  : this.props.userData.TotalPoint}
+              </Text>
+            </View>
+          </View>
+        </ImageBackground>
+        <TabView
+          style={{flex: 3}}
+          navigationState={this.state}
+          renderScene={this._renderScene}
+          onIndexChange={index => this.setState({index})}
+          initialLayout={{width: Dimensions.get('window').width}}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              indicatorStyle={styles.indicator}
+              tabStyle={styles.bubble}
+              labelStyle={styles.label}
+              style={{backgroundColor: 'transparent'}}
+            />
+          )}
+          swipeEnabled={true}
+        />
+      </View>
+    ) : (
+      <Login />
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    UserData: state.loginReducer.data,
+    isLoading: state.loginReducer.changeBottomTab,
+    userData: state.loginReducer.data,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    //register: data => dispatch(registerAction.register(data)),
     login: data => dispatch(loginActions.login(data)),
   };
 };
-// export default UserProfile;
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
 const styles = StyleSheet.create({
   scene: {

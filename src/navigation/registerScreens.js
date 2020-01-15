@@ -13,6 +13,7 @@ import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
 import ListUserBook from '../screens/UserBook/ListUserBook';
 import ModalWriteReview from '../components/modalWriteReview';
+import UserSetting from '../screens/UserProfile/UserSetting';
 
 // import your components here
 import {
@@ -137,5 +138,10 @@ export function registerScreens() {
     'modalWriteReview',
     () => ReduxProvider(ModalWriteReview),
     () => ModalWriteReview,
+  );
+  Navigation.registerComponent(
+    'UserSetting',
+    () => ReduxProvider(UserSetting),
+    () => UserSetting,
   );
 }
