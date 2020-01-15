@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default class IntroViewer extends React.PureComponent {
   goToHome = async () => {
-    AsyncStorage.setItem('token', 'startApp');
+    AsyncStorage.setItem('start', 'startApp');
     startApp();
   };
   render() {

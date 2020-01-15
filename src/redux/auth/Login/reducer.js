@@ -6,6 +6,7 @@ const init = {
   token: null,
   loginLoading: false,
   changeBottomTab: false,
+  reRender: true,
 };
 const loginReducer = (state = init, action) => {
   switch (action.type) {
@@ -18,6 +19,7 @@ const loginReducer = (state = init, action) => {
         token: action.token,
         loginLoading: false,
         changeBottomTab: true,
+        reRender: true,
       };
     case LoginType.LOGIN_FAIL:
       return {
@@ -32,6 +34,7 @@ const loginReducer = (state = init, action) => {
         token: null,
         loginLoading: false,
         changeBottomTab: false,
+        reRender: false,
       };
     default:
       return state;

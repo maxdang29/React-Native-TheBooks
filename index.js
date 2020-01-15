@@ -19,8 +19,8 @@ Navigation.registerComponent('app', () => App);
 Navigation.registerComponent('Intro', () => Intro);
 
 Navigation.events().registerAppLaunchedListener(async () => {
-  const token = await AsyncStorage.getItem('token');
-  if (token) {
+  const start = await AsyncStorage.getItem('start');
+  if (start) {
     startApp();
   } else {
     intro();
