@@ -14,6 +14,9 @@ import {connect} from 'react-redux';
 import * as Action from '../../redux/cart/actions/actions';
 import RowBookItem from '../../components/RowBookItem';
 import AsyncStorage from '@react-native-community/async-storage';
+import {showConfirmAlert} from '../../navigation/showConfirmAlert';
+import {goAnotherScreen} from '../../navigation/navigation';
+import {Colors} from '../../themes';
 
 class Cart extends Component {
   async componentDidMount() {
@@ -21,6 +24,29 @@ class Cart extends Component {
     const token = await AsyncStorage.getItem('token');
     this.props.get_all_item_in_cart(cartId, token);
   }
+
+  checkUserMember = async () => {
+    const data = await AsyncStorage.getItem('userData');
+    const userData = JSON.parse(data);
+    console.log('member ship', userData);
+    if (userData.IsMembershipExpired === true || userData.MaxBorrowDays === 0) {
+      showConfirmAlert(
+        'Đặt hàng',
+        'Bạn chư alaf thành viên hoặc gói thành viên của bạn không đủ! Bạn có muốn nâng cấp thêm?',
+        [
+          {
+            text: 'Không, cảm ơn',
+          },
+          {
+            text: 'Nâng cấp ngày',
+            onPress: () => {
+              goAnotherScreen('Membership', null, 'danh sach goi');
+            },
+          },
+        ],
+      );
+    }
+  };
 
   render() {
     const {data} = this.props;
@@ -50,21 +76,22 @@ class Cart extends Component {
         </ScrollView>
 
         <View style={styles.footer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.checkUserMember()}>
             <Text style={styles.footer_text}>Đặt hàng</Text>
           </TouchableOpacity>
         </View>
       </>
     ) : (
-      <View>
+      <View style={styles.emptyCartView}>
         <Image
-          style={{width: 200, height: 200}}
+          style={styles.emptyCartImage}
           resizeMode="stretch"
           source={{
             uri:
               'https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png',
           }}
         />
+        <Text style={styles.emptyCartText}>Không có sản phẩm màu</Text>
       </View>
     );
   }
@@ -72,6 +99,20 @@ class Cart extends Component {
 
 const height = Dimensions.get('window').height / 2;
 const styles = StyleSheet.create({
+  emptyCartView: {
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginVertical: 6,
+  },
+  emptyCartImage: {
+    width: 400,
+    height: 400,
+  },
+  emptyCartText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: Colors.lightBlue,
+  },
   footer: {
     backgroundColor: '#fc9619',
     height: 70,

@@ -15,11 +15,15 @@ function* login(action) {
         response.data.Token.access_token,
       ),
     );
-    showInAppNotification('Đăng nhập thành công', 'Chào mừng đến với The Books');
+    showInAppNotification(
+      'Đăng nhập thành công',
+      'Chào mừng đến với The Books',
+    );
     ToastAndroid.show('Login Success', ToastAndroid.SHORT);
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
     yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);
     yield AsyncStorage.setItem('userId', response.data.Data.Id);
+    yield AsyncStorage.setItem('userData', JSON.stringify(response.data.Data));
   } catch (error) {
     showInAppNotification('Đăng nhập', error.data.Message, 'error');
     yield put(loginActions.loginFail(error));

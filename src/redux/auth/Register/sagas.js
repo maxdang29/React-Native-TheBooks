@@ -11,7 +11,10 @@ function* register(action) {
     const response = yield call(registerApi, action.payload);
     yield put(registerActions.registerSuccess(response.data.Data));
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
-    showInAppNotification('Đăng Kí thành công', 'Chào mừng đến với The Books');
+    yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);
+    yield AsyncStorage.setItem('userId', response.data.Data.Id);
+    yield AsyncStorage.setItem('userData', JSON.stringify(response.data.Data));
+    showInAppNotification('Đăng kí thành công', 'Chào mừng đến với The Books');
   } catch (error) {
     showInAppNotification('Đăng kí', error.data.Message, 'error');
     yield put(registerActions.registerFail(error));
