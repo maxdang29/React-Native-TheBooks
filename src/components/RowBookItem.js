@@ -18,7 +18,6 @@ class RowBookItem extends Component {
       UserId: userId,
     };
     this.props.update_item_in_cart(idBasket, data, token);
-    // this.props.get_all_item_in_cart(idBasket, token);
   };
 
   deleteItemInCart = async bookId => {
