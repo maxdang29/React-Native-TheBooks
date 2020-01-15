@@ -111,7 +111,6 @@ function* getBestReview(actions) {
 const rootSagaHome = () => [
   takeLatest(ActionTypes.GET_ALL_BOOK, getAllBook),
   takeLatest(ActionTypes.GET_RELATED_BOOK, getRelatedBook),
-  takeLatest(ActionTypes.GET_REVIEW_BOOK, getReviewBook),
   takeLatest(ActionTypes.GET_CMS_HOME_SUMMARY, getCmsHomeSummary),
   takeLatest(ActionTypes.GET_BOOK_SUGGESTION, getBookSuggestion),
   takeLatest(ActionTypes.GET_BEST_USER, getBestUser),

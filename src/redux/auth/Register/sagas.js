@@ -2,14 +2,25 @@ import {put, takeLatest, call, all} from 'redux-saga/effects';
 import {registerApi} from '../../../api/auth';
 import * as registerType from './actionTypes';
 import * as registerActions from './actions';
-import {ToastAndroid} from 'react-native';
+import * as loginActions from '../Login/actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import {showInAppNotification} from '../../../navigation/showInAppNotification';
 
 function* register(action) {
   try {
     const response = yield call(registerApi, action.payload);
-    yield put(registerActions.registerSuccess(response.data.Data));
+    yield put(
+      registerActions.registerSuccess(
+        response.data.Data,
+        response.data.Token.access_token,
+      ),
+    );
+    yield put(
+      loginActions.loginSuccess(
+        response.data.Data,
+        response.data.Token.access_token,
+      ),
+    );
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
     yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);
     yield AsyncStorage.setItem('userId', response.data.Data.Id);

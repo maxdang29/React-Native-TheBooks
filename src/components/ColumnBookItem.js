@@ -14,7 +14,9 @@ export default class ColumBookItem extends Component {
           <Image
             style={styles.image}
             source={{
-              uri: item.Medias[0].ImageUrl,
+              uri: item.Medias[0].ImageUrl
+                ? item.Medias[0].ImageUrl
+                : 'https://member.thebooks.vn/static/media/Bia_sach.01b3a899.jpg',
             }}
           />
         </View>

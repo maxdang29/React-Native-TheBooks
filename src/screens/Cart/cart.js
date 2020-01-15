@@ -17,12 +17,23 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
 import {goAnotherScreen} from '../../navigation/navigation';
 import {Colors} from '../../themes';
+import {Navigation} from 'react-native-navigation';
 
 class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+  }
   async componentDidMount() {
     const cartId = await AsyncStorage.getItem('cartId');
     const token = await AsyncStorage.getItem('token');
     this.props.get_all_item_in_cart(cartId, token);
+  }
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
   }
 
   checkUserMember = async () => {

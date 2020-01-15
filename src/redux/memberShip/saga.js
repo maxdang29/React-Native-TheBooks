@@ -6,7 +6,6 @@ import * as ActionTypes from '../memberShip/actions/actionTypes';
 function* getAllMembershipCode() {
   try {
     const response = yield call(getAllMembershipCodeRequest);
-    console.log('respon ===>', response.data.GeneratedMemberships);
     yield put(
       membershipActions.getAllMembershipCodeSuccess(
         response.data.GeneratedMemberships,

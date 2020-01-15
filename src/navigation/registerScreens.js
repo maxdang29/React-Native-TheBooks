@@ -11,7 +11,9 @@ import Register from '../screens/Authentication/Register';
 import Login from '../screens/Authentication/Login';
 import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
+import ListUserBook from '../screens/UserBook/ListUserBook';
 import ModalWriteReview from '../components/modalWriteReview';
+import UserSetting from '../screens/UserProfile/UserSetting';
 
 // import your components here
 import {
@@ -19,6 +21,8 @@ import {
   InAppNotification,
   QRCodeOverlay,
 } from '../components/Overlay';
+import EmptyView from '../components/EmptyView';
+//components
 
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Search from '../screens/search/search';
@@ -29,6 +33,8 @@ import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
 import Membership from '../screens/MemberShip/memberShipList';
+
+import SplashScreen from '../screens/splashScreen';
 
 function ReduxProvider(Component) {
   return props => (
@@ -128,8 +134,29 @@ export function registerScreens() {
     () => Sort,
   );
   Navigation.registerComponent(
+    'ListUserBook',
+    () => ReduxProvider(ListUserBook),
+    () => ListUserBook,
+  );
+  Navigation.registerComponent(
+    'EmptyView',
+    () => ReduxProvider(EmptyView),
+    () => EmptyView,
+  );
+  Navigation.registerComponent(
     'modalWriteReview',
     () => ReduxProvider(ModalWriteReview),
     () => ModalWriteReview,
+  );
+  Navigation.registerComponent(
+    'UserSetting',
+    () => ReduxProvider(UserSetting),
+    () => UserSetting,
+  );
+
+  Navigation.registerComponent(
+    'splashScreen',
+    () => ReduxProvider(SplashScreen),
+    () => SplashScreen,
   );
 }

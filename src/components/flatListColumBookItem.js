@@ -10,13 +10,14 @@ export default class FlatListBookColumnItem extends Component {
 
   render() {
     const {data, row} = this.props;
-    console.log('data33333', data);
 
     return (
       <FlatList
         data={data}
         numColumns={row ? 1 : 2}
-        keyExtractor={(item, index) => item.Id}
+        keyExtractor={(item, index) =>
+          item.Id + Math.floor(Math.random() * 100)
+        }
         renderItem={({item}) =>
           row ? (
             <RowBookItem item={item} />

@@ -24,6 +24,14 @@ class Register extends React.Component {
   }
   constructor(props) {
     super(props);
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+    this.state = {componentId: this.props.componentId};
+  }
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'backRegister') {
+      Navigation.dismissModal(componentId);
+    }
   }
 
   focusNextField(nextField) {
@@ -91,11 +99,16 @@ class Register extends React.Component {
       Email: this.email.getText(),
       Password: this.password.getText(),
     };
-    this.setState({isLoading: true});
     this.props.register(data);
+    setTimeout(() => {
+      if (this.props.gotoUserProfile === true) {
+        Navigation.dismissModal(this.state.componentId);
+      }
+    }, 5000);
   };
 
   render() {
+    console.log('gotoUserProfile', this.props.gotoUserProfile);
     return (
       <ScrollView style={{top: 5}}>
         <View style={{flex: 1, marginHorizontal: 15}}>
@@ -201,6 +214,7 @@ class Register extends React.Component {
 const mapStateToProps = state => {
   return {
     isLoading: state.registerReducer.registerLoading,
+    gotoUserProfile: state.registerReducer.gotoUserProfile,
   };
 };
 

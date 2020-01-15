@@ -28,7 +28,8 @@ export default class FlatListCircle extends Component {
 }
 const styles = StyleSheet.create({
   title: {
-    fontSize: 25,
+    fontSize: 20,
     marginLeft: 20,
+    marginTop: 10,
   },
 });
