@@ -3,9 +3,35 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {goAnotherScreen} from '../navigation/navigation';
 import {countStars} from '../../src/utils/function';
+import {connect} from 'react-redux';
+import * as Action from '../redux/cart/actions/actions';
+import AsyncStorage from '@react-native-community/async-storage';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 
-export default class RowBookItem extends Component {
+class RowBookItem extends Component {
+  updateQuantity = async (quantity, bookId) => {
+    const userId = await AsyncStorage.getItem('userId');
+    const idBasket = await AsyncStorage.getItem('cartId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      BookId: bookId,
+      Quantity: quantity,
+      UserId: userId,
+    };
+    this.props.update_item_in_cart(idBasket, data, token);
+  };
+
+  deleteItemInCart = async bookId => {
+    const userId = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      BookId: bookId,
+      DeleteAll: false,
+      UserId: userId,
+    };
+    this.props.delete_item_in_cart(data, token);
+  };
+
   render() {
     const {item, isInCart} = this.props;
     const urlImage = item.Book
@@ -33,7 +59,10 @@ export default class RowBookItem extends Component {
 
         <View style={styles.bookDescription}>
           {isInCart ? (
-            <Icons style={styles.cancelItem} name="ic-delete" />
+            <TouchableOpacity
+              onPress={() => this.deleteItemInCart(item.Book.Id)}>
+              <Icons style={styles.cancelItem} name="ic-delete" />
+            </TouchableOpacity>
           ) : null}
 
           <Text style={styles.bookTitle}>{title} ...</Text>
@@ -77,13 +106,21 @@ export default class RowBookItem extends Component {
                   styles.iconBottom,
                   styles.bottom,
                 ]}>
-                <TouchableOpacity style={styles.UDQuantity}>
+                <TouchableOpacity
+                  style={styles.UDQuantity}
+                  onPress={() =>
+                    this.updateQuantity(item.Quantity - 1, item.Book.Id)
+                  }>
                   <Text style={[styles.textUD]}>-</Text>
                 </TouchableOpacity>
 
                 <Text style={[styles.bookQuantity]}>{item.Quantity}</Text>
 
-                <TouchableOpacity style={styles.UDQuantity}>
+                <TouchableOpacity
+                  style={styles.UDQuantity}
+                  onPress={() =>
+                    this.updateQuantity(item.Quantity + 1, item.Book.Id)
+                  }>
                   <Text style={styles.textUD}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -95,13 +132,36 @@ export default class RowBookItem extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    data: state.cartReducers.data,
+    loading: state.cartReducers.loadingCart,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    update_item_in_cart: (id, data, token) => {
+      dispatch(Action.updateItemInCart(id, data, token));
+    },
+    get_all_item_in_cart: (id, token) => {
+      dispatch(Action.getAllItemByCartId(id, token));
+    },
+    delete_item_in_cart: (data, token) => {
+      dispatch(Action.deleteItemInCart(data, token));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RowBookItem);
+
 const styles = StyleSheet.create({
   cancelItem: {
-    textAlign: 'right',
-    marginTop: -10,
-    fontSize: 12,
-    marginRight: 10,
-    marginBottom: 10,
+    // textAlign: 'right',
+    // marginTop: -10,
+    // fontSize: 12,
+    // marginRight: 20,
+    // marginBottom: 10,
   },
   bookQuantity: {
     fontSize: 17,

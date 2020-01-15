@@ -38,7 +38,6 @@ class BookDetail extends Component {
   getInforUser = async () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
-
     await this.setState({
       userId: userId,
       token: token,
@@ -46,6 +45,7 @@ class BookDetail extends Component {
   };
 
   componentDidMount() {
+    console.log('mount');
     const {Id, Content} = this.props.value;
     this.props.get_related_book(Id);
     this.props.get_review_book(Id);
@@ -61,6 +61,18 @@ class BookDetail extends Component {
       this.props.get_review_book(Id);
     }
   }
+
+  checkContent = content => {
+    if (content.length > 300) {
+      this.setState({
+        expanded: false,
+      });
+    } else {
+      this.setState({
+        expanded: null,
+      });
+    }
+  };
 
   limitContent = content => {
     const {expanded} = this.state;
@@ -78,8 +90,14 @@ class BookDetail extends Component {
       } else {
         this.setState({
           bookContent: content,
+          expanded: null,
         });
       }
+    } else {
+      this.setState({
+        bookContent: content,
+        expanded: null,
+      });
     }
   };
 
@@ -167,9 +185,8 @@ class BookDetail extends Component {
   render() {
     console.log('render');
     const {value} = this.props;
-    const {userId, token, numberReview} = this.state;
+    const {userId, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props;
-    console.log('reviews book', reviewBooks);
     const {bookContent, expanded} = this.state;
     return (
       <>
@@ -198,13 +215,15 @@ class BookDetail extends Component {
               </View>
 
               <View style={styles.viewFlexDirection}>
-                {value.Categories.map(item => {
-                  return (
-                    <TouchableOpacity style={styles.btnBookType}>
-                      <Text style={styles.textBookType}>{item.Name}</Text>
-                    </TouchableOpacity>
-                  );
-                })}
+                {value.Categories
+                  ? value.Categories.map(item => {
+                      return (
+                        <TouchableOpacity style={styles.btnBookType}>
+                          <Text style={styles.textBookType}>{item.Name}</Text>
+                        </TouchableOpacity>
+                      );
+                    })
+                  : null}
               </View>
             </View>
 
@@ -224,13 +243,15 @@ class BookDetail extends Component {
                 <Text style={styles.seeMore}>Xem thêm</Text>
               </View>
               <View style={[styles.bookFlatList]}>
-                <FlatList
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  data={relatedBooks}
-                  keyExtractor={(item, index) => item.Id + index}
-                  renderItem={({item}) => <ColumnBookItem item={item} />}
-                />
+                {relatedBooks ? (
+                  <FlatList
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    data={relatedBooks}
+                    keyExtractor={(item, index) => item.Id + index}
+                    renderItem={({item}) => <ColumnBookItem item={item} />}
+                  />
+                ) : null}
               </View>
             </View>
             <View style={styles.viewOfCmt}>
@@ -250,15 +271,17 @@ class BookDetail extends Component {
               </TouchableOpacity>
 
               <View style={[styles.bookFlatList]}>
-                {reviewBooks.map((item, index) => {
-                  if (index < numberReview) {
-                    if (userId === item.UserId) {
-                      return <CommentBook item={item} isUser={true} />;
-                    } else {
-                      return <CommentBook item={item} isUser={false} />;
-                    }
-                  }
-                })}
+                {reviewBooks
+                  ? reviewBooks.map((item, index) => {
+                      if (index < numberReview) {
+                        if (userId === item.UserId) {
+                          return <CommentBook item={item} isUser={true} />;
+                        } else {
+                          return <CommentBook item={item} isUser={false} />;
+                        }
+                      }
+                    })
+                  : null}
               </View>
             </View>
           </View>
@@ -271,11 +294,6 @@ class BookDetail extends Component {
           </TouchableOpacity>
         </ScrollView>
         <View>
-          <TouchableOpacity
-            style={styles.footer}
-            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
-            <Text style={styles.footer_text}>Go to cart</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.footer}
             onPress={() => this.onAddToCart(value.Id, 1)}>
@@ -293,7 +311,7 @@ async function getStore() {
 }
 
 const mapStateToProps = state => {
-  console.log('store', state.commentReducers);
+  console.log('store', state);
   return {
     relatedBooks: state.homeReducer.relatedBooks,
     reviewBooks: state.commentReducers.comment,

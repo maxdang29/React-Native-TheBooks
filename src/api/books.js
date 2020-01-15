@@ -30,3 +30,15 @@ export const getBestUserRequest = data => {
 export const getBestReviewRequest = data => {
   return callApi('/api/cms/reviews', 'GET', data);
 };
+
+export const updateItemInCartRequest = (idBasket, data, token) => {
+  return callApi('/api/basket/' + idBasket, 'PUT', data, token);
+};
+
+export const deleteItemInCartRequest = (data, token) => {
+  return callApi('/api/basket/', 'DELETE', data, token);
+};
+
+export const postCommentRequest = (data, token) => {
+  return callApi('/api/reviews', 'POST', data, token);
+};
