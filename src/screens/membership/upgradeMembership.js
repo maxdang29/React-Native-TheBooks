@@ -2,8 +2,18 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Navigation} from 'react-native-navigation';
+import {Navigation} from 'react-native-navigation';
 
 export default class upgradeMembership extends Component {
+  constructor(props) {
+    super(props);
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        visible: false,
+      },
+    });
+  }
   render() {
     return (
       <View style={styles.container}>

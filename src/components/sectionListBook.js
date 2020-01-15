@@ -1,23 +1,12 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, SectionList, FlatList} from 'react-native';
 import ColumBookItem from './ColumnBookItem';
-import {convertDataToSection} from '../utils/function';
 import {connect} from 'react-redux';
-import * as actionHome from '../redux/home/actions/action';
 import {pushScreen} from '../navigation/pushScreen';
-
-const NAME = {
-  NewBooks: 'Sách Mới',
-  HotTrendBooks: 'Sách Được Yêu thích',
-  MostBorrowBooks: 'Sách Mượn Nhiều',
-};
 
 class SectionListBook extends Component {
   constructor(props) {
     super(props);
-  }
-  componentDidMount() {
-    this.props.getCmsHomeSummary();
   }
 
   moveToSeeMoreScreen = (data, title) => {
@@ -62,17 +51,11 @@ class SectionListBook extends Component {
   }
 }
 const mapStateToProps = store => {
-  return {
-    bookData: convertDataToSection(store.homeReducer.data, NAME),
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getCmsHomeSummary: () => {
-      dispatch(actionHome.getCmsHomeSummary());
-    },
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionListBook);
