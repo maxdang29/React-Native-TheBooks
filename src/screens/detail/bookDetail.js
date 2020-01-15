@@ -35,12 +35,10 @@ class BookDetail extends Component {
   getInforUser = async () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
-
     await this.setState({
       userId: userId,
       token: token,
     });
-    console.log('id user ', this.state.userId);
   };
 
   componentDidMount() {
@@ -51,6 +49,18 @@ class BookDetail extends Component {
     this.limitContent(Content);
     this.getInforUser();
   }
+
+  checkContent = content => {
+    if (content.length > 300) {
+      this.setState({
+        expanded: false,
+      });
+    } else {
+      this.setState({
+        expanded: null,
+      });
+    }
+  };
 
   limitContent = content => {
     const {expanded} = this.state;
@@ -68,8 +78,14 @@ class BookDetail extends Component {
       } else {
         this.setState({
           bookContent: content,
+          expanded: null,
         });
       }
+    } else {
+      this.setState({
+        bookContent: content,
+        expanded: null,
+      });
     }
   };
 
@@ -149,10 +165,9 @@ class BookDetail extends Component {
 
   render() {
     const {value} = this.props;
-    const {userId, token, numberReview} = this.state;
+    const {userId, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props.data;
     const {bookContent, expanded} = this.state;
-    console.log('user id', userId);
     return (
       <>
         <ScrollView style={styles.scrollView}>
@@ -180,13 +195,15 @@ class BookDetail extends Component {
               </View>
 
               <View style={styles.viewFlexDirection}>
-                {value.Categories.map(item => {
-                  return (
-                    <TouchableOpacity style={styles.btnBookType}>
-                      <Text style={styles.textBookType}>{item.Name}</Text>
-                    </TouchableOpacity>
-                  );
-                })}
+                {value.Categories
+                  ? value.Categories.map(item => {
+                      return (
+                        <TouchableOpacity style={styles.btnBookType}>
+                          <Text style={styles.textBookType}>{item.Name}</Text>
+                        </TouchableOpacity>
+                      );
+                    })
+                  : null}
               </View>
             </View>
 
@@ -252,11 +269,6 @@ class BookDetail extends Component {
           </TouchableOpacity>
         </ScrollView>
         <View>
-          <TouchableOpacity
-            style={styles.footer}
-            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
-            <Text style={styles.footer_text}>Go to cart</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.footer}
             onPress={() => this.onAddToCart(value.Id, 1)}>

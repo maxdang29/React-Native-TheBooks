@@ -3,7 +3,6 @@ import {loginApi} from '../../../api/auth';
 import * as loginType from './actionTypes';
 import * as loginActions from './actions';
 import AsyncStorage from '@react-native-community/async-storage';
-// import Navigation from 'react-native-navigation';
 import {ToastAndroid} from 'react-native';
 import {showInAppNotification} from '../../../navigation/showInAppNotification';
 

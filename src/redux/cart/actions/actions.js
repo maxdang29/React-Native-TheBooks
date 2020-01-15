@@ -42,3 +42,47 @@ export const getAllItemByCartIdSuccess = data => {
     data,
   };
 };
+
+export const updateItemInCart = (id, data, Token) => {
+  return {
+    type: types.UPDATE_ITEM_IN_CART,
+    id,
+    data,
+    Token,
+  };
+};
+
+export const updateItemInCartFailed = error => {
+  return {
+    type: types.UPDATE_ITEM_IN_CART_FAILED,
+    error,
+  };
+};
+export const updateItemInCartSuccess = data => {
+  return {
+    type: types.UPDATE_ITEM_IN_CART_SUCCESS,
+    data,
+  };
+};
+
+export const deleteItemInCart = (data, Token) => {
+  return {
+    type: types.DELETE_ITEM_IN_CART,
+    data,
+    Token,
+  };
+};
+
+export const deleteItemInCartFailed = error => {
+  return {
+    type: types.DELETE_ITEM_IN_CART_FAILED,
+    error,
+  };
+};
+
+export const deleteItemInCartSuccess = data => {
+  return {
+    type: types.DELETE_ITEM_IN_CART_SUCCESS,
+    data,
+  };
+};
