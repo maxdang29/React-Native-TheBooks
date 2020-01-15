@@ -51,7 +51,9 @@ class RowBookItem extends Component {
               style={styles.image}
               resizeMode="stretch"
               source={{
-                uri: urlImage,
+                uri: urlImage
+                  ? urlImage
+                  : 'https://member.thebooks.vn/static/media/Bia_sach.01b3a899.jpg',
               }}
             />
           </View>

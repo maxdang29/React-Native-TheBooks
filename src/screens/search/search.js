@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
   },
   keyWordCommon: {
     color: '#ababab',
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   textItem: {
     fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 10,
   },
   flatList: {

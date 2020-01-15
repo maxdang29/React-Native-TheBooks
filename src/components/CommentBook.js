@@ -17,7 +17,6 @@ class CommentBook extends Component {
 
   onUpdate = () => {
     const {item} = this.props;
-    console.log('item show', item);
     showCommentForm('', '', [
       {
         text: 'Submit',
@@ -42,7 +41,6 @@ class CommentBook extends Component {
   };
   render() {
     const {item, isUser} = this.props;
-    console.log('item22222222', item);
     return (
       <>
         <View style={styles.container}>

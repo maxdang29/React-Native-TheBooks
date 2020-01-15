@@ -75,7 +75,6 @@ class ModalWriteReview extends Component {
     if (update) {
       const {actions} = this.props;
       const id = actions[0].value.item.Id;
-      console.log('id', id);
       await this.props.updateComment(id, data, token);
     } else {
       await this.props.postComment(data, token);
@@ -87,7 +86,6 @@ class ModalWriteReview extends Component {
 
     if (typeof actions[0].value.update !== 'undefined') {
       const item = actions[0].value.item;
-      console.log('action modal', item);
       this.setState({
         valueText: item.Content,
         update: true,

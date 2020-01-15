@@ -22,7 +22,6 @@ const commentReducers = (state = init, action) => {
     case types.UPDATE_REVIEW_BOOK:
       return {...state, commentLoading: true};
     case types.UPDATE_REVIEW_BOOK_SUCCESS:
-      console.log('action update', action.data);
       return {...state, comment: [...action.data], commentLoading: false};
     default:
       return {...state};

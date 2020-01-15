@@ -11,7 +11,6 @@ import {
 } from '../../api/comment';
 
 function* postComment(actions) {
-  console.log('post comment');
   try {
     const response = yield call(
       postCommentRequest,
@@ -30,13 +29,11 @@ function* postComment(actions) {
 }
 
 function* getReviewBook(actions) {
-  console.log('get review');
   try {
     const response = yield call(getReviewBookRequest, null);
     const reviews = yield response.data.Reviews.filter(
       item => item.BookId === actions.data,
     );
-    console.log('review2222', reviews);
     if (reviews) {
       yield put(commentAction.getReviewBookSuccess(reviews));
     }
@@ -68,7 +65,6 @@ function* deleteReviewBook(actions) {
 }
 
 function* updateComment(actions) {
-  console.log('update comment', actions);
   try {
     const response = yield call(
       updateCommentRequest,
