@@ -5,6 +5,7 @@ import SideBarReducers from './sideBar/reducer';
 import registerReducer from './auth/Register/reducer';
 import loginReducer from './auth/Login/reducer';
 import cartReducers from './cart/reducer';
+import membershipReducer from './memberShip/reducer';
 import commentReducers from './comment/reducer';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   loginReducer,
   SideBarReducers,
   cartReducers,
+  membershipReducer,
   commentReducers,
 });
 

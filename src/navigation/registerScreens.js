@@ -32,6 +32,7 @@ import Sort from '../screens/search/sort';
 import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
+import Membership from '../screens/MemberShip/memberShipList';
 
 import SplashScreen from '../screens/splashScreen';
 
@@ -44,6 +45,12 @@ function ReduxProvider(Component) {
 }
 
 export function registerScreens() {
+  Navigation.registerComponent(
+    'Membership',
+    () => ReduxProvider(Membership),
+    () => Membership,
+  );
+
   Navigation.registerComponent(
     'Cart',
     () => ReduxProvider(Cart),
