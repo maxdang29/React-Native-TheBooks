@@ -20,6 +20,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this);
+    
   }
   componentDidMount() {
     this.props.getBestUsers();

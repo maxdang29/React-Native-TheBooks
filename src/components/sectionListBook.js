@@ -26,8 +26,6 @@ class SectionListBook extends Component {
 
   render() {
     const {bookData} = this.props;
-    console.log(bookData);
-    console.log(Date.now().toString());
     return (
       <View style={styles.container}>
         <SectionList

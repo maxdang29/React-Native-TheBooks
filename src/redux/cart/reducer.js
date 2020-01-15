@@ -33,7 +33,6 @@ const cartReducers = (state = init, action) => {
     case types.DELETE_ITEM_IN_CART_FAILED:
       return {...state, error: action.error, loadingCart: false};
     case types.DELETE_ITEM_IN_CART_SUCCESS:
-      console.log('action delete', action);
       return {...state, data: action.data, loadingCart: false};
     default:
       return state;

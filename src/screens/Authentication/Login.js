@@ -81,8 +81,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log('token', this.state.Token);
-    console.log('changeBottomTab', this.props.userData.changeBottomTab);
     return this.state.Token !== 'startApp' ? (
       this.renderUserProfile()
     ) : this.props.userData.changeBottomTab ? (

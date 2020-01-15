@@ -35,6 +35,14 @@ class BookDetail extends Component {
       numberReview: 1,
     };
   }
+
+  navigationButtonPressed({buttonId}) {
+    const {componentId} = this.props;
+    if (buttonId === 'back') {
+      Navigation.dismissModal(componentId);
+    }
+  }
+
   getInforUser = async () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
@@ -45,7 +53,6 @@ class BookDetail extends Component {
   };
 
   componentDidMount() {
-    console.log('mount');
     const {Id, Content} = this.props.value;
     this.props.get_related_book(Id);
     this.props.get_review_book(Id);
@@ -55,7 +62,6 @@ class BookDetail extends Component {
   }
   componentDidUpdate() {
     const {commentLoading} = this.props;
-    console.log('commentLoading', commentLoading);
     if (commentLoading) {
       const {Id} = this.props.value;
       this.props.get_review_book(Id);
@@ -125,13 +131,6 @@ class BookDetail extends Component {
     );
   };
 
-  navigationButtonPressed({buttonId}) {
-    const {componentId} = this.props;
-    if (buttonId === 'back') {
-      Navigation.dismissModal(componentId);
-    }
-  }
-
   showExpanded = expanded => {
     if (expanded === true) {
       return (
@@ -183,7 +182,6 @@ class BookDetail extends Component {
   };
 
   render() {
-    console.log('render');
     const {value} = this.props;
     const {userId, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props;
@@ -196,7 +194,9 @@ class BookDetail extends Component {
               <Image
                 style={styles.image}
                 source={{
-                  uri: value.Medias[0].ImageUrl,
+                  uri: value.Medias[0]
+                    ? value.Medias[0].ImageUrl
+                    : 'https://member.thebooks.vn/static/media/Bia_sach.01b3a899.jpg',
                 }}
               />
             </View>
@@ -311,7 +311,6 @@ async function getStore() {
 }
 
 const mapStateToProps = state => {
-  console.log('store', state);
   return {
     relatedBooks: state.homeReducer.relatedBooks,
     reviewBooks: state.commentReducers.comment,
