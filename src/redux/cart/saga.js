@@ -1,8 +1,6 @@
 import {put, takeLatest, call} from 'redux-saga/effects';
 import * as ActionTypes from '../cart/actions/typesAction';
 import * as CartActions from '../cart/actions/actions';
-import AsyncStorage from '@react-native-community/async-storage';
-import {ToastAndroid} from 'react-native';
 import store from '../store';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
 import {goAnotherScreen} from '../../navigation/navigation';
@@ -71,9 +69,8 @@ function* updateItemInCart(actions) {
       actions.data,
       actions.Token,
     );
-    // if (response.status === 200) {
-    const allData = store.getState().cartReducers;
-    const newList = allData.data.map(item => {
+    const allData = yield store.getState().cartReducers;
+    const newList = yield allData.data.map(item => {
       if (item.Book.Id === actions.data.BookId) {
         if (item.Book.Quantity >= actions.data.Quantity) {
           item.Quantity = actions.data.Quantity;
@@ -89,7 +86,6 @@ function* updateItemInCart(actions) {
       response.data.Message,
       'success',
     );
-    // }
   } catch (error) {
     showInAppNotification(
       'Thay đổi số lượng thất bại',
@@ -102,13 +98,13 @@ function* updateItemInCart(actions) {
 
 function* deleteAnItemInCart(actions) {
   try {
-    const allData = store.getState().cartReducers;
     const response = yield call(
       deleteItemInCartRequest,
       actions.data,
       actions.Token,
     );
-    const newList = allData.data.filter(item => {
+    const allData = yield store.getState().cartReducers;
+    const newList = yield allData.data.filter(item => {
       return item.Book.Id !== actions.data.BookId;
     });
     if (response.status === 200) {

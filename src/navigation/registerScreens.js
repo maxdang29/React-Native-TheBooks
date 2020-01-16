@@ -14,6 +14,7 @@ import UserProfile from '../screens/UserProfile/UserProfile';
 import ListUserBook from '../screens/UserBook/ListUserBook';
 import ModalWriteReview from '../components/modalWriteReview';
 import ListOrder from '../screens/order/listOrder';
+import UserSetting from '../screens/UserProfile/UserSetting';
 
 // import your components here
 import {
@@ -28,12 +29,12 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
 import Sort from '../screens/search/sort';
-
 import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
-
 import SplashScreen from '../screens/splashScreen';
+import upgradeMembership from '../screens/membership/upgradeMembership';
+import Membership from '../screens/membership/memberShipList';
 
 function ReduxProvider(Component) {
   return props => (
@@ -44,6 +45,17 @@ function ReduxProvider(Component) {
 }
 
 export function registerScreens() {
+  Navigation.registerComponent(
+    'upgradeMembership',
+    () => ReduxProvider(upgradeMembership),
+    () => upgradeMembership,
+  );
+  Navigation.registerComponent(
+    'Membership',
+    () => ReduxProvider(Membership),
+    () => Membership,
+  );
+
   Navigation.registerComponent(
     'Cart',
     () => ReduxProvider(Cart),
@@ -140,6 +152,11 @@ export function registerScreens() {
     'modalWriteReview',
     () => ReduxProvider(ModalWriteReview),
     () => ModalWriteReview,
+  );
+  Navigation.registerComponent(
+    'UserSetting',
+    () => ReduxProvider(UserSetting),
+    () => UserSetting,
   );
 
   Navigation.registerComponent(

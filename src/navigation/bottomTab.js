@@ -2,6 +2,7 @@ import {Navigation} from 'react-native-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import Colors from '../themes/Colors';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const openDrawer = () => {
   Navigation.mergeOptions('sideDrawer', {
@@ -14,7 +15,9 @@ export const openDrawer = () => {
   });
 };
 
-export default function startApp() {
+export default async function startApp() {
+  const UserData = await AsyncStorage.getItem('userData');
+  const token = await AsyncStorage.getItem('token');
   Promise.all([
     Icons.getImageSource('ic-home', 30),
     Icons.getImageSource('ic-order', 30),
@@ -114,7 +117,11 @@ export default function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'Login',
+                            name: 'UserProfile',
+                            passProps: {
+                              token,
+                              UserData,
+                            },
                             options: {
                               topBar: {
                                 visible: false,
@@ -137,7 +144,7 @@ export default function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'UserProfile',
+                            name: 'Login',
                             options: {
                               topBar: {
                                 visible: false,
@@ -161,13 +168,12 @@ export default function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'EmptyView',
+                            name: 'UserSetting',
                             options: {
                               topBar: {
                                 leftButtons: [
                                   {
                                     id: 'sideMenu',
-
                                     icon: menu,
                                   },
                                 ],

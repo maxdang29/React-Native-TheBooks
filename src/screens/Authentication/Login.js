@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import {Colors} from '../../themes';
 import UserProfile from '../UserProfile/UserProfile';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icons from 'react-native-vector-icons/thebook-appicon';
 
 class Login extends React.Component {
   static options(passProps) {
@@ -24,7 +25,7 @@ class Login extends React.Component {
   }
   constructor(props) {
     super(props);
-    this.state = {Token: ''};
+    this.state = {Token: this.props.token};
   }
 
   focusNextField(nextField) {
@@ -50,42 +51,42 @@ class Login extends React.Component {
   };
 
   onPush = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'Register',
-        passProps: {
-          text: 'Pushed screen',
-        },
-        options: {
-          topBar: {
-            title: {
-              text: 'Đăng ký',
-              fontSize: 22,
-              fontFamily: 'SVN-ProximaNova',
-              alignment: 'center',
+    Promise.all([
+      Icons.getImageSource('ic-back', 25),
+      Icons.getImageSource('ic-order', 30),
+    ]).then(([back, orderHistory]) => {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'Register',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'Đăng ký',
+                      fontSize: 22,
+                      fontFamily: 'SVN-ProximaNova',
+                      alignment: 'center',
+                    },
+                    leftButtons: [
+                      {
+                        icon: back,
+                        color: 'black',
+                        id: 'backRegister',
+                      },
+                    ],
+                  },
+                },
+              },
             },
-          },
+          ],
         },
-      },
+      });
     });
   };
-  renderUserProfile = () => {
-    return <UserProfile />;
-  };
-
-  async componentDidMount() {
-    const token = await AsyncStorage.getItem('token');
-    if (token) {
-      this.setState({Token: token});
-    }
-  }
-
   render() {
-    return this.state.Token !== 'startApp' ? (
-      this.renderUserProfile()
-    ) : this.props.userData.changeBottomTab ? (
-      this.renderUserProfile()
-    ) : (
+    return (
       <ScrollView style={{top: 20}}>
         <View
           style={{
@@ -171,6 +172,7 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = state => {
+  console.log('stateLogin', state);
   return {
     isLoading: state.loginReducer.loginLoading,
     userData: state.loginReducer,
@@ -179,7 +181,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    //register: data => dispatch(registerAction.register(data)),
     login: data => dispatch(loginActions.login(data)),
   };
 };

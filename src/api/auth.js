@@ -6,3 +6,6 @@ export const loginApi = data => {
 export const registerApi = data => {
   return callApi('/api/users', 'POST', data);
 };
+export const logoutApi = () => {
+  return callApi('/api/Token', 'DELETE');
+};
