@@ -13,6 +13,7 @@ import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
 import ListUserBook from '../screens/UserBook/ListUserBook';
 import ModalWriteReview from '../components/modalWriteReview';
+import ListOrder from '../screens/order/listOrder';
 
 // import your components here
 import {
@@ -145,5 +146,11 @@ export function registerScreens() {
     'splashScreen',
     () => ReduxProvider(SplashScreen),
     () => SplashScreen,
+  );
+
+  Navigation.registerComponent(
+    'listOrder',
+    () => ReduxProvider(ListOrder),
+    () => ListOrder,
   );
 }

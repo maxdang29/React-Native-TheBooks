@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   FlatList,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
@@ -63,7 +64,7 @@ class Search extends Component {
     pushScreen(componentId, 'searchResult', data, 'Tìm kiếm');
   };
   render() {
-    const {searchSuggestion, bookData} = this.props;
+    const {searchSuggestion, bookData, loading} = this.props;
     const dataSearch = this.filterBook(bookData, this.state.value);
     const data = dataSearch ? dataSearch : searchSuggestion;
 
@@ -94,19 +95,23 @@ class Search extends Component {
             <Text style={[styles.text, styles.keyWordCommon]}>
               Các từ khóa thông dụng
             </Text>
-            <FlatList
-              data={data}
-              keyExtractor={(item, index) => item.Id}
-              renderItem={({item}) => (
-                <Text
-                  style={styles.textItem}
-                  onPress={() => {
-                    this.moveToDetailBookScreen(item);
-                  }}>
-                  {item.Title}
-                </Text>
-              )}
-            />
+            {loading ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <FlatList
+                data={data}
+                keyExtractor={(item, index) => item.Id}
+                renderItem={({item}) => (
+                  <Text
+                    style={styles.textItem}
+                    onPress={() => {
+                      this.moveToDetailBookScreen(item);
+                    }}>
+                    {item.Title}
+                  </Text>
+                )}
+              />
+            )}
           </SafeAreaView>
         </ScrollView>
       </View>
@@ -118,6 +123,7 @@ const mapStateToProps = store => {
   return {
     bookData: store.homeReducer.search,
     searchSuggestion: store.homeReducer.searchSuggestion,
+    loading: store.homeReducer.loading,
   };
 };
 

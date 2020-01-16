@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, StyleSheet} from 'react-native';
 import ColumBookItem from '../components/ColumnBookItem';
 import RowBookItem from '../components//RowBookItem';
 
@@ -10,6 +10,7 @@ export default class FlatListBookColumnItem extends Component {
 
   render() {
     const {data, row} = this.props;
+    console.log('data222', data);
 
     return (
       <FlatList
@@ -22,10 +23,18 @@ export default class FlatListBookColumnItem extends Component {
           row ? (
             <RowBookItem item={item} />
           ) : (
-            <ColumBookItem item={item} componentId={this.props.componentId} />
+            <View style={styles.item}>
+              <ColumBookItem item={item} componentId={this.props.componentId} />
+            </View>
           )
         }
       />
     );
   }
 }
+const styles = StyleSheet.create({
+  item: {
+    marginLeft: 15,
+    marginRight: 15,
+  },
+});

@@ -40,7 +40,9 @@ class SectionListBook extends Component {
                   return item.Id.toString() + Date.now().toString();
                 }}
                 renderItem={({item, index}) => (
-                  <ColumBookItem item={item} key={Date.now().toString()} />
+                  <View style={styles.item}>
+                    <ColumBookItem item={item} key={Date.now().toString()} />
+                  </View>
                 )}
               />
             );
@@ -63,9 +65,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(SectionListBook);
 const styles = StyleSheet.create({
   container: {
     marginTop: 15,
+    marginLeft: 20,
   },
   header: {
-    marginLeft: 20,
     flexDirection: 'row',
     marginTop: 15,
   },
@@ -78,5 +80,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     color: 'blue',
     marginTop: 10,
+  },
+  item: {
+    marginRight: 20,
   },
 });

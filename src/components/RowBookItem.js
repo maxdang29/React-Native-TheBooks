@@ -45,7 +45,13 @@ class RowBookItem extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => goAnotherScreen('BookDetail', item.Book, 'Chi tiết')}>
+          onPress={() =>
+            goAnotherScreen(
+              'BookDetail',
+              item.Book ? item.Book : item,
+              'Chi tiết',
+            )
+          }>
           <View style={styles.shadowView}>
             <Image
               style={styles.image}

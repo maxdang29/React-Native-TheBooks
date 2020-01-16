@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {connect} from 'react-redux';
 import * as actionBooks from '../../redux/home/actions/action';
 import FlatListBookColumnItem from '../../components/flatListColumBookItem';
@@ -36,10 +42,9 @@ class SearchResultFilter extends Component {
     return array;
   };
   render() {
-    const {value, passPropsOption, bookData} = this.props;
+    const {value, passPropsOption, bookData, loading} = this.props;
     const bookFilter = this.filterBookFollowCategory();
     const data = passPropsOption ? value : bookFilter;
-
     return (
       <View>
         <View style={styles.container}>
@@ -66,13 +71,21 @@ class SearchResultFilter extends Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={{marginBottom: 170}}>
-          <FlatListBookColumnItem data={data} row={true} />
-        </View>
+
+        {loading ? (
+          <View style={styles.loading}>
+            <ActivityIndicator size="large" />
+          </View>
+        ) : (
+          <View style={{marginBottom: 170}}>
+            <FlatListBookColumnItem data={data} row={true} />
+          </View>
+        )}
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -108,11 +121,17 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  loading: {
+    color: '#0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 const mapStateToProps = store => {
   return {
     bookData: store.homeReducer.search,
+    loading: store.homeReducer.loading,
   };
 };
 

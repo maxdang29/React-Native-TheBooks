@@ -37,6 +37,11 @@ export default function startApp() {
             center: {
               bottomTabs: {
                 id: 'tabs',
+                options: {
+                  bottomTabs: {
+                    animate: false,
+                  },
+                },
                 children: [
                   {
                     stack: {
@@ -61,12 +66,13 @@ export default function startApp() {
                                     fontSize: 10,
                                   },
                                 ],
-                                visible: true,
+                                visible: false,
                               },
                               bottomTab: {
                                 fontSize: 10,
                                 icon: listBook,
                                 selectedIconColor: Colors.primary,
+                                animate: false,
                               },
                             },
                           },
@@ -81,22 +87,20 @@ export default function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'Login',
+                            name: 'listOrder',
                             options: {
                               topBar: {
-                                leftButtons: [
-                                  {
-                                    id: 'sideMenu',
-                                    icon: menu,
-                                    fontSize: 10,
-                                  },
-                                ],
+                                title: {
+                                  text: 'Danh sách đơn hàng',
+                                },
                                 visible: true,
                               },
                               bottomTab: {
                                 fontSize: 10,
                                 icon: orderHistory,
                                 selectedIconColor: Colors.primary,
+                                visible: true,
+                                animate: false,
                               },
                             },
                           },
@@ -119,6 +123,7 @@ export default function startApp() {
                                 fontSize: 10,
                                 selectedIconColor: Colors.primary,
                                 icon: user,
+                                animate: false,
                               },
                             },
                           },
@@ -141,6 +146,7 @@ export default function startApp() {
                                 fontSize: 10,
                                 icon: notifications,
                                 selectedIconColor: Colors.primary,
+                                animate: false,
                               },
                             },
                           },
@@ -171,6 +177,7 @@ export default function startApp() {
                                 fontSize: 10,
                                 selectedIconColor: Colors.primary,
                                 icon: library,
+                                animate: false,
                               },
                             },
                           },
