@@ -4,11 +4,22 @@ import Icons from 'react-native-vector-icons/thebook-appicon';
 
 import {connect} from 'react-redux';
 import {Colors} from '../themes';
+import {goAnotherScreen} from '../navigation/navigation';
 const iconWithData = [
-  {icon: 'ic-platinum', name: 'Platinum', color: '#ea5d5d'},
-  {icon: 'ic-basic', name: 'Basic', color: '#8cd542'},
-  {icon: 'ic-titan', name: 'Titan', color: '#f4a621'},
-  {icon: 'ic-silver', name: 'Silver', color: '#23c6d2'},
+  {
+    icon: 'ic-platinum',
+    name: 'Platinum',
+    color: '#ea5d5d',
+    colorOpacity: '#f3c4c9',
+  },
+  {icon: 'ic-basic', name: 'Basic', color: '#8cd542', colorOpacity: '#d8ea9d'},
+  {icon: 'ic-titan', name: 'Titan', color: '#f4a621', colorOpacity: '#ead59d'},
+  {
+    icon: 'ic-silver',
+    name: 'Silver',
+    color: '#23c6d2',
+    colorOpacity: '#a6daec',
+  },
 ];
 
 class MemberPackage extends Component {
@@ -21,10 +32,15 @@ class MemberPackage extends Component {
   render() {
     const {item} = this.props;
     const icon = this.findIcon(item.Membership.Name)[0];
+    const data = {item, icon};
     return (
       <>
         <View style={styles.shadowView}>
-          <TouchableOpacity style={styles.around}>
+          <TouchableOpacity
+            style={styles.around}
+            onPress={() => {
+              goAnotherScreen('upgradeMembership', data, '');
+            }}>
             <View style={styles.container}>
               <View style={[styles.ViewFlex_1, styles.image]}>
                 <Icons

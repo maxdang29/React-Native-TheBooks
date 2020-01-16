@@ -3,7 +3,6 @@ import {Text, View, StyleSheet} from 'react-native';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Navigation} from 'react-native-navigation';
-import {Navigation} from 'react-native-navigation';
 
 export default class upgradeMembership extends Component {
   constructor(props) {
@@ -14,42 +13,121 @@ export default class upgradeMembership extends Component {
       },
     });
   }
+  // componentDidMount() {
+  //   const {value} = this.props;
+  //   console.log('value', value.icon.color);
+  //   mainColor = value.icon.color;
+  // }
+
   render() {
+    const {value} = this.props;
+    console.log('value', value);
+    // value.icon.color;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Titan</Text>
-        <View style={styles.containerCircle}>
-          <View style={styles.containerCircleChild}>
-            <Icons name="ic-titan" solid size={80} style={styles.icon} />
+        <Text
+          style={[
+            styles.title,
+            {color: `${value.icon.color ? value.icon.color : '#000'}`},
+          ]}>
+          {value.icon.name}
+        </Text>
+        <View
+          style={[
+            styles.containerCircle,
+            {
+              backgroundColor: `${
+                value.icon.colorOpacity ? value.icon.colorOpacity : '#e2ddd3'
+              }`,
+            },
+          ]}>
+          <View
+            style={[
+              styles.containerCircleChild,
+              {
+                backgroundColor: `${
+                  value.icon.color ? value.icon.color : '#000'
+                }`,
+              },
+            ]}>
+            <Icons name="ic-titan" solid size={80} style={[styles.icon]} />
           </View>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>10 ngày</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxBorrowDays} quyển
+          </Text>
           <Text style={styles.text}> mượn mỗi lần</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>02 lần</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxExtensionTimes} lần
+          </Text>
           <Text style={styles.text}> gia hạn</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>01 lần</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxRequestTimes} lần
+          </Text>
           <Text style={styles.text}> yêu cầu danh sách</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>01 lần</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxDeliveryTimes} lần
+          </Text>
           <Text style={styles.text}> giao sách tại nhà</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight, styles.price]}>300.000</Text>
-          <Text style={[styles.highlight, styles.year]}> / năm</Text>
+          <Text
+            style={[
+              styles.highlight,
+              styles.price,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.Value}
+          </Text>
+          <Text
+            style={[
+              styles.highlight,
+              styles.year,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {' '}
+            / năm
+          </Text>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.textButton}>Nâng cấp</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: `${
+                value.icon.color ? value.icon.color : '#000'
+              }`,
+            },
+          ]}>
+          <Text style={[styles.textButton]}>Nâng cấp</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -59,12 +137,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   containerCircleChild: {
-    backgroundColor: '#f4a621',
+    // backgroundColor: mainColor,
     borderRadius: 150,
     padding: 20,
   },
   containerCircle: {
-    backgroundColor: 'rgb(252, 228, 188)',
+    // backgroundColor: 'rgb(252, 228, 188)',
     borderRadius: 150,
     padding: 30,
     marginTop: 40,
@@ -73,7 +151,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'SVN-ProximaNova',
     fontSize: 30,
-    color: '#f4a621',
+    // color: '#f4a621',
     marginTop: 30,
   },
   row: {
@@ -82,7 +160,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   highlight: {
-    color: '#f4a621',
+    // color: mainColor,
     fontWeight: '700',
     fontSize: 20,
   },
@@ -99,7 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    backgroundColor: '#f6b74c',
+    // backgroundColor: mainColor,
     width: 180,
     padding: 15,
     marginTop: 20,

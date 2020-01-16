@@ -2,9 +2,9 @@ import callApi from './apiCaller';
 
 export const getAllMembershipCodeRequest = () => {
   return callApi(
-    '/api/generatedMemberships?Status=Active&pageNumber=1',
+    '/api/generatedmemberships',
     'GET',
     null,
-    'WVlDclUvVzBRcnl6YkhkVUN6R1JlRVIxSjhjeE10Zy82V3E5eEcrOUdEU3ZWL2tvbUQxaDg0bEYvd1hXUTE0SA==',
+    'akN4LzF5SzFnKys4N2ZTdVdKbDh3QUtISkd6T25PRmZNL3pTSm90Q1hZd1VKUWx5aVBFZWUvYWNZbE9zUVcxTw==',
   );
 };
