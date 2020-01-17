@@ -39,7 +39,6 @@ class Cart extends Component {
   checkUserMember = async () => {
     const data = await AsyncStorage.getItem('userData');
     const userData = JSON.parse(data);
-    console.log('member ship', userData);
     if (userData.IsMembershipExpired === true || userData.MaxBorrowDays === 0) {
       showConfirmAlert(
         'Đặt hàng',
@@ -147,8 +146,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    data: state.cartReducers.data,
-    loading: state.cartReducers.loadingCart,
+    data: state.cartReducer.data,
+    loading: state.cartReducer.loadingCart,
   };
 };
 

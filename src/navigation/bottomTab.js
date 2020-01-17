@@ -139,7 +139,7 @@ export default async function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'Login',
+                            name: 'Notification',
                             options: {
                               topBar: {
                                 visible: false,

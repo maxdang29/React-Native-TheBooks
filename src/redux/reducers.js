@@ -4,18 +4,20 @@ import SideBarReducers from './sideBar/reducer';
 
 import registerReducer from './auth/Register/reducer';
 import loginReducer from './auth/Login/reducer';
-import cartReducers from './cart/reducer';
+import cartReducer from './cart/reducer';
 import membershipReducer from './memberShip/reducer';
 import commentReducers from './comment/reducer';
+import noticeReducer from './notification/reducer';
 
 const rootReducer = combineReducers({
   homeReducer,
   registerReducer,
   loginReducer,
   SideBarReducers,
-  cartReducers,
+  cartReducer,
   membershipReducer,
   commentReducers,
+  noticeReducer,
 });
 
 export default rootReducer;
