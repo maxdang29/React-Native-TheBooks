@@ -16,6 +16,7 @@ export default class FlatListBookColumnItem extends Component {
       <FlatList
         data={data}
         numColumns={row ? 1 : 2}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) =>
           item.Id + Math.floor(Math.random() * 100)
         }

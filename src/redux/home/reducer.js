@@ -3,7 +3,6 @@ import * as types from './actions/typesAction';
 const init = {
   data: [],
   relatedBooks: [],
-
   search: [],
   error: undefined,
   searchSuggestion: [],

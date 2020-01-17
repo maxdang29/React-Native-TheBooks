@@ -4,6 +4,7 @@ const init = {
   data: [],
   loading: false,
   error: [],
+  upgradeMemberShip: [],
 };
 
 const membershipReducer = (state = init, action) => {
@@ -14,6 +15,13 @@ const membershipReducer = (state = init, action) => {
       return {...state, data: [...action.data], loading: false};
     case ActionTypes.GET_ALL_MEMBERSHIP_CODE_FAILED:
       return {...state, error: action.error, loading: false};
+    case ActionTypes.UPGRADE_MEMBER_SHIP:
+      return {...state, loading: true};
+    case ActionTypes.UPGRADE_MEMBER_SHIP_SUCCESS:
+      return {...state, upgradeMemberShip: action.data, loading: false};
+    case ActionTypes.UPGRADE_MEMBER_SHIP_FAILED:
+      return {...state, loading: false};
+
     default:
       return state;
   }

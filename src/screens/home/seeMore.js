@@ -15,10 +15,23 @@ export default class SeeMore extends Component {
     return array;
   };
   render() {
-    const {data, title} = this.props;
-    const dataFilter = this.filterData(data, title);
-    const bookData = dataFilter[0].data[0].data;
+    let bookData = [];
+    const {data, title} = this.props.value;
+    const {value} = this.props;
 
-    return <FlatListBookColumnItem data={bookData}  />;
+    if (title) {
+      const dataFilter = this.filterData(data, title);
+      console.log('dataFilter', dataFilter);
+      bookData = dataFilter[0].data[0].data;
+    } else {
+      bookData = value;
+    }
+    console.log('valueeee', this.props);
+
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <FlatListBookColumnItem data={bookData} />
+      </View>
+    );
   }
 }

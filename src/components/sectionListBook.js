@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, SectionList, FlatList} from 'react-native';
 import ColumBookItem from './ColumnBookItem';
 import {connect} from 'react-redux';
-import {pushScreen} from '../navigation/pushScreen';
+import {goAnotherScreen} from '../navigation/navigation';
 
 class SectionListBook extends Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class SectionListBook extends Component {
   }
 
   moveToSeeMoreScreen = (data, title) => {
-    pushScreen(this.props.componentId, 'seeMore', data, title);
+    console.log('66666', data);
+    goAnotherScreen('seeMore', {data, title}, title);
   };
 
   render() {

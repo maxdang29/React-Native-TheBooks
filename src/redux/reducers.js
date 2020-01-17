@@ -7,6 +7,7 @@ import loginReducer from './auth/Login/reducer';
 import cartReducers from './cart/reducer';
 import membershipReducer from './memberShip/reducer';
 import commentReducers from './comment/reducer';
+import orderReducers from './order/reducers';
 
 const rootReducer = combineReducers({
   homeReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   cartReducers,
   membershipReducer,
   commentReducers,
+  orderReducers,
 });
 
 export default rootReducer;

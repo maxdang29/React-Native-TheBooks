@@ -47,6 +47,7 @@ class BookDetail extends Component {
   getInforUser = async () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
+
     await this.setState({
       userId: userId,
       token: token,
@@ -189,6 +190,8 @@ class BookDetail extends Component {
     const {relatedBooks, reviewBooks} = this.props;
     const {bookContent, expanded} = this.state;
 
+    console.log('relatedBooks', relatedBooks);
+
     if (value)
       return (
         <>
@@ -250,7 +253,10 @@ class BookDetail extends Component {
                     ]}>
                     Sách tương tự
                   </Text>
-                  <Text style={styles.seeMore}>Xem thêm</Text>
+                  <TouchableOpacity
+                    onPress={() => goAnotherScreen('seeMore', relatedBooks)}>
+                    <Text style={styles.seeMore}>Xem thêm</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={[styles.bookFlatList]}>
                   {relatedBooks ? (
@@ -355,6 +361,11 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(BookDetail);
 
 const styles = StyleSheet.create({
+  seeMore: {
+    fontSize: 15,
+    color: 'blue',
+    marginTop: 10,
+  },
   item: {
     marginRight: 20,
   },

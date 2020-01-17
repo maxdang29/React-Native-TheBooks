@@ -13,36 +13,38 @@ export default class ListOrder extends Component {
     return (
       <View>
         <View style={styles.container}>
-          <View style={styles.item}>
-            <View style={styles.row}>
-              <View style={styles.dateContainer}>
-                <Text style={styles.date}>20/12/1019</Text>
-              </View>
+          <View style={styles.shadowView}>
+            <View style={styles.item}>
+              <View style={styles.row}>
+                <View style={styles.dateContainer}>
+                  <Text style={styles.date}>20/12/1019</Text>
+                </View>
 
-              <View style={styles.infor}>
-                <View style={styles.row}>
-                  <Icons
-                    name="ic-code"
-                    solid
-                    size={25}
-                    color={'#fc9619'}
-                    style={styles.icon}
-                  />
-                  <Text style={[styles.text, styles.qr]}>K234H32JS</Text>
+                <View style={styles.infor}>
+                  <View style={styles.row}>
+                    <Icons
+                      name="ic-code"
+                      solid
+                      size={25}
+                      color={'#fc9619'}
+                      style={styles.icon}
+                    />
+                    <Text style={[styles.text, styles.qr]}>K234H32JS</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Icons
+                      name="ic-price-1"
+                      solid
+                      size={20}
+                      color={'#fc9619'}
+                      style={styles.icon}
+                    />
+                    <Text style={styles.text}>164.000</Text>
+                  </View>
+                  <Text>Hạn trả: 10-04-2019</Text>
                 </View>
-                <View style={styles.row}>
-                  <Icons
-                    name="ic-price-1"
-                    solid
-                    size={20}
-                    color={'#fc9619'}
-                    style={styles.icon}
-                  />
-                  <Text style={styles.text}>164.000</Text>
-                </View>
-                <Text>Hạn trả: 10-04-2019</Text>
+                <Text style={styles.status}>Đang mượn</Text>
               </View>
-              <Text style={styles.status}>Đang mượn</Text>
             </View>
           </View>
         </View>
@@ -113,5 +115,14 @@ const styles = StyleSheet.create({
   },
   iconCart: {
     color: 'white',
+  },
+  shadowView: {
+    margin: 15,
+    borderRadius: 5,
+    elevation: 8,
+    shadowColor: 'gray',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
 });

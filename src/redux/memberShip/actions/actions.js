@@ -19,3 +19,26 @@ export const getAllMembershipCodeSuccess = data => {
     data,
   };
 };
+
+export const upgradeMembership = (idUser, data, token) => {
+  return {
+    type: Actions.UPGRADE_MEMBER_SHIP,
+    idUser,
+    data,
+    token,
+  };
+};
+
+export const upgradeMembershipFailed = error => {
+  return {
+    type: Actions.UPGRADE_MEMBER_SHIP_FAILED,
+    error,
+  };
+};
+
+export const upgradeMembershipSuccess = data => {
+  return {
+    type: Actions.UPGRADE_MEMBER_SHIP_SUCCESS,
+    data,
+  };
+};

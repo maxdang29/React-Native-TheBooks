@@ -35,6 +35,8 @@ import Cart from '../screens/Cart/cart';
 import SplashScreen from '../screens/splashScreen';
 import upgradeMembership from '../screens/membership/upgradeMembership';
 import Membership from '../screens/membership/memberShipList';
+import UpgradeSuccess from '../screens/membership/upgradeSuccess';
+import Payment from '../screens/payment/payment';
 
 function ReduxProvider(Component) {
   return props => (
@@ -169,5 +171,16 @@ export function registerScreens() {
     'listOrder',
     () => ReduxProvider(ListOrder),
     () => ListOrder,
+  );
+
+  Navigation.registerComponent(
+    'payment',
+    () => ReduxProvider(Payment),
+    () => Payment,
+  );
+  Navigation.registerComponent(
+    'upgradeSuccess',
+    () => ReduxProvider(UpgradeSuccess),
+    () => UpgradeSuccess,
   );
 }
