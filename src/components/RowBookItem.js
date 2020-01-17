@@ -142,8 +142,8 @@ class RowBookItem extends Component {
 
 const mapStateToProps = state => {
   return {
-    data: state.cartReducers.data,
-    loading: state.cartReducers.loadingCart,
+    data: state.cartReducer.data,
+    loading: state.cartReducer.loadingCart,
   };
 };
 

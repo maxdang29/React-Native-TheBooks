@@ -37,6 +37,7 @@ import upgradeMembership from '../screens/membership/upgradeMembership';
 import Membership from '../screens/membership/memberShipList';
 import UpgradeSuccess from '../screens/membership/upgradeSuccess';
 import Payment from '../screens/payment/payment';
+import Notification from '../screens/notification/notification';
 
 function ReduxProvider(Component) {
   return props => (
@@ -51,6 +52,11 @@ export function registerScreens() {
     'upgradeMembership',
     () => ReduxProvider(upgradeMembership),
     () => upgradeMembership,
+  );
+  Navigation.registerComponent(
+    'Notification',
+    () => ReduxProvider(Notification),
+    () => Notification,
   );
   Navigation.registerComponent(
     'Membership',

@@ -6,7 +6,7 @@ const init = {
   error: [],
 };
 
-const cartReducers = (state = init, action) => {
+const cartReducer = (state = init, action) => {
   switch (action.type) {
     case types.ADD_TO_CART:
       return {...state, loadingCart: true};
@@ -39,4 +39,4 @@ const cartReducers = (state = init, action) => {
   }
 };
 
-export default cartReducers;
+export default cartReducer;
