@@ -13,16 +13,9 @@ export default class upgradeMembership extends Component {
       },
     });
   }
-  // componentDidMount() {
-  //   const {value} = this.props;
-  //   console.log('value', value.icon.color);
-  //   mainColor = value.icon.color;
-  // }
 
   render() {
     const {value} = this.props;
-    console.log('value', value);
-    // value.icon.color;
     return (
       <View style={styles.container}>
         <Text

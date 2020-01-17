@@ -5,6 +5,7 @@ import rootSagaLogin from './auth/Login/sagas';
 import rootSagaCart from './cart/saga';
 import rootSagaComment from './comment/saga';
 import rootSagaMembership from './memberShip/saga';
+import rootSagaNotice from '../redux/notification/saga';
 import {all} from 'redux-saga/effects';
 export default function* root() {
   yield all([
@@ -15,5 +16,6 @@ export default function* root() {
     ...rootSagaCart,
     ...rootSagaComment,
     ...rootSagaMembership,
+    ...rootSagaNotice,
   ]);
 }

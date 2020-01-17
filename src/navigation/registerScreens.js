@@ -34,6 +34,7 @@ import Cart from '../screens/Cart/cart';
 import Membership from '../screens/MemberShip/memberShipList';
 import SplashScreen from '../screens/splashScreen';
 import upgradeMembership from '../screens/MemberShip/upgradeMembership';
+import Notification from '../screens/notification/notification';
 
 function ReduxProvider(Component) {
   return props => (
@@ -48,6 +49,11 @@ export function registerScreens() {
     'upgradeMembership',
     () => ReduxProvider(upgradeMembership),
     () => upgradeMembership,
+  );
+  Navigation.registerComponent(
+    'Notification',
+    () => ReduxProvider(Notification),
+    () => Notification,
   );
   Navigation.registerComponent(
     'Membership',

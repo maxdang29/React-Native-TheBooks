@@ -69,7 +69,7 @@ function* updateItemInCart(actions) {
       actions.data,
       actions.Token,
     );
-    const allData = yield store.getState().cartReducers;
+    const allData = yield store.getState().cartReducer;
     const newList = yield allData.data.map(item => {
       if (item.Book.Id === actions.data.BookId) {
         if (item.Book.Quantity >= actions.data.Quantity) {
@@ -103,7 +103,7 @@ function* deleteAnItemInCart(actions) {
       actions.data,
       actions.Token,
     );
-    const allData = yield store.getState().cartReducers;
+    const allData = yield store.getState().cartReducer;
     const newList = yield allData.data.filter(item => {
       return item.Book.Id !== actions.data.BookId;
     });
