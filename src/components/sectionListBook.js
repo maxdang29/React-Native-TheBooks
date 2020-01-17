@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, SectionList, FlatList} from 'react-native';
 import ColumBookItem from './ColumnBookItem';
 import {connect} from 'react-redux';
-import {pushScreen} from '../navigation/pushScreen';
+import {goAnotherScreen} from '../navigation/navigation';
 
 class SectionListBook extends Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class SectionListBook extends Component {
   }
 
   moveToSeeMoreScreen = (data, title) => {
-    pushScreen(this.props.componentId, 'seeMore', data, title);
+    console.log('66666', data);
+    goAnotherScreen('seeMore', {data, title}, title);
   };
 
   render() {
@@ -40,7 +41,9 @@ class SectionListBook extends Component {
                   return item.Id.toString() + Date.now().toString();
                 }}
                 renderItem={({item, index}) => (
-                  <ColumBookItem item={item} key={Date.now().toString()} />
+                  <View style={styles.item}>
+                    <ColumBookItem item={item} key={Date.now().toString()} />
+                  </View>
                 )}
               />
             );
@@ -63,9 +66,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(SectionListBook);
 const styles = StyleSheet.create({
   container: {
     marginTop: 15,
+    marginLeft: 20,
   },
   header: {
-    marginLeft: 20,
     flexDirection: 'row',
     marginTop: 15,
   },
@@ -78,5 +81,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     color: 'blue',
     marginTop: 10,
+  },
+  item: {
+    marginRight: 20,
   },
 });

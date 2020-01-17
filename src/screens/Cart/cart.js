@@ -39,10 +39,13 @@ class Cart extends Component {
   checkUserMember = async () => {
     const data = await AsyncStorage.getItem('userData');
     const userData = JSON.parse(data);
-    if (userData.IsMembershipExpired === true || userData.MaxBorrowDays === 0) {
+    console.log('member ship', userData);
+    if (userData.IsMembershipExpired === false && userData.MaxBorrowDays > 0) {
+      alert('ok');
+    } else {
       showConfirmAlert(
         'Đặt hàng',
-        'Bạn chư alaf thành viên hoặc gói thành viên của bạn không đủ! Bạn có muốn nâng cấp thêm?',
+        'Bạn chưa là thành viên hoặc gói thành viên của bạn không đủ! Bạn có muốn nâng cấp thêm?',
         [
           {
             text: 'Không, cảm ơn',
@@ -60,6 +63,7 @@ class Cart extends Component {
 
   render() {
     const {data} = this.props;
+    console.log('data cart', data);
     let {loading} = this.props;
     let isExistsData = Array.isArray(data)
       ? data.length !== 0
@@ -85,8 +89,10 @@ class Cart extends Component {
           </View>
         </ScrollView>
 
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={() => this.checkUserMember()}>
+        <View>
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => this.checkUserMember()}>
             <Text style={styles.footer_text}>Đặt hàng</Text>
           </TouchableOpacity>
         </View>
@@ -126,9 +132,8 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: '#fc9619',
     height: 70,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 10,
-    width: Dimensions.get('window').width,
   },
 
   footer_text: {

@@ -30,7 +30,7 @@ class MemberPackage extends Component {
   };
 
   render() {
-    const {item} = this.props;
+    const {item, componentId} = this.props;
     const icon = this.findIcon(item.Membership.Name)[0];
     const data = {item, icon};
     return (

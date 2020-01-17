@@ -5,7 +5,7 @@ import store from '../store';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
 import {goAnotherScreen} from '../../navigation/navigation';
 import {showInAppNotification} from '../../navigation/showInAppNotification';
-
+ 
 import {
   addToCartRequest,
   getAllItemInCartRequest,

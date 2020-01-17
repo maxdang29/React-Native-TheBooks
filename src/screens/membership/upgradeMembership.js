@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import Icons from 'react-native-vector-icons/thebook-appicon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Navigation} from 'react-native-navigation';
+import {goAnotherScreen} from '../../navigation/navigation';
+import {connect} from 'react-redux';
+import * as upgradeMembershipAction from '../../redux/memberShip/actions/actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default class upgradeMembership extends Component {
+class upgradeMembership extends Component {
   constructor(props) {
     super(props);
     Navigation.mergeOptions(this.props.componentId, {
@@ -14,8 +23,28 @@ export default class upgradeMembership extends Component {
     });
   }
 
-  render() {
+  upgradeMembership = async () => {
+    // goAnotherScreen('payment', value);
     const {value} = this.props;
+    const userId = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      GenerateCode: value.item.GeneratedMembershipCode,
+    };
+
+    this.props.upgradeMembership(userId, data, token);
+  };
+
+  render() {
+    const {value, loading} = this.props;
+
+    if (loading) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <Text
@@ -114,12 +143,30 @@ export default class upgradeMembership extends Component {
               }`,
             },
           ]}>
-          <Text style={[styles.textButton]}>Nâng cấp</Text>
+          <TouchableOpacity onPress={() => this.upgradeMembership()}>
+            <Text style={[styles.textButton]}>Nâng cấp</Text>
+          </TouchableOpacity>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.membershipReducer.loading,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    upgradeMembership: (idUser, data, token) => {
+      dispatch(upgradeMembershipAction.upgradeMembership(idUser, data, token));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(upgradeMembership);
 
 const styles = StyleSheet.create({
   container: {
@@ -130,12 +177,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   containerCircleChild: {
-    // backgroundColor: mainColor,
     borderRadius: 150,
     padding: 20,
   },
   containerCircle: {
-    // backgroundColor: 'rgb(252, 228, 188)',
     borderRadius: 150,
     padding: 30,
     marginTop: 40,
@@ -144,7 +189,6 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'SVN-ProximaNova',
     fontSize: 30,
-    // color: '#f4a621',
     marginTop: 30,
   },
   row: {
@@ -153,7 +197,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   highlight: {
-    // color: mainColor,
     fontWeight: '700',
     fontSize: 20,
   },
@@ -170,7 +213,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    // backgroundColor: mainColor,
     width: 180,
     padding: 15,
     marginTop: 20,
@@ -179,5 +221,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: 'center',
     color: 'white',
+  },
+  loading: {
+    color: '#0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
 });

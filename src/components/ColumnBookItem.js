@@ -40,8 +40,10 @@ export default class ColumBookItem extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    paddingHorizontal: 20,
+    //paddingHorizontal: 20,
+    //paddingRight: 20,
     paddingVertical: 3,
+    //marginRight: 20,
   },
   viewFlexDirection: {
     flexDirection: 'row',

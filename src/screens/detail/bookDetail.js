@@ -34,6 +34,7 @@ class BookDetail extends Component {
       token: '',
       numberReview: 1,
     };
+    this.navigationEventListener = Navigation.events().bindComponent(this);
   }
 
   navigationButtonPressed({buttonId}) {
@@ -46,6 +47,7 @@ class BookDetail extends Component {
   getInforUser = async () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
+
     await this.setState({
       userId: userId,
       token: token,
@@ -53,12 +55,13 @@ class BookDetail extends Component {
   };
 
   componentDidMount() {
-    const {Id, Content} = this.props.value;
-    this.props.get_related_book(Id);
-    this.props.get_review_book(Id);
-    this.navigationEventListener = Navigation.events().bindComponent(this);
-    this.limitContent(Content);
-    this.getInforUser();
+    if (this.props.value) {
+      const {Id, Content} = this.props.value;
+      this.props.get_related_book(Id);
+      this.props.get_review_book(Id);
+      this.limitContent(Content);
+      this.getInforUser();
+    }
   }
   componentDidUpdate() {
     const {commentLoading} = this.props;
@@ -186,122 +189,143 @@ class BookDetail extends Component {
     const {userId, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props;
     const {bookContent, expanded} = this.state;
-    return (
-      <>
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.container}>
-            <View style={styles.shadowView}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: value.Medias[0]
-                    ? value.Medias[0].ImageUrl
-                    : 'https://member.thebooks.vn/static/media/Bia_sach.01b3a899.jpg',
-                }}
-              />
-            </View>
-            <View style={styles.bookDescription}>
-              <Text style={styles.bookTitle}>{value.Title}</Text>
-              <Text style={styles.bookAuthor}>{value.Authors[0].Name}</Text>
 
-              <View style={styles.viewFlexDirection}>
-                {countStars(
-                  value.OverallStarRating,
-                  styles.iconRankChecked,
-                  styles.iconRankUnchecked,
-                )}
-                <Icon style={styles.iconDirection} name="tag" />
-                <Text style={[styles.bookWish]}>{value.FavoriteCount}</Text>
-              </View>
+    console.log('relatedBooks', relatedBooks);
 
-              <View style={styles.viewFlexDirection}>
-                {value.Categories
-                  ? value.Categories.map(item => {
-                      return (
-                        <TouchableOpacity style={styles.btnBookType}>
-                          <Text style={styles.textBookType}>{item.Name}</Text>
-                        </TouchableOpacity>
-                      );
-                    })
-                  : null}
-              </View>
-            </View>
-
-            <View style={styles.bookSubView}>
-              <Text style={styles.bookSubText}>
-                {bookContent}
-                {this.showExpanded(expanded)}
-              </Text>
-            </View>
-
-            <View style={styles.viewOfCategory}>
-              <View style={styles.titleOfCategory}>
-                <Text
-                  style={[styles.textTitleOfCategory, styles.titleOfCategory]}>
-                  Sách tương tự
-                </Text>
-                <Text style={styles.seeMore}>Xem thêm</Text>
-              </View>
-              <View style={[styles.bookFlatList]}>
-                {relatedBooks ? (
-                  <FlatList
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={relatedBooks}
-                    keyExtractor={(item, index) => item.Id + index}
-                    renderItem={({item}) => <ColumnBookItem item={item} />}
+    if (value)
+      return (
+        <>
+          <ScrollView>
+            <View style={styles.container}>
+              <View style={styles.imageContainer}>
+                <View style={styles.shadowView}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: value.Medias[0]
+                        ? value.Medias[0].ImageUrl
+                        : 'https://member.thebooks.vn/static/media/Bia_sach.01b3a899.jpg',
+                    }}
                   />
-                ) : null}
+                </View>
               </View>
-            </View>
-            <View style={styles.viewOfCmt}>
-              <View style={styles.titleOfCategory}>
-                <Text
-                  style={[styles.textTitleOfCategory, styles.titleOfCategory]}>
-                  Nhận Xét
+
+              <View style={styles.bookDescription}>
+                <Text style={styles.bookTitle}>{value.Title}</Text>
+                <Text style={styles.bookAuthor}>{value.Authors[0].Name}</Text>
+
+                <View style={styles.viewFlexDirection}>
+                  {countStars(
+                    value.OverallStarRating,
+                    styles.iconRankChecked,
+                    styles.iconRankUnchecked,
+                  )}
+                  <Icon style={styles.iconDirection} name="tag" />
+                  <Text style={[styles.bookWish]}>{value.FavoriteCount}</Text>
+                </View>
+
+                <View style={styles.viewFlexDirection}>
+                  {value.Categories
+                    ? value.Categories.map(item => {
+                        return (
+                          <TouchableOpacity style={styles.btnBookType}>
+                            <Text style={styles.textBookType}>{item.Name}</Text>
+                          </TouchableOpacity>
+                        );
+                      })
+                    : null}
+                </View>
+              </View>
+
+              <View style={styles.bookSubView}>
+                <Text style={styles.bookSubText}>
+                  {bookContent}
+                  {this.showExpanded(expanded)}
                 </Text>
               </View>
 
-              <TouchableOpacity
-                style={styles.btnCmt}
-                onPress={() => this.showModalReview()}>
-                <Text style={styles.textCmt}>
-                  Viết nhận xét cho cuốn sách này!
-                </Text>
-              </TouchableOpacity>
+              <View style={styles.viewOfCategory}>
+                <View style={styles.titleOfCategory}>
+                  <Text
+                    style={[
+                      styles.textTitleOfCategory,
+                      styles.titleOfCategory,
+                    ]}>
+                    Sách tương tự
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => goAnotherScreen('seeMore', relatedBooks)}>
+                    <Text style={styles.seeMore}>Xem thêm</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={[styles.bookFlatList]}>
+                  {relatedBooks ? (
+                    <FlatList
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      data={relatedBooks}
+                      keyExtractor={(item, index) => item.Id + index}
+                      renderItem={({item}) => (
+                        <View style={styles.item}>
+                          <ColumnBookItem item={item} />
+                        </View>
+                      )}
+                    />
+                  ) : null}
+                </View>
+              </View>
+              <View style={styles.viewOfCmt}>
+                <View style={styles.titleOfCategory}>
+                  <Text
+                    style={[
+                      styles.textTitleOfCategory,
+                      styles.titleOfCategory,
+                    ]}>
+                    Nhận Xét
+                  </Text>
+                </View>
 
-              <View style={[styles.bookFlatList]}>
-                {reviewBooks
-                  ? reviewBooks.map((item, index) => {
-                      if (index < numberReview) {
-                        if (userId === item.UserId) {
-                          return <CommentBook item={item} isUser={true} />;
-                        } else {
-                          return <CommentBook item={item} isUser={false} />;
+                <TouchableOpacity
+                  style={styles.btnCmt}
+                  onPress={() => this.showModalReview()}>
+                  <Text style={styles.textCmt}>
+                    Viết nhận xét cho cuốn sách này!
+                  </Text>
+                </TouchableOpacity>
+
+                <View style={[styles.bookFlatList]}>
+                  {reviewBooks
+                    ? reviewBooks.map((item, index) => {
+                        if (index < numberReview) {
+                          if (userId === item.UserId) {
+                            return <CommentBook item={item} isUser={true} />;
+                          } else {
+                            return <CommentBook item={item} isUser={false} />;
+                          }
                         }
-                      }
-                    })
-                  : null}
+                      })
+                    : null}
+                </View>
               </View>
             </View>
+            <TouchableOpacity onPress={() => this.setNumberReview()}>
+              {numberReview === 1 ? (
+                <Text style={[styles.showAllCmt]}>Xem tất cả nhận xét</Text>
+              ) : (
+                <Text style={[styles.showAllCmt]}>Thu gọn</Text>
+              )}
+            </TouchableOpacity>
+          </ScrollView>
+          <View>
+            <TouchableOpacity
+              style={styles.footer}
+              onPress={() => this.onAddToCart(value.Id, 1)}>
+              <Text style={styles.footer_text}>Thêm Vào Cart</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => this.setNumberReview()}>
-            {numberReview === 1 ? (
-              <Text style={[styles.showAllCmt]}>Xem tất cả nhận xét</Text>
-            ) : (
-              <Text style={[styles.showAllCmt]}>Thu gọn</Text>
-            )}
-          </TouchableOpacity>
-        </ScrollView>
-        <View>
-          <TouchableOpacity
-            style={styles.footer}
-            onPress={() => this.onAddToCart(value.Id, 1)}>
-            <Text style={styles.footer_text}>Thêm Vào Cart</Text>
-          </TouchableOpacity>
-        </View>
-      </>
-    );
+        </>
+      );
+    else return null;
   }
 }
 
@@ -337,6 +361,14 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(BookDetail);
 
 const styles = StyleSheet.create({
+  seeMore: {
+    fontSize: 15,
+    color: 'blue',
+    marginTop: 10,
+  },
+  item: {
+    marginRight: 20,
+  },
   expanded: {
     color: '#1d9dd8',
   },
@@ -375,9 +407,7 @@ const styles = StyleSheet.create({
     top: 30,
     flexDirection: 'column',
   },
-  scrollView: {
-    marginTop: 20,
-  },
+
   viewOfCategory: {
     top: 45,
     flexDirection: 'column',
@@ -399,8 +429,14 @@ const styles = StyleSheet.create({
 
   container: {
     flexDirection: 'column',
-    marginHorizontal: 20,
     bottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
   },
   image: {
     width: 230,
@@ -411,9 +447,6 @@ const styles = StyleSheet.create({
     width: 231,
     height: 311,
     borderRadius: 5,
-    marginVertical: 5,
-    marginHorizontal: 70,
-    top: 30,
     elevation: 10,
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 4},

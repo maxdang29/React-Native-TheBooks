@@ -3,7 +3,6 @@ import * as types from './actions/typesAction';
 const init = {
   data: [],
   relatedBooks: [],
-
   search: [],
   error: undefined,
   searchSuggestion: [],
@@ -20,9 +19,10 @@ const homeReducers = (state = init, action) => {
       return {...state, data: action.data, loading: false};
     case types.GET_RELATED_BOOK_SUCCESS:
       return {...state, relatedBooks: action.data};
-
+    case types.GET_ALL_BOOK:
+      return {...state, loading: true};
     case types.GET_ALL_BOOK_SUCCESS:
-      return {...state, search: action.data};
+      return {...state, search: action.data, loading: false};
     case types.GET_BOOK_SUGGESTION_SUCCESS:
       return {...state, searchSuggestion: action.data};
 

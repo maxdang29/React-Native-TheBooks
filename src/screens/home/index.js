@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = store => {
-  console.log('store 33', store.homeReducer.loading);
   return {
     bookData: convertDataToSection(store.homeReducer.data, NAME),
     bestUser: store.homeReducer.bestUser,

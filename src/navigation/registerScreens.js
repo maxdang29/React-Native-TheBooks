@@ -13,6 +13,7 @@ import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
 import ListUserBook from '../screens/UserBook/ListUserBook';
 import ModalWriteReview from '../components/modalWriteReview';
+import ListOrder from '../screens/order/listOrder';
 import UserSetting from '../screens/UserProfile/UserSetting';
 
 // import your components here
@@ -31,9 +32,11 @@ import Sort from '../screens/search/sort';
 import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
-import Membership from '../screens/MemberShip/memberShipList';
 import SplashScreen from '../screens/splashScreen';
-import upgradeMembership from '../screens/MemberShip/upgradeMembership';
+import upgradeMembership from '../screens/membership/upgradeMembership';
+import Membership from '../screens/membership/memberShipList';
+import UpgradeSuccess from '../screens/membership/upgradeSuccess';
+import Payment from '../screens/payment/payment';
 import Notification from '../screens/notification/notification';
 
 function ReduxProvider(Component) {
@@ -168,5 +171,22 @@ export function registerScreens() {
     'splashScreen',
     () => ReduxProvider(SplashScreen),
     () => SplashScreen,
+  );
+
+  Navigation.registerComponent(
+    'listOrder',
+    () => ReduxProvider(ListOrder),
+    () => ListOrder,
+  );
+
+  Navigation.registerComponent(
+    'payment',
+    () => ReduxProvider(Payment),
+    () => Payment,
+  );
+  Navigation.registerComponent(
+    'upgradeSuccess',
+    () => ReduxProvider(UpgradeSuccess),
+    () => UpgradeSuccess,
   );
 }
