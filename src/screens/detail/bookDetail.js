@@ -47,7 +47,6 @@ class BookDetail extends Component {
   getInforUser = async () => {
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
-
     await this.setState({
       userId: userId,
       token: token,
@@ -189,6 +188,7 @@ class BookDetail extends Component {
     const {userId, numberReview} = this.state;
     const {relatedBooks, reviewBooks} = this.props;
     const {bookContent, expanded} = this.state;
+
     if (value)
       return (
         <>

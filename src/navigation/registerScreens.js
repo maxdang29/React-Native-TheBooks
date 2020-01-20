@@ -29,13 +29,13 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
 import Sort from '../screens/search/sort';
-import SearchResultFilter from '../screens//search/searchResultWithFilter';
+import SearchResultFilter from '../screens/search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
 import SplashScreen from '../screens/splashScreen';
-import UpgradeMembership from '../screens/memberShip/upgradeMembership';
-import Membership from '../screens/memberShip/memberShipList';
-import UpgradeSuccess from '../screens/memberShip/upgradeSuccess';
+import UpgradeMembership from '../screens/membership/upgradeMembership';
+import Membership from '../screens/membership/memberShipList';
+import UpgradeSuccess from '../screens/membership/upgradeSuccess';
 import Payment from '../screens/payment/payment';
 import Notification from '../screens/notification/notification';
 

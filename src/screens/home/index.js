@@ -5,6 +5,7 @@ import {Navigation} from 'react-native-navigation';
 import SectionListBook from '../../components/sectionListBook';
 import {goAnotherScreen} from '../../navigation/navigation';
 import FlatListCircle from '../../components/FlatListCircle';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {connect} from 'react-redux';
 import * as actionUser from '../../redux/home/actions/action';
@@ -48,6 +49,9 @@ class Home extends Component {
       });
     }
   }
+  gotoCart = async () => {
+    goAnotherScreen('Cart', null, 'Giỏ hàng');
+  };
   navigationButtonPressed({buttonId}) {
     if (buttonId === 'sideMenu') {
       try {
@@ -92,8 +96,7 @@ class Home extends Component {
           />
         </ScrollView>
         <View style={styles.circleContainer}>
-          <TouchableOpacity
-            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
+          <TouchableOpacity onPress={() => this.gotoCart()}>
             <Icons style={styles.iconCart} size={35} name="ic-cart" />
           </TouchableOpacity>
         </View>

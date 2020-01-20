@@ -24,6 +24,8 @@ function* postComment(actions) {
     }
   } catch (error) {
     console.log(error.data.Message);
+    showInAppNotification('Đánh giá thất bại', error.data.Message, 'error');
+
     yield put(commentAction.postCommentFailed(error.data.Message));
   }
 }

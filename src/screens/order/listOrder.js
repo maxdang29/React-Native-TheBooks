@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {goAnotherScreen} from '../../navigation/navigation';
-import {connect} from '../../../node_modules/react-redux';
-import * as Action from '../../redux/order/actions/actions';
 import AsyncStorage from '@react-native-community/async-storage';
+import {connect} from 'react-redux';
 
 class ListOrder extends Component {
   constructor(props) {
     super(props);
   }
+  gotoCart = () => {
+    goAnotherScreen('Cart', null, 'Giỏ hàng');
+  };
   async componentDidMount() {
     const userData = await AsyncStorage.getItem('userData');
     const token = await AsyncStorage.getItem('token');
@@ -58,8 +60,7 @@ class ListOrder extends Component {
           </View>
         </View>
         <View style={styles.circleContainer}>
-          <TouchableOpacity
-            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
+          <TouchableOpacity onPress={() => this.gotoCart()}>
             <Icons style={styles.iconCart} size={35} name="ic-cart" />
           </TouchableOpacity>
         </View>

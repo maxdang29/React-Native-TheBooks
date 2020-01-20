@@ -1,7 +1,10 @@
 import * as types from './typesAction';
-export const addOrder = () => {
+export const addOrder = (data, componentId, token) => {
   return {
     type: types.ADD_ORDER,
+    data,
+    componentId,
+    token,
   };
 };
 
@@ -11,10 +14,9 @@ export const addOrderFailed = error => {
     error,
   };
 };
-export const addOrderSuccess = data => {
+export const addOrderSuccess = () => {
   return {
     type: types.ADD_ORDER_SUCCESS,
-    data,
   };
 };
 
