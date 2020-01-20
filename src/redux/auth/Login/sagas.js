@@ -15,7 +15,10 @@ function* login(action) {
         response.data.Token.access_token,
       ),
     );
-    showInAppNotification('Đăng nhập', 'Chào mừng đến với The Books');
+    setTimeout(() => {
+      showInAppNotification('Đăng nhập', 'Chào mừng đến với The Books');
+    }, 4000);
+
     yield AsyncStorage.setItem('userData', JSON.stringify(response.data.Data));
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
     yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);

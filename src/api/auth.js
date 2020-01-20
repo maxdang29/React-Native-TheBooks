@@ -9,3 +9,11 @@ export const registerApi = data => {
 export const logoutApi = () => {
   return callApi('/api/Token', 'DELETE');
 };
+export const editUserApi = data => {
+  return callApi(
+    `/api/users/${data.userId}/updateprofile`,
+    'PUT',
+    data.requestData,
+    data.Token,
+  );
+};

@@ -25,7 +25,12 @@ function* register(action) {
     yield AsyncStorage.setItem('userData', JSON.stringify(response.data.Data));
     yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);
     yield AsyncStorage.setItem('userId', response.data.Data.Id);
-    showInAppNotification('Đăng Kí thành công', 'Chào mừng đến với The Books');
+    setTimeout(() => {
+      showInAppNotification(
+        'Đăng Kí thành công',
+        'Chào mừng đến với The Books',
+      );
+    }, 3000);
   } catch (error) {
     showInAppNotification('Đăng kí', error.data.Message, 'error');
     yield put(registerActions.registerFail(error));

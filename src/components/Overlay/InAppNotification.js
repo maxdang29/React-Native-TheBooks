@@ -29,7 +29,7 @@ export default class NotificationOverlay extends React.Component {
     const {autoDismissTime, isAutoDismiss, componentId, isVibrate} = this.props;
     Animated.timing(this.animation, {
       toValue: 1,
-      duration: 700,
+      duration: 1000,
       easing: Easing.poly(0.8),
       useNativeDriver: true,
     }).start(() => {

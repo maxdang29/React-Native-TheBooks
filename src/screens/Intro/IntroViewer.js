@@ -4,6 +4,7 @@ import {Text, TouchableButton} from '../../components';
 import {Colors} from '../../themes';
 import startApp from '../../navigation/bottomTab';
 import AsyncStorage from '@react-native-community/async-storage';
+import Login from '../Authentication/Login';
 
 export default class IntroViewer extends React.PureComponent {
   goToHome = async () => {

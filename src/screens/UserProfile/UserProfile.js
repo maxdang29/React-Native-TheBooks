@@ -7,7 +7,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+//import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import ListUserBook from '../UserBook/ListUserBook';
 import {Text} from '../../components';
 import {Colors, Metrics} from '../../themes';
@@ -18,35 +18,9 @@ import Icons from 'react-native-vector-icons/thebook-appicon';
 import EmptyView from '../../components/EmptyView';
 import {Navigation} from 'react-native-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
-import Login from '../Authentication/Login';
+import ScrollableTabView from 'rn-collapsing-tab-bar';
 
 class UserProfile extends React.Component {
-  state = {
-    index: 0,
-    routes: [
-      {
-        key: 'first',
-        title: 'Sách của bạn',
-      },
-      {
-        key: 'second',
-        title: 'Sách yêu cầu',
-      },
-      {
-        key: 'third',
-        title: 'Gói thành viên',
-      },
-    ],
-  };
-
-  _renderScene = SceneMap({
-    first: ListUserBook,
-    second: () => <EmptyView message={'Không có sách nào '} />,
-    third: () => (
-      <EmptyView message={'Bạn chưa là thành viên của '} TheBooks={true} />
-    ),
-  });
-
   onShowQRCode = () => {
     const {UserData, userData} = this.props;
     showQRCode('', UserData ? JSON.parse(UserData).QrCode : userData.QrCode, [
@@ -58,8 +32,9 @@ class UserProfile extends React.Component {
   };
 
   onShowSetting = () => {
+    const UserData = JSON.parse(this.props.UserData);
     Promise.all([
-      Icons.getImageSource('ic-back', 25),
+      Icons.getImageSource('ic-back', 20),
       Icons.getImageSource('ic-order', 30),
     ]).then(([back, orderHistory]) => {
       Navigation.showModal({
@@ -68,6 +43,7 @@ class UserProfile extends React.Component {
             {
               component: {
                 name: 'UserSetting',
+                passProps: {Data: UserData},
                 options: {
                   topBar: {
                     title: {
@@ -94,13 +70,10 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    console.log('render', this.props.isRender);
-    return this.props.isRender === false ? (
-      <Login />
-    ) : this.props.token ? (
+    console.log('yaaaaaaaaaaaaaaa', JSON.parse(this.props.UserData));
+    return (
       <View style={{flex: 1}}>
         <View style={{flex: 2}} />
-
         <ImageBackground
           style={styles.imageBackground}
           source={{
@@ -207,162 +180,32 @@ class UserProfile extends React.Component {
             </View>
           </View>
         </ImageBackground>
-        <TabView
-          style={{flex: 3}}
-          navigationState={this.state}
-          renderScene={this._renderScene}
-          onIndexChange={index => this.setState({index})}
-          initialLayout={{width: Dimensions.get('window').width}}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={styles.indicator}
-              tabStyle={styles.bubble}
-              labelStyle={styles.label}
-              style={{backgroundColor: 'transparent'}}
+        <View style={{flex: 3, backgroundColor: 'transparent'}}>
+          <ScrollableTabView
+            tabBarActiveTextColor={Colors.white}
+            tabBarUnderlineStyle={styles.indicator}
+            tabBarInactiveTextColor="rgba(255, 255, 255, 0.7)"
+            tabBarTextStyle={{
+              top: 5,
+              fontSize: 13,
+              fontFamily: 'SVN-ProximaNova',
+            }}>
+            <ListUserBook tabLabel="Sách của bạn" />
+            <EmptyView message={'Không có sách nào '} tabLabel="Sách yêu cầu" />
+            <EmptyView
+              message={'Bạn chưa là thành viên của '}
+              TheBooks={true}
+              tabLabel="Gói thành viên"
             />
-          )}
-          swipeEnabled={true}
-        />
+          </ScrollableTabView>
+        </View>
       </View>
-    ) : this.props.isChangeBottomTab ? (
-      <View style={{flex: 1}}>
-        <View style={{flex: 2}} />
-
-        <ImageBackground
-          style={styles.imageBackground}
-          source={{
-            uri:
-              'https://lh3.googleusercontent.com/-SZN4fL4-8rI/XhazmUR5f_I/AAAAAAAABgg/HBl3APUI3hg-WBvfwIbeFTl3tYvdbTEegCK8BGAsYHg/s0/2020-01-08.jpg',
-          }}
-          blurRadius={3}>
-          <View style={styles.profileContainer}>
-            <View style={styles.QrCodeContainer}>
-              <TouchableWithoutFeedback
-                style={{marginHorizontal: 50}}
-                onPress={this.onShowQRCode}>
-                <View style={styles.QRContainer}>
-                  <Icons
-                    name="code"
-                    size={18}
-                    color="black"
-                    style={styles.QRIcon}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-            <View style={styles.settingContainer}>
-              <TouchableWithoutFeedback
-                style={{marginHorizontal: 50}}
-                onPress={this.onShowSetting}>
-                <Icons
-                  name="ic-setting"
-                  size={24}
-                  color="white"
-                  style={styles.settingIcon}
-                />
-              </TouchableWithoutFeedback>
-            </View>
-
-            <View>
-              <Image
-                source={{
-                  uri:
-                    'https://lh3.googleusercontent.com/-SZN4fL4-8rI/XhazmUR5f_I/AAAAAAAABgg/HBl3APUI3hg-WBvfwIbeFTl3tYvdbTEegCK8BGAsYHg/s0/2020-01-08.jpg',
-                }}
-                style={styles.avatar}
-              />
-            </View>
-
-            <View style={{marginVertical: 12}}>
-              <Text
-                style={styles.textshadow}
-                type="bold"
-                color={Colors.white}
-                sizeType="large">
-                {this.props.UserData
-                  ? JSON.parse(this.props.UserData).FullName
-                  : this.props.userData.FullName}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingRight: 19,
-              }}>
-              <TouchableWithoutFeedback
-                style={{marginHorizontal: 50}}
-                onPress={this.onShowQRCode}>
-                <View style={styles.upGrateContainer}>
-                  <Text
-                    style={styles.textshadow}
-                    type="light"
-                    color={Colors.white}
-                    sizeType="mini">
-                    Nâng cấp
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <View style={styles.divideContainer}>
-                <Text
-                  style={styles.textshadow}
-                  type="light"
-                  color={Colors.white}
-                  sizeType="large">
-                  |
-                </Text>
-              </View>
-              <View style={styles.totalPointContainer}>
-                <Icons
-                  name="star"
-                  size={15}
-                  color="#EC9921"
-                  style={styles.totalPoint}
-                />
-              </View>
-              <Text
-                style={[
-                  styles.textshadow,
-                  {marginHorizontal: 5, marginVertical: 5},
-                ]}
-                type="light"
-                color={Colors.white}
-                sizeType="mini">
-                {this.props.UserData
-                  ? JSON.parse(this.props.UserData).TotalPoint
-                  : this.props.userData.TotalPoint}
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
-        <TabView
-          style={{flex: 3}}
-          navigationState={this.state}
-          renderScene={this._renderScene}
-          onIndexChange={index => this.setState({index})}
-          initialLayout={{width: Dimensions.get('window').width}}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={styles.indicator}
-              tabStyle={styles.bubble}
-              labelStyle={styles.label}
-              style={{backgroundColor: 'transparent'}}
-            />
-          )}
-          swipeEnabled={true}
-        />
-      </View>
-    ) : (
-      <Login />
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    isChangeBottomTab: state.loginReducer.changeBottomTab,
     userData: state.loginReducer.data,
-    isRender: state.loginReducer.reRender,
   };
 };
 

@@ -13,8 +13,6 @@ import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.swmansion.reanimated.ReanimatedPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -35,8 +33,7 @@ public class MainApplication extends NavigationApplication {
     }
 
     protected List<ReactPackage> getPackages() {
-        return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNGestureHandlerPackage(),
-                new ReanimatedPackage(), new RNCViewPagerPackage(), new VectorIconsPackage(),
+        return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNCViewPagerPackage(), new VectorIconsPackage(),
                 new AsyncStoragePackage());
     }
 

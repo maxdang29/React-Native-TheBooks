@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   popup: {
     width: Metrics.screenWidth - 100,
-    height: Metrics.screenHeight - 450,
+    height: Metrics.screenHeight - 425,
     backgroundColor: Colors.white,
     paddingVertical: 20,
     alignItems: 'center',

@@ -113,7 +113,8 @@ export default async function startApp() {
                       children: [
                         {
                           component: {
-                            name: 'UserProfile',
+                            //name: 'Login',
+                            name: token ? 'UserProfile' : 'Login',
                             passProps: {
                               token,
                               UserData,

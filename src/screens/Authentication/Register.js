@@ -1,20 +1,13 @@
 import React from 'react';
 import SpecialInput from '../../components/SpecialInput';
-import {
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import {StyleSheet, View, Image, ScrollView, Text} from 'react-native';
 import TouchableButton from '../../components/TouchableButton';
 import {Navigation} from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as registerActions from '../../redux/auth/Register/actions';
-//import * as loginAction from '../../Redux/Authentication/Login/actions';
 import {connect} from 'react-redux';
 import {Colors} from '../../themes';
+import startApp from '../../navigation/bottomTab';
 
 class Register extends React.Component {
   static options(passProps) {
@@ -37,35 +30,6 @@ class Register extends React.Component {
   focusNextField(nextField) {
     this[nextField].focus();
   }
-  onLogIn = () => {
-    if (!this.name.getText()) {
-      this.name.focus();
-      return null;
-    }
-    if (!this.phone.getText()) {
-      this.phone.focus();
-      return null;
-    }
-    if (!this.username.getText()) {
-      this.username.focus();
-      return null;
-    }
-    if (!this.email.getText()) {
-      this.email.focus();
-      return null;
-    }
-
-    if (!this.password.getText()) {
-      this.password.focus();
-      return null;
-    }
-    const data = {
-      username: this.username.getText(),
-      email: this.email.getText(),
-      password: this.password.getText(),
-    };
-    this.props.login(data);
-  };
 
   onRegister = () => {
     if (!this.firstName.getText()) {
@@ -99,12 +63,11 @@ class Register extends React.Component {
       Email: this.email.getText(),
       Password: this.password.getText(),
     };
+
     this.props.register(data);
     setTimeout(() => {
-      if (this.props.gotoUserProfile === true) {
-        Navigation.dismissModal(this.state.componentId);
-      }
-    }, 5000);
+      startApp();
+    }, 4000);
   };
 
   render() {

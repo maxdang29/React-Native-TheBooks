@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     height: Metrics.screenHeight,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
     flexDirection: 'row',
     flex: 1,
   },

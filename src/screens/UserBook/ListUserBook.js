@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Animated,
 } from 'react-native';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+//import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import Login from '../Authentication/Login';
 import Register from '../Authentication/Register';
 import EmptyView from '../../components/EmptyView';
@@ -16,32 +16,18 @@ import {Text, TouchableButton} from '../../components';
 import {Colors, Metrics} from '../../themes';
 import {connect} from 'react-redux';
 import * as loginActions from '../../redux/auth/Login/actions';
-import {showQRCode} from '../../navigation/showQRCode';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 
 class ListUserBook extends React.Component {
-  state = {
-    index: 0,
-    routes: [
-      {
-        key: 'first',
-        title: 'Đang mượn',
-      },
-      {
-        key: 'second',
-        title: 'Đang chờ',
-      },
-      {
-        key: 'third',
-        title: 'Yêu thích',
-      },
-    ],
-  };
-  _renderScene = SceneMap({
-    first: () => <EmptyView message={'Không có sách nào '} />,
-    second: () => <EmptyView message={'Không có sách nào '} />,
-    third: () => <EmptyView message={'Không có sách nào '} />,
-  });
+  // _renderScene = SceneMap({
+  //   first: () => <EmptyView message={'Không có sách nào '} />,
+  //   second: () => <EmptyView message={'Không có sách nào '} />,
+  //   third: () => <EmptyView message={'Không có sách nào '} />,
+  // });
+  constructor(props) {
+    super(props);
+    this.state = {borrowScreen: true, waitScreen: false, loveScreen: false};
+  }
 
   renderEmptyView = () => {
     return (
@@ -50,15 +36,14 @@ class ListUserBook extends React.Component {
       </View>
     );
   };
-
-  onShowQRCode = () => {
-    showQRCode('', this.props.UserData.QrCode, [
-      {
-        text: 'Submit',
-        link: this.props.UserData.QrCodeUrl,
-      },
-    ]);
+  onHoverButton = (borrowScreen, waitScreen, loveScreen) => {
+    this.setState({
+      borrowScreen: borrowScreen,
+      waitScreen: waitScreen,
+      loveScreen: loveScreen,
+    });
   };
+
   renderLabel = ({route, focused, color}) => {
     return (
       <View>
@@ -73,24 +58,59 @@ class ListUserBook extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <TabView
-          style={{flex: 3}}
-          navigationState={this.state}
-          renderScene={this._renderScene}
-          onIndexChange={index => this.setState({index})}
-          initialLayout={{width: Dimensions.get('window').width}}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={styles.indicator}
-              tabStyle={styles.bubble}
-              labelStyle={styles.label}
-              renderLabel={this.renderLabel}
-              style={{backgroundColor: Colors.white}}
+        <View style={[{flex: 1, flexDirection: 'row'}, styles.shadow]}>
+          <View style={{flex: 1}}>
+            <TouchableButton
+              title={'Đang mượn'}
+              style={styles.button}
+              buttonColor={
+                this.state.borrowScreen ? Colors.lightBlue : Colors.white
+              }
+              onPress={() => this.onHoverButton(true, false, false)}
+              textStyle={
+                this.state.borrowScreen
+                  ? styles.textButton
+                  : styles.textButtonHover
+              }
+              loading={this.props.isLoading}
             />
-          )}
-          swipeEnabled={true}
-        />
+          </View>
+          <View style={{flex: 1}}>
+            <TouchableButton
+              title={'Đang chờ'}
+              style={styles.button}
+              buttonColor={
+                this.state.waitScreen ? Colors.lightBlue : Colors.white
+              }
+              textStyle={
+                this.state.waitScreen
+                  ? styles.textButton
+                  : styles.textButtonHover
+              }
+              loading={this.props.isLoading}
+              onPress={() => this.onHoverButton(false, true, false)}
+            />
+          </View>
+          <View style={{flex: 1}}>
+            <TouchableButton
+              title={'Yêu thích'}
+              style={styles.button}
+              buttonColor={
+                this.state.loveScreen ? Colors.lightBlue : Colors.white
+              }
+              onPress={() => this.onHoverButton(false, false, true)}
+              textStyle={
+                this.state.loveScreen
+                  ? styles.textButton
+                  : styles.textButtonHover
+              }
+              loading={this.props.isLoading}
+            />
+          </View>
+        </View>
+        <View style={{flex: 6}}>
+          <EmptyView message={'Không có sách nào '} />
+        </View>
       </View>
     );
   }
@@ -123,35 +143,6 @@ const styles = StyleSheet.create({
     height: 54,
   },
 
-  profileContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    bottom: 75,
-  },
-  avatar: {
-    height: 100,
-    width: 100,
-    borderRadius: 100,
-    margin: 10,
-    borderColor: 'white',
-    borderWidth: 1,
-    bottom: 5,
-  },
-  qr: {
-    height: 30,
-    width: 30,
-    borderRadius: 150,
-    margin: 10,
-    bottom: 20,
-  },
-  infoUser: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
   textshadow: {
     color: '#FFFFFF',
     fontFamily: 'Times New Roman',
@@ -159,92 +150,34 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 1,
   },
-  button: {flex: 1, paddingHorizontal: 110, justifyContent: 'center'},
-  textButton: {fontSize: 16, fontFamily: 'SVN-ProximaNova'},
-  QrCodeContainer: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'flex-start',
-    top: 100,
-    position: 'absolute',
-    left: 0,
-  },
-  upGrateContainer: {
-    width: 75,
-    height: 33,
-    borderColor: Colors.white,
-    borderWidth: 1,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  totalPoint: {
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: '#FEBC4D',
-    paddingLeft: 4,
-    paddingTop: 2,
-    paddingBottom: 1.5,
-  },
   indicator: {
     backgroundColor: Colors.lightBlue,
     width: Metrics.screenWidth / 3,
     height: 60,
   },
-  totalPointContainer: {
-    marginVertical: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-    height: 23,
-    backgroundColor: '#FEE28E',
-  },
-  imageBackground: {
-    width: '100%',
-    height: '69%',
-    position: 'absolute',
-    zIndex: 10,
-  },
-  QRContainer: {
-    backgroundColor: 'white',
-    height: 31,
-    width: 31,
-    borderRadius: 150,
-    margin: 11,
-    bottom: 22,
-  },
-  QRIcon: {
-    height: 30,
-    width: 30,
-    borderRadius: 150,
-    left: 6,
-    top: 6,
-  },
-  settingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    top: 100,
-    position: 'absolute',
-    left: 0,
-    width: '100%',
-  },
-  settingIcon: {
-    height: 30,
-    width: 30,
-    borderRadius: 150,
-    margin: 11,
-    bottom: 20,
-  },
-  divideContainer: {
-    alignItems: 'center',
-    width: 20,
-    top: 2,
-    marginHorizontal: 7,
-  },
+
   activeTabTextColor: {
     color: Colors.white,
   },
   tabTextColor: {
     color: Colors.lightBlue,
+  },
+  button: {
+    width: '102%',
+    height: 50,
+  },
+  textButton: {fontSize: 13, fontFamily: 'SVN-ProximaNova'},
+  textButtonHover: {
+    fontSize: 13,
+    fontFamily: 'SVN-ProximaNova',
+    color: Colors.lightBlue,
+  },
+  shadow: {
+    elevation: 7,
+    shadowColor: 'black',
+    shadowOffset: {width: 3, height: 4},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    backgroundColor: 'white',
   },
 });

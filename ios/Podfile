@@ -36,9 +36,6 @@ target 'reactNativeProject' do
   pod 'react-native-viewpager', :path => '../node_modules/@react-native-community/viewpager'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
-
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   pod 'SajjadBlurOverlay', :path => '../node_modules/react-native-blur-overlay'
 

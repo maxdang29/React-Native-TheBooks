@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Share} from 'react-native';
 import {Text, RowDirect} from '../../components';
 import {Colors, Metrics} from '../../themes';
 import {connect} from 'react-redux';
@@ -8,6 +8,8 @@ import {showQRCode} from '../../navigation/showQRCode';
 import {Navigation} from 'react-native-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
+import Icons from 'react-native-vector-icons/thebook-appicon';
+import startApp from '../../navigation/bottomTab';
 
 class UserSetting extends React.Component {
   constructor(props) {
@@ -35,7 +37,8 @@ class UserSetting extends React.Component {
     await AsyncStorage.setItem('start', 'startApp');
     setTimeout(() => {
       Navigation.dismissModal(this.state.componentId);
-    }, 3000);
+      startApp();
+    }, 2000);
   };
 
   onLogout = () => {
@@ -52,13 +55,77 @@ class UserSetting extends React.Component {
     ]);
   };
 
+  onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'The Books fake nè',
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  onShowUserSetting = () => {
+    Promise.all([
+      Icons.getImageSource('ic-back', 20),
+      Icons.getImageSource('ic-pencil', 20),
+    ]).then(([back, edit]) => {
+      Navigation.showModal({
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'EditUserProfile',
+                passProps: {storeData: this.props.Data},
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'Cài đặt thông tin',
+                      fontSize: 22,
+                      fontFamily: 'SVN-ProximaNova',
+                      alignment: 'center',
+                    },
+                    leftButtons: [
+                      {
+                        icon: back,
+                        color: 'black',
+                        id: 'backEditUser',
+                      },
+                    ],
+                    rightButtons: [
+                      {
+                        id: 'editUserProfile',
+                        icon: edit,
+                        color: Colors.black,
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
+      });
+    });
+  };
+
   render() {
     return (
       <View style={{flex: 1}}>
         <RowDirect
           rowTitle="Thông tin cá nhân"
           icon="ic-profile"
-          onPress={this.goToChangePassword}
+          onPress={this.onShowUserSetting}
           textStyle={styles.rowTitle}
         />
         <RowDirect
@@ -82,7 +149,7 @@ class UserSetting extends React.Component {
         <RowDirect
           rowTitle="Chia sẻ"
           icon="ic-share"
-          onPress={this.goToChangePassword}
+          onPress={this.onShare}
           textStyle={styles.rowTitle}
         />
         <RowDirect

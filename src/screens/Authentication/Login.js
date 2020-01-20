@@ -16,6 +16,9 @@ import {Colors} from '../../themes';
 import UserProfile from '../UserProfile/UserProfile';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icons from 'react-native-vector-icons/thebook-appicon';
+import ScrollableTabView from 'rn-collapsing-tab-bar';
+import EmptyView from '../../components/EmptyView';
+import startApp from '../../navigation/bottomTab';
 
 class Login extends React.Component {
   static options(passProps) {
@@ -46,8 +49,10 @@ class Login extends React.Component {
       username: this.email.getText(),
       password: this.password.getText(),
     };
-
     this.props.login(data);
+    setTimeout(() => {
+      startApp();
+    }, 4000);
   };
 
   onPush = () => {
@@ -151,7 +156,6 @@ class Login extends React.Component {
             isOutlineMode={true}
           />
         </View>
-
         <View
           style={{
             justifyContent: 'center',
