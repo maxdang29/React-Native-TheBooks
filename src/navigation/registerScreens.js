@@ -13,6 +13,7 @@ import SeeMore from '../screens/home/seeMore';
 import UserProfile from '../screens/UserProfile/UserProfile';
 import ListUserBook from '../screens/UserBook/ListUserBook';
 import ModalWriteReview from '../components/modalWriteReview';
+import ListOrder from '../screens/order/listOrder';
 import UserSetting from '../screens/UserProfile/UserSetting';
 import EditUserProfile from '../screens/UserProfile/EditUserProfile';
 
@@ -28,12 +29,16 @@ import EmptyView from '../components/EmptyView';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
 import Sort from '../screens/search/sort';
-
-import SearchResultFilter from '../screens//search/searchResultWithFilter';
+import SearchResultFilter from '../screens/search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
-
 import SplashScreen from '../screens/splashScreen';
+import UpgradeMembership from '../screens/membership/upgradeMembership';
+import Membership from '../screens/membership/memberShipList';
+import UpgradeSuccess from '../screens/membership/upgradeSuccess';
+import Payment from '../screens/payment/payment';
+import Notification from '../screens/notification/notification';
+console.disableYellowBox = true;
 
 function ReduxProvider(Component) {
   return props => (
@@ -44,6 +49,22 @@ function ReduxProvider(Component) {
 }
 
 export function registerScreens() {
+  Navigation.registerComponent(
+    'UpgradeMembership',
+    () => ReduxProvider(UpgradeMembership),
+    () => UpgradeMembership,
+  );
+  Navigation.registerComponent(
+    'Notification',
+    () => ReduxProvider(Notification),
+    () => Notification,
+  );
+  Navigation.registerComponent(
+    'Membership',
+    () => ReduxProvider(Membership),
+    () => Membership,
+  );
+
   Navigation.registerComponent(
     'Cart',
     () => ReduxProvider(Cart),
@@ -156,5 +177,22 @@ export function registerScreens() {
     'EditUserProfile',
     () => ReduxProvider(EditUserProfile),
     () => EditUserProfile,
+  );
+
+  Navigation.registerComponent(
+    'listOrder',
+    () => ReduxProvider(ListOrder),
+    () => ListOrder,
+  );
+
+  Navigation.registerComponent(
+    'payment',
+    () => ReduxProvider(Payment),
+    () => Payment,
+  );
+  Navigation.registerComponent(
+    'upgradeSuccess',
+    () => ReduxProvider(UpgradeSuccess),
+    () => UpgradeSuccess,
   );
 }

@@ -130,7 +130,6 @@ class Login extends React.Component {
             ref={ref => {
               this.password = ref;
             }}
-            // secureTextEntry
             isRequired
             validateType="password"
             value="123456789"
@@ -176,7 +175,6 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  console.log('stateLogin', state);
   return {
     isLoading: state.loginReducer.loginLoading,
     userData: state.loginReducer,

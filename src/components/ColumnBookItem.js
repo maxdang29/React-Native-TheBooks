@@ -40,7 +40,6 @@ export default class ColumBookItem extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    paddingHorizontal: 20,
     paddingVertical: 3,
   },
   viewFlexDirection: {
@@ -64,14 +63,12 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   bookTitle: {
-    // fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
     fontSize: 18,
     width: 180,
     top: -1,
   },
   bookAuthor: {
-    // fontFamily: 'SVN-ProximaNova',
     color: '#bcbcbc',
     fontSize: 17,
     width: 230,

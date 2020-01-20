@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {Navigation} from 'react-native-navigation';
+import {connect} from 'react-redux';
+import * as upgradeMembershipAction from '../../redux/memberShip/actions/actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default class upgradeMembership extends Component {
+class UpgradeMembership extends Component {
   constructor(props) {
     super(props);
     Navigation.mergeOptions(this.props.componentId, {
@@ -12,42 +21,151 @@ export default class upgradeMembership extends Component {
       },
     });
   }
+
+  upgradeMembership = async () => {
+    const {value} = this.props;
+    const userId = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      GenerateCode: value.item.GeneratedMembershipCode,
+    };
+
+    this.props.upgradeMembership(userId, data, token);
+  };
+
   render() {
+    const {value, loading} = this.props;
+
+    if (loading) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Titan</Text>
-        <View style={styles.containerCircle}>
-          <View style={styles.containerCircleChild}>
-            <Icons name="ic-titan" solid size={80} style={styles.icon} />
+        <Text
+          style={[
+            styles.title,
+            {color: `${value.icon.color ? value.icon.color : '#000'}`},
+          ]}>
+          {value.icon.name}
+        </Text>
+        <View
+          style={[
+            styles.containerCircle,
+            {
+              backgroundColor: `${
+                value.icon.colorOpacity ? value.icon.colorOpacity : '#e2ddd3'
+              }`,
+            },
+          ]}>
+          <View
+            style={[
+              styles.containerCircleChild,
+              {
+                backgroundColor: `${
+                  value.icon.color ? value.icon.color : '#000'
+                }`,
+              },
+            ]}>
+            <Icons name="ic-titan" solid size={80} style={[styles.icon]} />
           </View>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>10 ngày</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxBorrowDays} quyển
+          </Text>
           <Text style={styles.text}> mượn mỗi lần</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>02 lần</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxExtensionTimes} lần
+          </Text>
           <Text style={styles.text}> gia hạn</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>01 lần</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxRequestTimes} lần
+          </Text>
           <Text style={styles.text}> yêu cầu danh sách</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight]}>01 lần</Text>
+          <Text
+            style={[
+              styles.highlight,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.MaxDeliveryTimes} lần
+          </Text>
           <Text style={styles.text}> giao sách tại nhà</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.highlight, styles.price]}>300.000</Text>
-          <Text style={[styles.highlight, styles.year]}> / năm</Text>
+          <Text
+            style={[
+              styles.highlight,
+              styles.price,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {value.item.Membership.Value}
+          </Text>
+          <Text
+            style={[
+              styles.highlight,
+              styles.year,
+              {color: `${value.icon.color ? value.icon.color : '#000'}`},
+            ]}>
+            {' '}
+            / năm
+          </Text>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.textButton}>Nâng cấp</Text>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: `${
+                value.icon.color ? value.icon.color : '#000'
+              }`,
+            },
+          ]}>
+          <TouchableOpacity onPress={() => this.upgradeMembership()}>
+            <Text style={[styles.textButton]}>Nâng cấp</Text>
+          </TouchableOpacity>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.membershipReducer.loading,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    upgradeMembership: (idUser, data, token) => {
+      dispatch(upgradeMembershipAction.upgradeMembership(idUser, data, token));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpgradeMembership);
+
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -57,12 +175,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   containerCircleChild: {
-    backgroundColor: '#f4a621',
     borderRadius: 150,
     padding: 20,
   },
   containerCircle: {
-    backgroundColor: 'rgb(252, 228, 188)',
     borderRadius: 150,
     padding: 30,
     marginTop: 40,
@@ -71,7 +187,6 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'SVN-ProximaNova',
     fontSize: 30,
-    color: '#f4a621',
     marginTop: 30,
   },
   row: {
@@ -80,7 +195,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   highlight: {
-    color: '#f4a621',
     fontWeight: '700',
     fontSize: 20,
   },
@@ -97,7 +211,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    backgroundColor: '#f6b74c',
     width: 180,
     padding: 15,
     marginTop: 20,
@@ -106,5 +219,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: 'center',
     color: 'white',
+  },
+  loading: {
+    color: '#0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
 });

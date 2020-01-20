@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, FlatList} from 'react-native';
-
+import {View} from 'react-native';
 import FlatListBookColumnItem from '../../components/flatListColumBookItem';
 
 export default class SeeMore extends Component {
@@ -15,10 +14,20 @@ export default class SeeMore extends Component {
     return array;
   };
   render() {
-    const {data, title} = this.props;
-    const dataFilter = this.filterData(data, title);
-    const bookData = dataFilter[0].data[0].data;
+    let bookData = [];
+    const {data, title} = this.props.value;
+    const {value} = this.props;
 
-    return <FlatListBookColumnItem data={bookData}  />;
+    if (title) {
+      const dataFilter = this.filterData(data, title);
+      bookData = dataFilter[0].data[0].data;
+    } else {
+      bookData = value;
+    }
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <FlatListBookColumnItem data={bookData} />
+      </View>
+    );
   }
 }

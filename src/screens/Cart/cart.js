@@ -12,8 +12,12 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as Action from '../../redux/cart/actions/actions';
+import * as orderAction from '../../redux/order/actions/actions';
 import RowBookItem from '../../components/RowBookItem';
 import AsyncStorage from '@react-native-community/async-storage';
+import {showConfirmAlert} from '../../navigation/showConfirmAlert';
+import {goAnotherScreen} from '../../navigation/navigation';
+import {Colors} from '../../themes';
 import {Navigation} from 'react-native-navigation';
 
 class Cart extends Component {
@@ -33,20 +37,61 @@ class Cart extends Component {
     }
   }
 
-  render() {
-    const {data} = this.props;
-    let {loading} = this.props;
-    let isExistsData = Array.isArray(data)
-      ? data.length !== 0
-        ? true
-        : false
-      : (loading = true);
+  checkUserMember = async () => {
+    const {componentId} = this.props;
+    const dataUser = await AsyncStorage.getItem('userData');
+    const userData = JSON.parse(dataUser);
+    if (userData.IsMembershipExpired === false && userData.MaxBorrowDays > 0) {
+      const userId = await AsyncStorage.getItem('userId');
+      const token = await AsyncStorage.getItem('token');
+      const data = {
+        UserId: userId,
+      };
+      await this.props.post_order(data, componentId, token);
+    } else {
+      showConfirmAlert(
+        'Đặt hàng',
+        'Bạn chưa là thành viên hoặc gói thành viên của bạn không đủ! Bạn có muốn nâng cấp thêm?',
+        [
+          {
+            text: 'Không, cảm ơn',
+          },
+          {
+            text: 'Nâng cấp ngày',
+            onPress: () => {
+              goAnotherScreen('Membership', null, 'Danh sách gói');
+            },
+          },
+        ],
+      );
+    }
+  };
 
-    return loading ? (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" />
-      </View>
-    ) : isExistsData ? (
+  render() {
+    const {data, loading} = this.props;
+
+    if (loading) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+    if (data.length === 0) {
+      return (
+        <View style={styles.emptyCartView}>
+          <Image
+            style={styles.emptyCartImage}
+            resizeMode="stretch"
+            source={{
+              uri:
+                'https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png',
+            }}
+          />
+        </View>
+      );
+    }
+    return (
       <>
         <ScrollView>
           <View>
@@ -60,35 +105,39 @@ class Cart extends Component {
           </View>
         </ScrollView>
 
-        <View style={styles.footer}>
-          <TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            style={styles.footer}
+            onPress={() => this.checkUserMember()}>
             <Text style={styles.footer_text}>Đặt hàng</Text>
           </TouchableOpacity>
         </View>
       </>
-    ) : (
-      <View>
-        <Image
-          style={{width: 200, height: 200}}
-          resizeMode="stretch"
-          source={{
-            uri:
-              'https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png',
-          }}
-        />
-      </View>
     );
   }
 }
 
 const height = Dimensions.get('window').height / 2;
 const styles = StyleSheet.create({
+  emptyCartView: {
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginVertical: 6,
+  },
+  emptyCartImage: {
+    width: 400,
+    height: 400,
+  },
+  emptyCartText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: Colors.lightBlue,
+  },
   footer: {
     backgroundColor: '#fc9619',
     height: 70,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 10,
-    width: Dimensions.get('window').width,
   },
 
   footer_text: {
@@ -106,8 +155,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    data: state.cartReducers.data,
-    loading: state.cartReducers.loadingCart,
+    data: state.cartReducer.data,
+    loading: state.cartReducer.loadingCart,
   };
 };
 
@@ -115,6 +164,9 @@ const mapDispatchToProps = dispatch => {
   return {
     get_all_item_in_cart: (id, token) => {
       dispatch(Action.getAllItemByCartId(id, token));
+    },
+    post_order: (data, componentId, token) => {
+      dispatch(orderAction.addOrder(data, componentId, token));
     },
   };
 };

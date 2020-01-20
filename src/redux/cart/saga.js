@@ -1,12 +1,11 @@
 import {put, takeLatest, call} from 'redux-saga/effects';
 import * as ActionTypes from '../cart/actions/typesAction';
 import * as CartActions from '../cart/actions/actions';
-import AsyncStorage from '@react-native-community/async-storage';
-import {ToastAndroid} from 'react-native';
 import store from '../store';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
 import {goAnotherScreen} from '../../navigation/navigation';
 import {showInAppNotification} from '../../navigation/showInAppNotification';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {
   addToCartRequest,
@@ -22,6 +21,7 @@ function* addToCart(actions) {
       const newItem =
         response.data.Data.Items[response.data.Data.Items.length - 1];
       yield put(CartActions.addToCartSuccess(newItem));
+      const cartId = yield AsyncStorage.getItem('cartId');
       showConfirmAlert(
         'Thêm vào giỏ thành công',
         'Thêm sản phẩm vào giỏ thành công ! Bạn có muốn đến giỏ hàng không ?',
@@ -52,11 +52,9 @@ function* getAllItemInCardById(actions) {
       actions.Token,
     );
     if (response.status === 200) {
-      if (response.data.Data && response.data.Data.Items.length !== 0) {
-        yield put(
-          CartActions.getAllItemByCartIdSuccess(response.data.Data.Items),
-        );
-      }
+      yield put(
+        CartActions.getAllItemByCartIdSuccess(response.data.Data.Items),
+      );
     }
   } catch (error) {
     yield put(CartActions.getAllItemByCartIdFailed(error));
@@ -71,9 +69,8 @@ function* updateItemInCart(actions) {
       actions.data,
       actions.Token,
     );
-    // if (response.status === 200) {
-    const allData = store.getState().cartReducers;
-    const newList = allData.data.map(item => {
+    const allData = yield store.getState().cartReducer;
+    const newList = yield allData.data.map(item => {
       if (item.Book.Id === actions.data.BookId) {
         if (item.Book.Quantity >= actions.data.Quantity) {
           item.Quantity = actions.data.Quantity;
@@ -89,7 +86,6 @@ function* updateItemInCart(actions) {
       response.data.Message,
       'success',
     );
-    // }
   } catch (error) {
     showInAppNotification(
       'Thay đổi số lượng thất bại',
@@ -102,13 +98,13 @@ function* updateItemInCart(actions) {
 
 function* deleteAnItemInCart(actions) {
   try {
-    const allData = store.getState().cartReducers;
     const response = yield call(
       deleteItemInCartRequest,
       actions.data,
       actions.Token,
     );
-    const newList = allData.data.filter(item => {
+    const allData = yield store.getState().cartReducer;
+    const newList = yield allData.data.filter(item => {
       return item.Book.Id !== actions.data.BookId;
     });
     if (response.status === 200) {

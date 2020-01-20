@@ -153,15 +153,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   cmtAuthor: {
-    // fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
     fontSize: 17,
-    //width: 230,
     paddingHorizontal: 15,
     top: -2,
   },
   alignCmt: {
-    // width: 160,
     textAlign: 'center',
     flex: 1,
   },

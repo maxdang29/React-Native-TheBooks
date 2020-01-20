@@ -71,7 +71,6 @@ class Register extends React.Component {
   };
 
   render() {
-    console.log('gotoUserProfile', this.props.gotoUserProfile);
     return (
       <ScrollView style={{top: 5}}>
         <View style={{flex: 1, marginHorizontal: 15}}>

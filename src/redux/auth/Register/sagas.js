@@ -22,7 +22,6 @@ function* register(action) {
       ),
     );
     yield AsyncStorage.setItem('token', response.data.Token.access_token);
-    yield AsyncStorage.setItem('userData', JSON.stringify(response.data.Data));
     yield AsyncStorage.setItem('cartId', response.data.Data.Basket.Id);
     yield AsyncStorage.setItem('userId', response.data.Data.Id);
     setTimeout(() => {

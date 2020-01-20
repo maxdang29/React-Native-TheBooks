@@ -27,12 +27,10 @@ function* getCmsHomeSummary(actions) {
 function* getAllBook(actions) {
   try {
     const response = yield call(getAllBookRequest, null);
-
     if (response.data) {
-      response.data.Books = response.data.Books.filter(item => {
+      response.data.Books = yield response.data.Books.filter(item => {
         return item.IsDeleted === false;
       });
-
       yield put(BookActions.getAllBookSuccess(response.data.Books));
     }
   } catch (error) {
@@ -42,7 +40,6 @@ function* getAllBook(actions) {
 function* getBookSuggestion(actions) {
   try {
     const response = yield call(getBookSuggestionRequest, null);
-
     if (response.data) {
       yield put(BookActions.getBookSuggestionSuccess(response.data.Data));
     }
@@ -54,9 +51,8 @@ function* getBookSuggestion(actions) {
 function* getRelatedBook(actions) {
   try {
     const response = yield call(getRelatedBookRequest, actions.data);
-
     if (response.data.Data) {
-      response.data.Data.RelatedBooks = response.data.Data.RelatedBooks.filter(
+      response.data.Data.RelatedBooks = yield response.data.Data.RelatedBooks.filter(
         item => {
           return item.IsDeleted === false;
         },
@@ -71,10 +67,24 @@ function* getRelatedBook(actions) {
   }
 }
 
+function* getReviewBook(actions) {
+  try {
+    const response = yield call(getReviewBookRequest, null);
+    const reviews = yield response.data.Reviews.filter(
+      item => item.BookId === actions.data,
+    );
+    if (reviews) {
+      yield put(BookActions.getReviewBookSuccess(reviews));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(BookActions.getReviewBookFailure(error));
+  }
+}
+
 function* getBestUser(actions) {
   try {
     const response = yield call(getBestUserRequest, null);
-
     if (response.data.Data) {
       yield put(BookActions.getBestUsersSuccess(response.data.Data));
     }

@@ -12,11 +12,13 @@ import {
 import Login from '../Authentication/Login';
 import Register from '../Authentication/Register';
 import EmptyView from '../../components/EmptyView';
-import {Text, TouchableButton} from '../../components';
+import {Text} from '../../components';
 import {Colors, Metrics} from '../../themes';
 import {connect} from 'react-redux';
 import * as loginActions from '../../redux/auth/Login/actions';
 import Icons from 'react-native-vector-icons/thebook-appicon';
+import {showQRCode} from '../../navigation/showQRCode';
+import TouchableButton from '../../components/TouchableButton';
 
 class ListUserBook extends React.Component {
   // _renderScene = SceneMap({
@@ -123,11 +125,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    //register: data => dispatch(registerAction.register(data)),
     login: data => dispatch(loginActions.login(data)),
   };
 };
-// export default UserProfile;
 export default connect(mapStateToProps, mapDispatchToProps)(ListUserBook);
 const styles = StyleSheet.create({
   scene: {
