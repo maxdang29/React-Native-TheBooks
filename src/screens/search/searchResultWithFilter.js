@@ -42,7 +42,7 @@ class SearchResultFilter extends Component {
     return array;
   };
   render() {
-    const {value, passPropsOption, bookData, loading} = this.props;
+    const {value, passPropsOption, loading} = this.props;
     const bookFilter = this.filterBookFollowCategory();
     const data = passPropsOption ? value : bookFilter;
     return (

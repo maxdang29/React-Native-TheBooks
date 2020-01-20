@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, SafeAreaView} from 'react-native';
-import {connect} from 'react-redux';
 import _ from 'lodash';
 import {Colors, Images} from '../../themes';
 import IntroViewer from './IntroViewer';
-import {Text, Swiper, TouchableButton} from '../../components/index';
+import {Swiper} from '../../components/index';
 import pushScreen from '../../navigation/pushScreen';
 
 class Intro extends Component {
@@ -79,10 +78,6 @@ class Intro extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => ({});
-
-// const mapDispatchToProps = dispatch => ({});
 
 export default Intro;
 

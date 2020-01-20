@@ -36,7 +36,6 @@ export const validateEmail = email => {
   return regex.test(email);
 };
 export const validatePhone = phone => {
-  // const regex = /^0(1\d{9}|8\d{8}|9\d{8})$/;
   const regex = /((09|03|07|08|05)+([0-9]{8})\b)$/;
   return regex.test(phone);
 };

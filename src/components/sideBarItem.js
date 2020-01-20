@@ -10,7 +10,7 @@ export default class SideBarItem extends Component {
     };
   }
   onclickCheck = async name => {
-    const {value, checked} = this.state;
+    const {checked} = this.state;
     if (checked) {
       await this.setState({
         value: name,

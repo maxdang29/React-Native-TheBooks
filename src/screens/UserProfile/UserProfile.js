@@ -17,7 +17,6 @@ import {showQRCode} from '../../navigation/showQRCode';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import EmptyView from '../../components/EmptyView';
 import {Navigation} from 'react-native-navigation';
-import AsyncStorage from '@react-native-community/async-storage';
 import Login from '../Authentication/Login';
 
 class UserProfile extends React.Component {
@@ -94,7 +93,6 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    console.log('render', this.props.isRender);
     return this.props.isRender === false ? (
       <Login />
     ) : this.props.token ? (

@@ -10,7 +10,6 @@ class SectionListBook extends Component {
   }
 
   moveToSeeMoreScreen = (data, title) => {
-    console.log('66666', data);
     goAnotherScreen('seeMore', {data, title}, title);
   };
 

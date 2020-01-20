@@ -18,7 +18,6 @@ function* getListOfUserNotifications(action) {
       ),
     );
   } catch (error) {
-    console.log('respon 123', error);
     yield put(actionsNotice.getListUserNotificationFailed(error));
   }
 }

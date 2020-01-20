@@ -33,9 +33,9 @@ import SearchResultFilter from '../screens//search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
 import SplashScreen from '../screens/splashScreen';
-import upgradeMembership from '../screens/membership/upgradeMembership';
-import Membership from '../screens/membership/memberShipList';
-import UpgradeSuccess from '../screens/membership/upgradeSuccess';
+import UpgradeMembership from '../screens/memberShip/upgradeMembership';
+import Membership from '../screens/memberShip/memberShipList';
+import UpgradeSuccess from '../screens/memberShip/upgradeSuccess';
 import Payment from '../screens/payment/payment';
 import Notification from '../screens/notification/notification';
 
@@ -49,9 +49,9 @@ function ReduxProvider(Component) {
 
 export function registerScreens() {
   Navigation.registerComponent(
-    'upgradeMembership',
-    () => ReduxProvider(upgradeMembership),
-    () => upgradeMembership,
+    'UpgradeMembership',
+    () => ReduxProvider(UpgradeMembership),
+    () => UpgradeMembership,
   );
   Navigation.registerComponent(
     'Notification',

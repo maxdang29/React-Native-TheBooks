@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {goAnotherScreen} from '../../navigation/navigation';
+import {goAnotherScreen} from './../../navigation/navigation';
 
 export default class UpgradeSuccess extends Component {
   constructor(props) {
@@ -35,7 +35,6 @@ export default class UpgradeSuccess extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
