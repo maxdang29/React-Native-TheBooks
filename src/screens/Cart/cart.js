@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as Action from '../../redux/cart/actions/actions';
+import * as orderAction from '../../redux/order/actions/actions';
 import RowBookItem from '../../components/RowBookItem';
 import AsyncStorage from '@react-native-community/async-storage';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
@@ -37,11 +38,16 @@ class Cart extends Component {
   }
 
   checkUserMember = async () => {
+    const {componentId} = this.props;
     const data = await AsyncStorage.getItem('userData');
     const userData = JSON.parse(data);
-    console.log('member ship', userData);
     if (userData.IsMembershipExpired === false && userData.MaxBorrowDays > 0) {
-      alert('ok');
+      const userId = await AsyncStorage.getItem('userId');
+      const token = await AsyncStorage.getItem('token');
+      const data = {
+        UserId: userId,
+      };
+      await this.props.post_order(data, componentId, token);
     } else {
       showConfirmAlert(
         'Đặt hàng',
@@ -53,7 +59,7 @@ class Cart extends Component {
           {
             text: 'Nâng cấp ngày',
             onPress: () => {
-              goAnotherScreen('Membership', null, 'danh sach goi');
+              goAnotherScreen('Membership', null, 'Danh sách gói');
             },
           },
         ],
@@ -62,20 +68,30 @@ class Cart extends Component {
   };
 
   render() {
-    const {data} = this.props;
-    console.log('data cart', data);
-    let {loading} = this.props;
-    let isExistsData = Array.isArray(data)
-      ? data.length !== 0
-        ? true
-        : false
-      : (loading = true);
+    const {data, loading} = this.props;
 
-    return loading ? (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" />
-      </View>
-    ) : isExistsData ? (
+    if (loading) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+    if (data.length === 0) {
+      return (
+        <View style={styles.emptyCartView}>
+          <Image
+            style={styles.emptyCartImage}
+            resizeMode="stretch"
+            source={{
+              uri:
+                'https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png',
+            }}
+          />
+        </View>
+      );
+    }
+    return (
       <>
         <ScrollView>
           <View>
@@ -97,18 +113,6 @@ class Cart extends Component {
           </TouchableOpacity>
         </View>
       </>
-    ) : (
-      <View style={styles.emptyCartView}>
-        <Image
-          style={styles.emptyCartImage}
-          resizeMode="stretch"
-          source={{
-            uri:
-              'https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png',
-          }}
-        />
-        <Text style={styles.emptyCartText}>Không có sản phẩm màu</Text>
-      </View>
     );
   }
 }
@@ -160,6 +164,9 @@ const mapDispatchToProps = dispatch => {
   return {
     get_all_item_in_cart: (id, token) => {
       dispatch(Action.getAllItemByCartId(id, token));
+    },
+    post_order: (data, componentId, token) => {
+      dispatch(orderAction.addOrder(data,componentId, token));
     },
   };
 };

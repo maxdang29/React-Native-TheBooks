@@ -172,7 +172,6 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  console.log('stateLogin', state);
   return {
     isLoading: state.loginReducer.loginLoading,
     userData: state.loginReducer,

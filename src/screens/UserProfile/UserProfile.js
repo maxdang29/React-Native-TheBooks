@@ -94,7 +94,6 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    console.log('render', this.props.isRender);
     return this.props.isRender === false ? (
       <Login />
     ) : this.props.token ? (

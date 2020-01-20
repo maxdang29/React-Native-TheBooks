@@ -5,7 +5,8 @@ import store from '../store';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
 import {goAnotherScreen} from '../../navigation/navigation';
 import {showInAppNotification} from '../../navigation/showInAppNotification';
- 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import {
   addToCartRequest,
   getAllItemInCartRequest,
@@ -20,6 +21,7 @@ function* addToCart(actions) {
       const newItem =
         response.data.Data.Items[response.data.Data.Items.length - 1];
       yield put(CartActions.addToCartSuccess(newItem));
+      const cartId = yield AsyncStorage.getItem('cartId');
       showConfirmAlert(
         'Thêm vào giỏ thành công',
         'Thêm sản phẩm vào giỏ thành công ! Bạn có muốn đến giỏ hàng không ?',
@@ -50,11 +52,9 @@ function* getAllItemInCardById(actions) {
       actions.Token,
     );
     if (response.status === 200) {
-      if (response.data.Data && response.data.Data.Items.length !== 0) {
-        yield put(
-          CartActions.getAllItemByCartIdSuccess(response.data.Data.Items),
-        );
-      }
+      yield put(
+        CartActions.getAllItemByCartIdSuccess(response.data.Data.Items),
+      );
     }
   } catch (error) {
     yield put(CartActions.getAllItemByCartIdFailed(error));

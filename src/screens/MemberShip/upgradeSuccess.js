@@ -15,7 +15,6 @@ export default class UpgradeSuccess extends Component {
 
   render() {
     const {value} = this.props;
-    console.log('value upgrade success', value);
     return (
       <View style={styles.container}>
         <Text style={styles.textTitle}>Xin chúc mừng !</Text>

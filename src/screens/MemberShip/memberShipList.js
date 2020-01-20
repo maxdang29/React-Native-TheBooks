@@ -18,7 +18,6 @@ class Membership extends Component {
 
   render() {
     const {data, loading} = this.props;
-    console.log('data111111111111', data);
     if (loading)
       return (
         <View style={styles.loading}>

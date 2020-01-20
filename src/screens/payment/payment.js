@@ -84,7 +84,6 @@ export default class Payment extends Component {
   render() {
     const {value} = this.props;
     const {transfer, payHome, payStore} = this.state;
-    console.log('333333', transfer);
     const item = value.item;
     return (
       <ScrollView>

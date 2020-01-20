@@ -46,6 +46,8 @@ class SideBar extends Component {
     });
   };
   onclickCheck = value => {
+    Navigation.dismissModal(this.props.value);
+
     const {valueArray} = this.state;
     let arr = valueArray;
 
@@ -64,7 +66,13 @@ class SideBar extends Component {
 
   onSearchBookWithCategory = () => {
     const {valueArray} = this.state;
-    goAnotherScreen('searchResultFilter', valueArray, 'Tìm kiếm');
+    const {componentId} = this.props;
+    console.log('component id', componentId);
+    goAnotherScreen(
+      'searchResultFilter',
+      {valueArray, componentId},
+      'Tìm kiếm',
+    );
   };
 
   render() {

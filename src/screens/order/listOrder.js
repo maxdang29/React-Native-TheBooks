@@ -3,12 +3,15 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {goAnotherScreen} from '../../navigation/navigation';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class ListOrder extends Component {
   constructor(props) {
     super(props);
   }
-
+  gotoCart = () => {
+    goAnotherScreen('Cart', null, 'Giỏ hàng');
+  };
   render() {
     return (
       <View>
@@ -49,8 +52,7 @@ export default class ListOrder extends Component {
           </View>
         </View>
         <View style={styles.circleContainer}>
-          <TouchableOpacity
-            onPress={() => goAnotherScreen('Cart', null, 'Giỏ hàng')}>
+          <TouchableOpacity onPress={() => this.gotoCart()}>
             <Icons style={styles.iconCart} size={35} name="ic-cart" />
           </TouchableOpacity>
         </View>

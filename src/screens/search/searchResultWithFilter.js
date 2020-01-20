@@ -20,6 +20,8 @@ class SearchResultFilter extends Component {
     this.navigationEventListener = Navigation.events().bindComponent(this);
   }
   componentDidMount() {
+    const {componentId} = this.props.value;
+    Navigation.dismissModal(componentId);
     this.props.getAllBook();
   }
   navigationButtonPressed({buttonId}) {
@@ -30,11 +32,11 @@ class SearchResultFilter extends Component {
   }
   filterBookFollowCategory = () => {
     const {value, bookData} = this.props;
-
+    const valueArray = value.valueArray;
     let array = [];
     bookData.map(element => {
       element.Categories.map(item => {
-        if (value.includes(item.Name)) {
+        if (valueArray.includes(item.Name)) {
           array.push(element);
         }
       });
@@ -42,22 +44,29 @@ class SearchResultFilter extends Component {
     return array;
   };
   render() {
-    const {value, passPropsOption, bookData, loading} = this.props;
-    const bookFilter = this.filterBookFollowCategory();
-    const data = passPropsOption ? value : bookFilter;
+    console.log('111', this.props);
+    const {componentId} = this.props;
+    const {arr} = this.props.value;
+    const {passPropsOption, bookData, loading} = this.props;
+    // const bookFilter = this.filterBookFollowCategory();
+    console.log('value arr', arr);
+    console.log('pass props', this.props.passPropsOption);
+    const data = passPropsOption ? arr : this.filterBookFollowCategory();
     return (
       <View>
         <View style={styles.container}>
           <TouchableOpacity
             style={[styles.containerItem, styles.left]}
-            onPress={() => goAnotherScreen('sideBar', null, '', false)}>
+            onPress={() => goAnotherScreen('sideBar', componentId, '', false)}>
             <Text style={[styles.titleFilter]}>Thể loại</Text>
             <Icons name="filter" solid size={18} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.containerItem, styles.content]}
-            onPress={() => goAnotherScreen('sort', data, 'Sắp xếp', true)}>
+            onPress={() =>
+              goAnotherScreen('sort', {data, componentId}, 'Sắp xếp', true)
+            }>
             <Text style={[styles.titleFilter]}>Sắp xếp</Text>
             <Icons name="select" solid size={18} style={styles.icon} />
           </TouchableOpacity>

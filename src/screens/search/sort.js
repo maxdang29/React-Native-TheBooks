@@ -43,8 +43,10 @@ export default class Sort extends Component {
     }
   }
   sort = async key => {
-    const {value} = this.props;
-    let arr = value;
+    const {data} = this.props.value;
+    const {componentId} = this.props;
+
+    let arr = data;
     await arr.sort(function(a, b) {
       if (typeof a[key] == 'number') {
         return b[key] - a[key];
@@ -60,11 +62,20 @@ export default class Sort extends Component {
         return 0;
       }
     });
-    
-    goAnotherScreen('searchResultFilter', arr, 'Tìm kiếm', true, true);
+
+    Navigation.dismissModal(componentId);
+
+    goAnotherScreen(
+      'searchResultFilter',
+      {arr, componentId},
+      'Tìm kiếm',
+      true,
+      true,
+    );
   };
 
   render() {
+    console.log('3333333333', this.props);
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
