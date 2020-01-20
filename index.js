@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import intro from './src/navigation/intro';
 
 import {registerScreens} from './src/navigation/registerScreens';
-
 registerScreens();
 
 Navigation.registerComponent('app', () => App);

@@ -38,6 +38,7 @@ import Membership from '../screens/membership/memberShipList';
 import UpgradeSuccess from '../screens/membership/upgradeSuccess';
 import Payment from '../screens/payment/payment';
 import Notification from '../screens/notification/notification';
+console.disableYellowBox = true;
 
 function ReduxProvider(Component) {
   return props => (
