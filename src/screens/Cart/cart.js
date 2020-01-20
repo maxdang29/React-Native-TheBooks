@@ -39,7 +39,6 @@ class Cart extends Component {
   checkUserMember = async () => {
     const data = await AsyncStorage.getItem('userData');
     const userData = JSON.parse(data);
-    console.log('member ship', userData);
     if (userData.IsMembershipExpired === false && userData.MaxBorrowDays > 0) {
       alert('ok');
     } else {
@@ -63,7 +62,6 @@ class Cart extends Component {
 
   render() {
     const {data} = this.props;
-    console.log('data cart', data);
     let {loading} = this.props;
     let isExistsData = Array.isArray(data)
       ? data.length !== 0

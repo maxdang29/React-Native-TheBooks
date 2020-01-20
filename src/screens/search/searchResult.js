@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import FlatListBookColumnItem from '../../components/flatListColumBookItem';
 export default class SearchResult extends Component {
   render() {

@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Navigation} from 'react-native-navigation';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {goAnotherScreen} from '../../navigation/navigation';
+import {connect} from '../../../node_modules/react-redux';
+import * as Action from '../../redux/order/actions/actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default class ListOrder extends Component {
+class ListOrder extends Component {
   constructor(props) {
     super(props);
   }
+  async componentDidMount() {
+    const userData = await AsyncStorage.getItem('userData');
+    const token = await AsyncStorage.getItem('token');
+    const id = JSON.parse(userData).Id;
+    this.props.get_order_by_id(id, token);
+  }
 
   render() {
+    const {data} = this.props;
     return (
       <View>
         <View style={styles.container}>
@@ -58,6 +67,23 @@ export default class ListOrder extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    data: state,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    get_order_by_id: (id, token) => {
+      dispatch(Action.getOrderById(id, token));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListOrder);
+
 const styles = StyleSheet.create({
   container: {
     height: '100%',

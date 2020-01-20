@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {
   Text,
-  View,
   StyleSheet,
   SafeAreaView,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {goAnotherScreen} from '../../navigation/navigation';
 import {Navigation} from 'react-native-navigation';
 
@@ -46,7 +44,7 @@ export default class Sort extends Component {
     const {value} = this.props;
     let arr = value;
     await arr.sort(function(a, b) {
-      if (typeof a[key] == 'number') {
+      if (typeof a[key] === 'number') {
         return b[key] - a[key];
       } else {
         var charA = a[key].toUpperCase();
@@ -60,7 +58,7 @@ export default class Sort extends Component {
         return 0;
       }
     });
-    
+
     goAnotherScreen('searchResultFilter', arr, 'Tìm kiếm', true, true);
   };
 

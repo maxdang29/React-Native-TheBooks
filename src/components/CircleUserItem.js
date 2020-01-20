@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   borrowAuthor: {
-    // fontFamily: 'SVN-ProximaNova',
     color: '#4a4a4a',
     textAlign: 'center',
   },

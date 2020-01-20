@@ -1,23 +1,12 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-  Image,
-  TouchableWithoutFeedback,
-  Animated,
-} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import Login from '../Authentication/Login';
-import Register from '../Authentication/Register';
 import EmptyView from '../../components/EmptyView';
-import {Text, TouchableButton} from '../../components';
+import {Text} from '../../components';
 import {Colors, Metrics} from '../../themes';
 import {connect} from 'react-redux';
 import * as loginActions from '../../redux/auth/Login/actions';
 import {showQRCode} from '../../navigation/showQRCode';
-import Icons from 'react-native-vector-icons/thebook-appicon';
 
 class ListUserBook extends React.Component {
   state = {
@@ -103,11 +92,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    //register: data => dispatch(registerAction.register(data)),
     login: data => dispatch(loginActions.login(data)),
   };
 };
-// export default UserProfile;
 export default connect(mapStateToProps, mapDispatchToProps)(ListUserBook);
 const styles = StyleSheet.create({
   scene: {

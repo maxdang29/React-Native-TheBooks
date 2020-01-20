@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import {View, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 import SectionListBook from '../../components/sectionListBook';

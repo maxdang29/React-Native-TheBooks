@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, FlatList, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import * as Action from '../../redux/notification/action/actions';
 import {Colors} from '../../themes';
@@ -40,65 +33,67 @@ class Notification extends Component {
               keyExtractor={(item, index) => item.Id}
               renderItem={({item}) => (
                 <>
-                  <TouchableOpacity onPress={() => this.markAsSeen(item.Id)}>
-                    <View style={styles.container}>
-                      <View
-                        style={[
-                          styles.iconView,
-                          {
-                            backgroundColor: `${
-                              item.IsSeen
-                                ? '#a2a5a4'
-                                : item.Notification.Type === 'BookRequest'
-                                ? '#eb6f6f'
+                  <View style={styles.shadowView}>
+                    <TouchableOpacity onPress={() => this.markAsSeen(item.Id)}>
+                      <View style={styles.container}>
+                        <View
+                          style={[
+                            styles.iconView,
+                            {
+                              backgroundColor: `${
+                                item.IsSeen
+                                  ? '#a2a5a4'
+                                  : item.Notification.Type === 'BookRequest'
+                                  ? '#eb6f6f'
+                                  : item.Notification.Type === 'Promotion'
+                                  ? '#7ed321'
+                                  : item.Notification.Type === 'Notification'
+                                  ? '#7e3dff'
+                                  : '#a2a5a4'
+                              }`,
+                            },
+                          ]}>
+                          <Icons
+                            name={`${
+                              item.Notification.Type === 'BookRequest'
+                                ? 'ic-book'
                                 : item.Notification.Type === 'Promotion'
-                                ? '#7ed321'
+                                ? 'ic-sale'
                                 : item.Notification.Type === 'Notification'
-                                ? '#7e3dff'
-                                : '#a2a5a4'
-                            }`,
-                          },
-                        ]}>
-                        <Icons
-                          name={`${
-                            item.Notification.Type === 'BookRequest'
-                              ? 'ic-book'
-                              : item.Notification.Type === 'Promotion'
-                              ? 'ic-sale'
-                              : item.Notification.Type === 'Notification'
-                              ? 'ic-notification-1'
-                              : 'ic-book'
-                          }`}
-                          solid
-                          size={35}
-                          style={[styles.icon]}
-                        />
-                      </View>
-                      <View style={styles.column_2}>
-                        <View style={styles.titleView}>
-                          <Text
-                            style={[
-                              styles.titleText,
-                              {
-                                color: `${item.IsSeen ? '#a2a5a4' : '#000'}`,
-                              },
-                            ]}>
-                            {item.Notification.Title}
-                          </Text>
-                          <Text style={styles.titleDate}>
-                            {moment(item.Notification.CreatedAt)
-                              .subtract(10, 'days')
-                              .calendar()}
-                          </Text>
+                                ? 'ic-notification-1'
+                                : 'ic-book'
+                            }`}
+                            solid
+                            size={35}
+                            style={[styles.icon]}
+                          />
                         </View>
-                        <View style={styles.contentView}>
-                          <Text style={styles.content}>
-                            {item.Notification.Body}
-                          </Text>
+                        <View style={styles.column_2}>
+                          <View style={styles.titleView}>
+                            <Text
+                              style={[
+                                styles.titleText,
+                                {
+                                  color: `${item.IsSeen ? '#a2a5a4' : '#000'}`,
+                                },
+                              ]}>
+                              {item.Notification.Title}
+                            </Text>
+                            <Text style={styles.titleDate}>
+                              {moment(item.Notification.CreatedAt)
+                                .subtract(10, 'days')
+                                .calendar()}
+                            </Text>
+                          </View>
+                          <View style={styles.contentView}>
+                            <Text style={styles.content}>
+                              {item.Notification.Body}
+                            </Text>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </View>
                 </>
               )}
             />
@@ -131,6 +126,16 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);
 
 const styles = StyleSheet.create({
+  shadowView: {
+    borderRadius: 6,
+    marginVertical: 16,
+    marginHorizontal: 10,
+    elevation: 10,
+    shadowColor: 'black',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
   content: {
     color: Colors.darkGray,
   },
@@ -144,7 +149,6 @@ const styles = StyleSheet.create({
   iconView: {
     marginHorizontal: 6,
     marginVertical: 6,
-    // backgroundColor: '#f0f',
     borderRadius: 50,
     paddingHorizontal: 8,
     paddingVertical: 8,

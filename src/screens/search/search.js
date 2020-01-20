@@ -50,7 +50,6 @@ class Search extends Component {
     });
   };
   moveToDetailBookScreen = data => {
-    const {componentId} = this.props;
     goAnotherScreen('BookDetail', data, 'Chi tiết');
   };
 

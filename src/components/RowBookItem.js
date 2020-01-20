@@ -165,11 +165,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(RowBookItem);
 
 const styles = StyleSheet.create({
   cancelItem: {
-    // textAlign: 'right',
-    // marginTop: -10,
-    // fontSize: 12,
-    // marginRight: 20,
-    // marginBottom: 10,
+    textAlign: 'right',
+    marginTop: -10,
+    fontSize: 12,
+    marginRight: 20,
+    marginBottom: 10,
   },
   bookQuantity: {
     fontSize: 17,
@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingHorizontal: 10,
-    // paddingVertical: ,
   },
   viewFlexDirection: {
     flexDirection: 'row',
