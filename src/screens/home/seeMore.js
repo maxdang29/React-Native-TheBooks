@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, FlatList} from 'react-native';
-
+import {View} from 'react-native';
 import FlatListBookColumnItem from '../../components/flatListColumBookItem';
 
 export default class SeeMore extends Component {
@@ -25,7 +24,6 @@ export default class SeeMore extends Component {
     } else {
       bookData = value;
     }
-
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <FlatListBookColumnItem data={bookData} />

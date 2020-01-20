@@ -189,7 +189,6 @@ class BookDetail extends Component {
     const {relatedBooks, reviewBooks} = this.props;
     const {bookContent, expanded} = this.state;
 
-
     if (value)
       return (
         <>

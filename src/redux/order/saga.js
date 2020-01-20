@@ -3,7 +3,7 @@ import * as ActionTypes from '../../redux/order/actions/typesAction';
 import * as actionsOrder from '../order/actions/actions';
 import {showConfirmAlert} from '../../navigation/showConfirmAlert';
 import {showInAppNotification} from '../../navigation/showInAppNotification';
-import {postOrderRequest} from '../../api/order';
+import {postOrderRequest, getAllOrderByIdRequest} from '../../api/order';
 import {Navigation} from 'react-native-navigation';
 
 function* addOrder(actions) {
@@ -28,10 +28,26 @@ function* addOrder(actions) {
     );
   } catch (error) {
     showInAppNotification('Đặt sách thất bại', error.data.Message, 'error');
-
     console.log('error', error);
     yield put(actionsOrder.addOrderFailed(error));
   }
 }
-const rootSagaOrder = () => [takeLatest(ActionTypes.ADD_ORDER, addOrder)];
+
+function* getOrder(action) {
+  try {
+    const response = yield call(
+      getAllOrderByIdRequest,
+      action.id,
+      action.token,
+    );
+    yield put(actionsOrder.getOrderByIdSuccess(response));
+  } catch (error) {
+    yield put(actionsOrder.getOrderByIdFailed(error));
+  }
+}
+
+const rootSagaOrder = () => [
+  takeLatest(ActionTypes.GET_ORDER_BY_ID, getOrder),
+  takeLatest(ActionTypes.ADD_ORDER, addOrder),
+];
 export default rootSagaOrder();

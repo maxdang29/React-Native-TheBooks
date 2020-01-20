@@ -1,5 +1,4 @@
 import {Navigation} from 'react-native-navigation';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import Colors from '../themes/Colors';
 import AsyncStorage from '@react-native-community/async-storage';

@@ -12,7 +12,6 @@ import TouchableButton from '../../components/TouchableButton';
 import {Navigation} from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as registerActions from '../../redux/auth/Register/actions';
-//import * as loginAction from '../../Redux/Authentication/Login/actions';
 import {connect} from 'react-redux';
 import {Colors} from '../../themes';
 

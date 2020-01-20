@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import {View, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import * as Action from '../../redux/memberShip/actions/actions';
 import MemberPackage from '../../components/MemberPackage';
-import {Navigation} from 'react-native-navigation';
 
 class Membership extends Component {
   async componentDidMount() {
@@ -18,12 +11,13 @@ class Membership extends Component {
 
   render() {
     const {data, loading} = this.props;
-    if (loading)
+    if (loading) {
       return (
         <View style={styles.loading}>
           <ActivityIndicator size="large" />
         </View>
       );
+    }
     return (
       <View>
         <View>

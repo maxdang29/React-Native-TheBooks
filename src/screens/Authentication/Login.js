@@ -125,7 +125,6 @@ class Login extends React.Component {
             ref={ref => {
               this.password = ref;
             }}
-            // secureTextEntry
             isRequired
             validateType="password"
             value="123456789"

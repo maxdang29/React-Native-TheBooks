@@ -29,11 +29,11 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import Search from '../screens/search/search';
 import SearchResult from '../screens/search/searchResult';
 import Sort from '../screens/search/sort';
-import SearchResultFilter from '../screens//search/searchResultWithFilter';
+import SearchResultFilter from '../screens/search/searchResultWithFilter';
 import CircleUserItem from '../components/CircleUserItem';
 import Cart from '../screens/Cart/cart';
 import SplashScreen from '../screens/splashScreen';
-import upgradeMembership from '../screens/membership/upgradeMembership';
+import UpgradeMembership from '../screens/membership/upgradeMembership';
 import Membership from '../screens/membership/memberShipList';
 import UpgradeSuccess from '../screens/membership/upgradeSuccess';
 import Payment from '../screens/payment/payment';
@@ -49,9 +49,9 @@ function ReduxProvider(Component) {
 
 export function registerScreens() {
   Navigation.registerComponent(
-    'upgradeMembership',
-    () => ReduxProvider(upgradeMembership),
-    () => upgradeMembership,
+    'UpgradeMembership',
+    () => ReduxProvider(UpgradeMembership),
+    () => UpgradeMembership,
   );
   Navigation.registerComponent(
     'Notification',

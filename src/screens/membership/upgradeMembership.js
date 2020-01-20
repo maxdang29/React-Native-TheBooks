@@ -8,12 +8,11 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/thebook-appicon';
 import {Navigation} from 'react-native-navigation';
-import {goAnotherScreen} from '../../navigation/navigation';
 import {connect} from 'react-redux';
 import * as upgradeMembershipAction from '../../redux/memberShip/actions/actions';
 import AsyncStorage from '@react-native-community/async-storage';
 
-class upgradeMembership extends Component {
+class UpgradeMembership extends Component {
   constructor(props) {
     super(props);
     Navigation.mergeOptions(this.props.componentId, {
@@ -24,7 +23,6 @@ class upgradeMembership extends Component {
   }
 
   upgradeMembership = async () => {
-    // goAnotherScreen('payment', value);
     const {value} = this.props;
     const userId = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
@@ -166,7 +164,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(upgradeMembership);
+export default connect(mapStateToProps, mapDispatchToProps)(UpgradeMembership);
 
 const styles = StyleSheet.create({
   container: {

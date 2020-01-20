@@ -204,7 +204,6 @@ const styles = StyleSheet.create({
     width: Metrics.screenWidth - 35,
     height: Metrics.screenHeight - 350,
     backgroundColor: Colors.white,
-    //paddingVertical: 20,
     alignItems: 'center',
     borderRadius: 8,
   },

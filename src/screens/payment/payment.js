@@ -74,12 +74,13 @@ export default class Payment extends Component {
           <Text>Thanh toán tại nhà</Text>
         </View>
       );
-    } else if (payStore)
+    } else if (payStore) {
       return (
         <View>
           <Text>Thanh toán tại cữa hàng</Text>
         </View>
       );
+    }
   };
   render() {
     const {value} = this.props;
@@ -191,9 +192,6 @@ export default class Payment extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     marginLeft: 20,
   },
   row: {
@@ -220,8 +218,6 @@ const styles = StyleSheet.create({
   buttonPayment: {
     flex: 1,
     justifyContent: 'center',
-    // borderColor: '#1b969f',
-    //borderWidth: 0.5,
     margin: 8,
   },
   iconPayment: {

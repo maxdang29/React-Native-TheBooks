@@ -14,6 +14,12 @@ const orderReducers = (state = init, action) => {
       return {...state, loading: false};
     case types.ADD_ORDER_FAILED:
       return {...state, loading: false};
+    case types.GET_ORDER_BY_ID:
+      return {...state, loading: true};
+    case types.GET_ORDER_BY_ID_FAILED:
+      return {...state, error: [...action.error], loading: false};
+    case types.GET_ORDER_BY_ID_SUCCESS:
+      return {...state, data: [...action.data], loading: false};
     default:
       return state;
   }

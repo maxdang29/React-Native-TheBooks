@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, RowDirect} from '../../components';
-import {Colors, Metrics} from '../../themes';
+import {RowDirect} from '../../components';
 import {connect} from 'react-redux';
 import * as loginActions from '../../redux/auth/Login/actions';
 import {showQRCode} from '../../navigation/showQRCode';
